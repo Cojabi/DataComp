@@ -67,10 +67,21 @@ def test_num_dist(zipper, feats=None):
     return p_values
 
 
-def p_bonfer_cor(p_values):
+def p_correction(p_values):
     """Apply p value correction for multiple testing"""
 
-    p = pd.Series(p_values).sort_values()
+    def _transform_p_dict(p):
+        """ """
+        temp_dict = dict()
+
+        for feat in p:
+            temp_dict[feat] = list(p[feat].items())
+        list_repr = [[i[1], i[0], x[0]] for x in list(temp_dict.items()) for i in x[1]]
+
+        return pd.DataFrame(list_repr)
+
+    p_trans = _transform_p_dict(p_values)
+    p = p_trans[0].sort_values()
 
     # correct p-values
     result = multipletests(p.values)
@@ -81,4 +92,10 @@ def p_bonfer_cor(p_values):
     p["cor_pv"] = result[1]
     p["signf"] = result[0]
 
-    return p
+    p = pd.concat([p, p_trans], axis=1, join="inner")
+    # create multi index
+    p.index = p[[2, 1]]
+    p.index = pd.MultiIndex.from_tuples(p.index)
+    p.drop([0, 1, 2], axis=1, inplace=True)
+
+    return p.sort_index()
