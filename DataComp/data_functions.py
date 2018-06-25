@@ -3,7 +3,7 @@
 import pandas as pd
 
 
-def get_data(path1, path2=None, groupby=None, class1=None, class2=None):
+def get_data(paths, groupby=None, classes=None, sep=","):
     """Will load the data and return a list of two dataframes
     that can then be used for later comparism.
     :param path1: Path to dataframe1
@@ -11,19 +11,26 @@ def get_data(path1, path2=None, groupby=None, class1=None, class2=None):
                   Then use groupby argument
     :param groupby: name of the column which specifies classes to compare to each other. (e.g. sampling site)
     """
-    data = pd.read_csv(path1, index_col=0)
+
+    dfs = []
 
     if groupby:
+        data = pd.read_csv(*paths, index_col=0, sep=sep)
         grouping = data.groupby(groupby)
-        df1 = grouping.get_group(class1)[::]
-        df2 = grouping.get_group(class2)[::]
 
-    if path2:
-        df1 = data
-        df2 = pd.read_csv(path2, index_col=0)
+        for name, grp in grouping: # split dataframe groups and create a list with all dataframes
+            df = grouping.get_group(name)[::]
+            dfs.append(df)
 
-    dfs = [df1, df2]
-    df_names = [class1, class2]
+    if len(paths) > 1:
+        for path in paths:
+            df = pd.read_csv(path, index_col=0)
+            dfs.append(df)
+
+    if classes:
+        df_names = classes
+    else:
+        df_names = ["df" + str(x) for x in range(1, len(dfs)+1)]
 
     return dfs, df_names
 
@@ -43,3 +50,6 @@ def create_zipper(dfs, feats=None):
     zipper = dict(zip(feats, zip_values))
     return zipper
 
+
+if __name__ == '__main__':
+    get_data("/home/colin/git/DataComp/niklas_test.csv", groupby="DD01")
