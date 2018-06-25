@@ -71,7 +71,12 @@ def p_correction(p_values):
     """Apply p value correction for multiple testing"""
 
     def _transform_p_dict(p):
-        """ """
+        """
+        Transforms a dictionary of dicts into a dataframe representing the dicts as rows (like tuples).
+        The resulting DataFrame can then be used to sort the p_values such that
+        :param p: dictionary of dictionaries storing the p_values
+        :return: dataframe where the keys are added to the p_values as columns
+        """
         temp_dict = dict()
 
         for feat in p:
