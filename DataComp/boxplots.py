@@ -4,11 +4,25 @@ import matplotlib.pylab as plt
 import numpy as np
 import os
 
+from operator import itemgetter
+
 plt.style.use('ggplot')
 
 
+def plot_sig_feats(df, zipper, df_names, feats=None, save_folder=None):
+    """ """
+
+    # grab significant deviances
+    sig_entries = df[df["signf"]]
+    index_labels = sig_entries.index.labels[0]
+    sig_feats = set(itemgetter(index_labels)(sig_entries.index.levels[0]))
+
+    sig_zipper = {x: zipper[x] for x in sig_feats}
+    single_feature_bp(sig_zipper, df_names, feats=None, save_folder=None)
+
+
 """Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
-def all_features_bp(num_zipper, save=None):
+def all_features_bp(num_zipper, df_names, save=None):
     """
     Plots boxplots for all features and all dfs into one figure
     :param num_zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
@@ -19,7 +33,7 @@ def all_features_bp(num_zipper, save=None):
     fig = plt.figure()
     ax = plt.axes()
 
-    add_value = len(dfs) + 1  # is used to define the positons of the boxplots
+    add_value = len(df_names) + 1  # is used to define the positons of the boxplots
     positions = range(1, add_value)
     xticks = []  # stores the positions where axis ticks shall be
 
@@ -51,7 +65,7 @@ def single_feature_bp(zipper, df_names, feats=None, save_folder=None):
     :return:
     """
 
-    positions = range(1, len(dfs) + 1)
+    positions = range(1, len(df_names) + 1)
     xticks = []  # stores the positions where axis ticks shall be
     i = 0  # counter to keep track of the feature names
 
