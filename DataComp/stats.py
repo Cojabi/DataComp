@@ -55,11 +55,14 @@ def test_num_dist(zipper, feats=None):
         feats = zipper.keys()
 
     for feat in feats:  # run through all variables
+        # initiate dict in dict for d1 vs d2, d2 vs d3 etc. per feature
+        p_values[feat] = dict()
+
         for i in range(len(zipper[feat]) - 1):  # select dataset1
             for j in range(i + 1, len(zipper[feat])):  # select dataset2
                 # calculate u statistic and return p-value
                 z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
-                p_values[feat] = z.pvalue
+                p_values[feat][i, j] = z.pvalue
 
     return p_values
 
