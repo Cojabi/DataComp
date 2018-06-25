@@ -3,7 +3,7 @@
 import pandas as pd
 
 
-def get_data(paths, groupby=None, classes=None, sep=","):
+def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
     """Will load the data and return a list of two dataframes
     that can then be used for later comparism.
     :param path1: Path to dataframe1
@@ -18,9 +18,14 @@ def get_data(paths, groupby=None, classes=None, sep=","):
         data = pd.read_csv(*paths, index_col=0, sep=sep)
         grouping = data.groupby(groupby)
 
-        for name, grp in grouping: # split dataframe groups and create a list with all dataframes
+        for name, grp in grouping:  # split dataframe groups and create a list with all dataframes
             df = grouping.get_group(name)[::]
-            dfs.append(df)
+
+            # consider all columns as relevant is no rel_cols given.
+            if rel_cols is None:
+                rel_cols = list(df)
+            # consider the relevant columns
+            dfs.append(df[rel_cols])
 
     if len(paths) > 1:
         for path in paths:
@@ -30,7 +35,7 @@ def get_data(paths, groupby=None, classes=None, sep=","):
     if classes:
         df_names = classes
     else:
-        df_names = ["df" + str(x) for x in range(1, len(dfs)+1)]
+        df_names = ["df" + str(x) for x in range(1, len(dfs) + 1)]
 
     return dfs, df_names
 
@@ -50,6 +55,3 @@ def create_zipper(dfs, feats=None):
     zipper = dict(zip(feats, zip_values))
     return zipper
 
-
-if __name__ == '__main__':
-    get_data("/home/colin/git/DataComp/niklas_test.csv", groupby="DD01")
