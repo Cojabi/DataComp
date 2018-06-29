@@ -8,9 +8,6 @@ from statsmodels.sandbox.stats.multicomp import multipletests
 from scipy.stats import chisquare
 from collections import Counter
 
-# propensity score matching
-from pymatch.Matcher import Matcher
-
 def test_single_cat(dfs, col_name, printer=False):
     """
     Uses a chi square test to check whether the distribution of categorical features accross the datasets differ
@@ -140,8 +137,18 @@ def p_correction(p_values):
 
     return p.sort_index()
 
+
 def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=None):
-    """ """
+    """
+
+    :param zipper:
+    :param cat_feats:
+    :param num_feats:
+    :param include:
+    :param exclude:
+    :return:
+    """
+
     # create coppy of zipper to avoid changing original zipper
     zipl = zipper.copy()
     # create dictionary that will store the results for feature comparison
@@ -151,13 +158,19 @@ def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=N
     if exclude:
         for feat in exclude:
             del zipl[feat]
+        # update feature lists
+        cat_feats = set(cat_feats).difference(exclude)
+        num_feats = set(num_feats).difference(exclude)
 
-    # test categorical features
-    for feats in cat_feats:
-        p_values[feat] = test_categorical(dfs, feat).pvalue
+    if include:
+        cat_feats = set(cat_feats).intersection(include)
+        num_feats = set(num_feats).intersection(include)
 
+    print(num_feats)
+    # test categorical features:
+    p_values.update(test_cat_feats(zipper, cat_feats))
+    p_values.update(test_num_feats(zipper, num_feats))
 
     # test numerical features
-    p_values.update(test_num_feats(zipl))
     results = p_correction(p_values)
-    results.sort_values("signf")
+    return results.sort_values("signf")
