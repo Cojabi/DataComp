@@ -140,13 +140,14 @@ def p_correction(p_values):
 
 def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=None):
     """
-
+    This function can be used to compare all features easily. It works as a wrapper for the categorical and numerical
+    feature comparison functions.
     :param zipper:
-    :param cat_feats:
-    :param num_feats:
-    :param include:
-    :param exclude:
-    :return:
+    :param cat_feats: List of categorical features
+    :param num_feats: List of numerical features
+    :param include: List of features that should be included into the comparison
+    :param exclude: List of features that should be excluded from the comparison
+    :return: dataframe showing the results of the comparison
     """
 
     # create coppy of zipper to avoid changing original zipper
