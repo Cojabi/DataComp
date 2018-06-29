@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
+from pymatch.Matcher import Matcher
 
 
 def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
@@ -9,6 +10,7 @@ def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
     :param path1: Path to dataframe1
     :param path2: Path to dataframe2. Optional if all data for comparison is in df1.
                   Then use groupby argument
+    :param rel_cols: List of relevant columns to consider. When given only those columns will be used. Otherwise all
     :param groupby: name of the column which specifies classes to compare to each other. (e.g. sampling site)
     """
 
@@ -24,6 +26,7 @@ def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
             # consider all columns as relevant is no rel_cols given.
             if rel_cols is None:
                 rel_cols = list(df)
+
             # consider the relevant columns
             dfs.append(df[rel_cols])
 
@@ -55,3 +58,59 @@ def create_zipper(dfs, feats=None):
     zipper = dict(zip(feats, zip_values))
     return zipper
 
+
+def creat_prop_matched_df(matches_path, dfs):
+    """ """
+
+    matches_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/matches.csv"
+
+    # load matches and drop non matched ids
+    matches = pd.read_csv(matches_path)
+    matches.dropna(inplace=True)
+
+    # prepare matched ids
+    adni_ids = matches["1"]
+
+    # create dfs containing only matched data
+    prop_dfs = [dfs[1].loc[matches["Unnamed: 0"]], dfs[0].loc[adni_ids]]
+
+    return prop_dfs
+
+def qc_prop_matching(dfs, rel_cols, label):
+    """
+    Evaluates the need for a propensity score matching and
+    :param dfs:
+    :param rel_cols:
+    :param label:
+    :return:
+    """
+
+    cols = rel_cols[::]
+
+    # create reduced copies of the dataframes for propensity score quality control
+    qc_dfs = []
+    for df in dfs:
+        qc_dfs.append(df[cols])
+
+    # construct formula
+    cols.remove(label)
+    formula = construct_formula(label, cols)
+
+    # create Matcher
+    m = Matcher(*qc_dfs, yvar=label, formula=formula)
+    # train classifier to asses predictability
+    m.fit_scores(balance=True, nmodels=10)
+    # calculate and visualize propensity scores
+    m.predict_scores()
+    m.plot_scores()
+
+def construct_formula(label, rel_cols):
+    """
+    Constructs a formula string from column names and label
+    :param label: Label or class which should be regressed for. (case/control, treatment/untreated etc.)
+    :param rel_cols: Relevant columns for the formula
+    :return: formula string
+    """
+
+    formula = label + " ~ " + "+".join(rel_cols)
+    return formula
