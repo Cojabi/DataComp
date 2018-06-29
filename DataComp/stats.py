@@ -167,11 +167,12 @@ def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=N
         cat_feats = set(cat_feats).intersection(include)
         num_feats = set(num_feats).intersection(include)
 
-    print(num_feats)
     # test categorical features:
     p_values.update(test_cat_feats(zipper, cat_feats))
     p_values.update(test_num_feats(zipper, num_feats))
 
     # test numerical features
     results = p_correction(p_values)
+
+    print("Fraction of significantly deviating features:", str(results["signf"].sum())+"/"+str(len(results["signf"])))
     return results.sort_values("signf")
