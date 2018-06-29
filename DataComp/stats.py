@@ -11,7 +11,7 @@ from collections import Counter
 # propensity score matching
 from pymatch.Matcher import Matcher
 
-def test_categorical(dfs, col_name, printer=False):
+def test_single_cat(dfs, col_name, printer=False):
     """
     Uses a chi square test to check whether the distribution of categorical features accross the datasets differ
     significantly.
@@ -47,7 +47,7 @@ def test_categorical(dfs, col_name, printer=False):
     return chisquare(*test_data)
 
 
-def test_num_dist(zipper, feats=None):
+def test_num_feats(zipper, feats=None):
     """Perform a hypothesis test to check if the distributions vary signifcantly from each other"""
     p_values = dict()
 
@@ -62,6 +62,41 @@ def test_num_dist(zipper, feats=None):
             for j in range(i + 1, len(zipper[feat])):  # select dataset2
                 # calculate u statistic and return p-value
                 z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
+                p_values[feat][i, j] = z.pvalue
+
+    return p_values
+
+
+def test_cat_feats(zipper, feats=None):
+    """Perform a hypothesis test to check if the distributions vary signifcantly from each other"""
+
+    def _categorical_table(data):
+        """
+        Returns the counts of occurences for the categories. Is used to build the observation table for a chi square test.
+        :param series:
+        :return:
+        """
+
+        c = Counter(data)
+        # get rid of NaNs
+        c = {key: c[key] for key in c if not pd.isnull(key)}
+        return pd.Series(c)
+
+    p_values = dict()
+
+    if feats is None:
+        feats = zipper.keys()
+
+    for feat in feats:  # run through all variables
+        # initiate dict in dict for d1 vs d2, d2 vs d3 etc. per feature
+        p_values[feat] = dict()
+
+        for i in range(len(zipper[feat]) - 1):  # select dataset1
+            for j in range(i + 1, len(zipper[feat])):  # select dataset2
+                # count occurences of categorical features
+                test_data = [_categorical_table(zipper[feat][i]), _categorical_table(zipper[feat][j])]
+                # calculate u statistic and return p-value
+                z = chisquare(*test_data)
                 p_values[feat][i, j] = z.pvalue
 
     return p_values
@@ -104,3 +139,25 @@ def p_correction(p_values):
     p.drop([0, 1, 2], axis=1, inplace=True)
 
     return p.sort_index()
+
+def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=None):
+    """ """
+    # create coppy of zipper to avoid changing original zipper
+    zipl = zipper.copy()
+    # create dictionary that will store the results for feature comparison
+    p_values = dict()
+
+    # delete label if given
+    if exclude:
+        for feat in exclude:
+            del zipl[feat]
+
+    # test categorical features
+    for feats in cat_feats:
+        p_values[feat] = test_categorical(dfs, feat).pvalue
+
+
+    # test numerical features
+    p_values.update(test_num_feats(zipl))
+    results = p_correction(p_values)
+    results.sort_values("signf")
