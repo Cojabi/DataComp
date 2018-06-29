@@ -78,11 +78,11 @@ def creat_prop_matched_df(matches_path, dfs):
 
 def qc_prop_matching(dfs, rel_cols, label):
     """
-    Evaluates the need for a propensity score matching and
-    :param dfs:
-    :param rel_cols:
-    :param label:
-    :return:
+    Evaluates the need for a propensity score matching and can be used to quality control a propensity score matched
+    population. Will train classifiers and create a plot.
+    :param dfs: List of dataframes
+    :param rel_cols: relevant columns
+    :param label: Label or class which should be regressed. (cohort1/cohort2, case/control, treatment/untreated etc.)
     """
 
     cols = rel_cols[::]
