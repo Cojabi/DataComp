@@ -62,17 +62,15 @@ def create_zipper(dfs, feats=None):
 def creat_prop_matched_df(matches_path, dfs):
     """ """
 
-    matches_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/matches.csv"
-
     # load matches and drop non matched ids
-    matches = pd.read_csv(matches_path)
-    matches.dropna(inplace=True)
+    matched = pd.read_csv(matches_path, index_col=0)
+    matched.dropna(inplace=True)
 
-    # prepare matched ids
-    adni_ids = matches["1"]
-
-    # create dfs containing only matched data
-    prop_dfs = [dfs[1].loc[matches["Unnamed: 0"]], dfs[0].loc[adni_ids]]
+    # create dfs containing only matched data. Try to get oder of dataframes and matching columns correct
+    try:
+        prop_dfs = [dfs[1].loc[matched.index], dfs[0].loc[matched["Matches"]]]
+    except KeyError:
+        prop_dfs = [dfs[0].loc[matched.index], dfs[1].loc[matched["Matches"]]]
 
     return prop_dfs
 
