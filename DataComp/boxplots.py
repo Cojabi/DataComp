@@ -3,13 +3,14 @@
 import matplotlib.pylab as plt
 import numpy as np
 import os
+import matplotlib_venn as mv
 
 from operator import itemgetter
 
 plt.style.use('ggplot')
 
 
-def plot_sig_feats(df, zipper, df_names, feats=None, save_folder=None):
+def bp_all_sig_feats(df, zipper, df_names, feats=None, save_folder=None):
     """ """
 
     # grab significant deviances
@@ -18,11 +19,11 @@ def plot_sig_feats(df, zipper, df_names, feats=None, save_folder=None):
     sig_feats = set(itemgetter(index_labels)(sig_entries.index.levels[0]))
 
     sig_zipper = {x: zipper[x] for x in sig_feats}
-    single_feature_bp(sig_zipper, df_names, feats=None, save_folder=None)
+    bp_single_feature(sig_zipper, df_names, feats=None, save_folder=None)
 
 
 """Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
-def all_features_bp(num_zipper, df_names, save=None):
+def bp_all_features(num_zipper, df_names, save=None):
     """
     Plots boxplots for all features and all dfs into one figure
     :param num_zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
@@ -54,7 +55,7 @@ def all_features_bp(num_zipper, df_names, save=None):
         plt.show()
 
 
-def single_feature_bp(zipper, df_names, feats=None, save_folder=None):
+def bp_single_feature(zipper, df_names, feats=None, save_folder=None):
     """
     Creates one boxplot figure per feature
     :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
@@ -94,3 +95,23 @@ def single_feature_bp(zipper, df_names, feats=None, save_folder=None):
             plt.show()
         # increase i to process next feature
         i += 1
+
+
+def feature_venn_diagram(dfs):
+    """
+    Plots a venn diagram illustrating the overlap in features between the datasets.
+    :param dfs: List of dataframes
+    :return:
+    """
+
+    # Create list containing features as sets
+    feats = []
+    for df in dfs:
+        feats.append(set(df))
+
+    # plot overlap as venn diagram
+    if len(dfs) == 2:
+        mv.venn2(feats)
+
+    if len(dfs) == 3:
+        mv.venn3(feats)
