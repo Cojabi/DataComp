@@ -118,3 +118,23 @@ def construct_formula(label, rel_cols):
 
     formula = label + " ~ " + "+".join(rel_cols)
     return formula
+
+def get_common_features(dfs, exclude=None):
+    """
+    Creates a set of the common features shared between dataframes.
+    :param dfs: List of dataframes
+    :param exclude: List of features which shall be taken out of consideration
+    :return: set of common features across the dataframes
+    """
+    feats = []
+
+    for df in dfs:
+        feats.append(set(df))
+
+    common_feats = set.intersection(*feats)
+
+    if exclude:
+        for feat in exclude:
+            common_feats.remove(feat)
+
+    return common_feats
