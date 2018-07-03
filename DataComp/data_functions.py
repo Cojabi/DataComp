@@ -115,8 +115,12 @@ def construct_formula(label, rel_cols):
     :param rel_cols: Relevant columns for the formula
     :return: formula string
     """
+    cols = rel_cols[::]
 
-    formula = label + " ~ " + "+".join(rel_cols)
+    if label in rel_cols:
+        cols.remove(label)
+
+    formula = label + " ~ " + "+".join(cols)
     return formula
 
 def get_common_features(dfs, exclude=None):
