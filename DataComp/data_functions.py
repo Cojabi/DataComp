@@ -137,4 +137,4 @@ def get_common_features(dfs, exclude=None):
         for feat in exclude:
             common_feats.remove(feat)
 
-    return common_feats
+    return list(common_feats)
