@@ -6,6 +6,7 @@ import os
 import matplotlib_venn as mv
 
 from operator import itemgetter
+from .data_functions import get_feature_sets
 
 plt.style.use('ggplot')
 
@@ -97,18 +98,13 @@ def bp_single_feature(zipper, df_names, feats=None, save_folder=None):
         i += 1
 
 
-def feature_venn_diagram(dfs):
+def feat_venn_diagram(dfs):
     """
     Plots a venn diagram illustrating the overlap in features between the datasets.
     :param dfs: List of dataframes
     :return:
     """
-
-    # Create list containing features as sets
-    feats = []
-    for df in dfs:
-        feats.append(set(df))
-
+    feats = get_feature_sets(dfs)
     # plot overlap as venn diagram
     if len(dfs) == 2:
         mv.venn2(feats)

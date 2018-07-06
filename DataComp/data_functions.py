@@ -13,11 +13,20 @@ def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
     :param rel_cols: List of relevant columns to consider. When given only those columns will be used. Otherwise all
     :param groupby: name of the column which specifies classes to compare to each other. (e.g. sampling site)
     """
+    def _load_data(path):
+        """small function to load according to the dataformat. (excel or csv)"""
+        try:
+            df = pd.read_csv(path, index_col=0)
+        except  :
+            df = pd.read_excel(path, index_col=0)
+        return df
 
+    # initialize list to store dataframes in
     dfs = []
 
-    if groupby:
-        data = pd.read_csv(*paths, index_col=0, sep=sep)
+    # Handle single path input
+    if groupby and len(paths)==1:
+        data = _load_data(*paths)
         grouping = data.groupby(groupby)
 
         for name, grp in grouping:  # split dataframe groups and create a list with all dataframes
@@ -30,9 +39,10 @@ def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
             # consider the relevant columns
             dfs.append(df[rel_cols])
 
+    # Handle multiple paths input
     if len(paths) > 1:
         for path in paths:
-            df = pd.read_csv(path, index_col=0)
+            df = _load_data(path)
             dfs.append(df)
 
     if classes:
@@ -61,7 +71,8 @@ def create_zipper(dfs, feats=None):
 
 def creat_prop_matched_df(matches_path, dfs):
     """
-
+    Creats a new list of dataframes but now only containing the matched cases. Propensity Score Matching must be performed
+    previously.
     :param matches_path: Path to a csv which contains the matched data. 2 Columns: one lists the subjects of df1 and
     the other lists the matching sample from df2.
     :param dfs: list of dataframes
@@ -130,10 +141,7 @@ def get_common_features(dfs, exclude=None):
     :param exclude: List of features which shall be taken out of consideration
     :return: set of common features across the dataframes
     """
-    feats = []
-
-    for df in dfs:
-        feats.append(set(df))
+    feats = get_feature_sets()
 
     common_feats = set.intersection(*feats)
 
@@ -142,3 +150,24 @@ def get_common_features(dfs, exclude=None):
             common_feats.remove(feat)
 
     return list(common_feats)
+
+def get_feature_sets(dfs):
+    """
+    Creats a list of sets, where each set stores the variable names of one dataframe
+    :param dfs: list of dataframes
+    :return: List of sets. Each set contains the feature names of one of the dataframes
+    """
+    # Create list containing features as sets
+    return [set(df) for df in dfs]
+
+def get_feature_differences(dfs):
+    """ """
+    feats = get_feature_sets(dfs)
+
+    # create a dictionary storing the features which are distinct
+    diff_dict = dict()
+    # compare each dataset against each and collect differences
+    for i in range(len(feats)):
+        for j in range(i + 1, len(feats)):
+            # take union from differences
+            diff_dict[i, j] = feats[i].difference(feats[j]).union(feats[j].difference(feats[i]))
