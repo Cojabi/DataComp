@@ -83,6 +83,15 @@ def get_common_features(dfs, exclude=None):
 
     return list(common_feats)
 
+def reduce_to_common_feats(dfs):
+    """
+    Manipulate the dataframe to only contain the overlapping features.
+    :param dfs: List of Dataframes
+    :return: List of dataframes where the features are identical
+    """
+    common_feats = get_common_features(dfs)
+    return [df[common_feats] for df in dfs]
+
 def get_feature_sets(dfs):
     """
     Creats a list of sets, where each set stores the variable names of one dataframe
