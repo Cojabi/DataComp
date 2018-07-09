@@ -73,7 +73,7 @@ def get_common_features(dfs, exclude=None):
     :param exclude: List of features which shall be taken out of consideration
     :return: set of common features across the dataframes
     """
-    feats = get_feature_sets()
+    feats = get_feature_sets(dfs)
 
     common_feats = set.intersection(*feats)
 
