@@ -36,7 +36,7 @@ def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
         except TypeError:
             pass
         # save longitudinal version of the current feature
-        save_path = os.path.join(save_folder, feat + "_longitudinal.csv"
+        save_path = os.path.join(save_folder, feat + "_longitudinal.csv")
         long_df.to_csv(save_path)
 
 
