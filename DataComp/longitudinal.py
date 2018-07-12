@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import numpy as np
 
 
 # !!! STILL VERY TIME INEFFICIENT. WORKS FOR NOW BUT NEEDS REWORK LATER ON !!!

@@ -114,6 +114,7 @@ def p_correction(p_values):
 
         for feat in p:
             temp_dict[feat] = list(p[feat].items())
+        # building a matrix ordered. extract and sort data from a tuple (x[0], (i[0], i[1]))
         list_repr = [[i[1], i[0], x[0]] for x in list(temp_dict.items()) for i in x[1]]
 
         return pd.DataFrame(list_repr)

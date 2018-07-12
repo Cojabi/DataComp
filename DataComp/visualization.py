@@ -115,10 +115,38 @@ def feat_venn_diagram(dfs, df_names):
     :param dfs: List of dataframes
     :return:
     """
-    feats = get_feature_sets(dfs)
+    feat_set = get_feature_sets(dfs)
+
+
     # plot overlap as venn diagram
     if len(dfs) == 2:
-        mv.venn2(feats, set_labels=df_names)
+        # set variables needed to assign new color scheme
+        colors = ["blue", "green"]
+        ids = ["A", "B"]
+        v = mv.venn2(feat_set, set_labels=df_names)
+
+        for df_name, color in zip(ids, colors):
+            v.get_patch_by_id(df_name).set_color(color)
+
+        # create lines around circles
+        circles = mv.venn2_circles(feat_set)
+        # reduce line width
+        for c in circles:
+            c.set_lw(1.0)
 
     if len(dfs) == 3:
-        mv.venn3(feats, set_labels=df_names)
+        # set variables needed to assign new color scheme
+        colors = ["blue", "green", "purple"]
+        ids = ["A", "B", "001"]
+
+        v = mv.venn3_unweighted(feat_set, set_labels=df_names)
+
+        # set colors
+        for df_name, color in zip(ids, colors):
+            v.get_patch_by_id(df_name).set_color(color)
+
+        # create lines around circles
+        circles = mv.venn3_circles(subsets=(1, 1, 1, 1, 1, 1, 1))
+        # reduce line width
+        for c in circles:
+            c.set_lw(1.0)
