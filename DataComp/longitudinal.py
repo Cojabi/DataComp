@@ -2,6 +2,9 @@ import pandas as pd
 import os
 import numpy as np
 
+from .data_functions import create_zipper, reduce_dfs
+from .stats import analyze_feature_ranges
+
 
 # !!! STILL VERY TIME INEFFICIENT. WORKS FOR NOW BUT NEEDS REWORK LATER ON !!!
 def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
@@ -94,9 +97,35 @@ def create_progression_tables(dfs, feats, time_col, patient_col, method, bl_inde
                             prog_df.loc[pat_inds, feat] = scores
                         except AttributeError:
                             prog_df.loc[pat_inds, feat] = scores
-                    except ValueError:
-                        print(pat_inds)
-                except KeyError:
-                    print(pat_inds)
 
-    return prog_df
+                    # One of the error arises when there is no baseline visit,
+                    # the other if there are multiple baseline visist
+                    except ValueError:
+                        pass  # print(pat_inds)
+                except KeyError:
+                    pass  # print(pat_inds)
+
+    return pd.concat([prog_df, df[time_col]], join="outer", axis=1)
+
+def analyze_longitudinal_feats(dfs, time_col, cat_feats=None, num_feats=None, include=None, exclude=None):
+    """ """
+    result_dict = dict()
+
+    # if no list of features is given, take all
+    if not num_feats:
+        feats = list(dfs[0])
+
+    if not cat_feats:
+        cat_feats = []
+
+    # create a set of all time_points present in the dataframes
+    time_points = {time_point for df in dfs for time_point in df[time_col]}
+
+    # for each timepoint collect the data and compare the data
+    for time in time_points:
+        reduced_dfs = reduce_dfs(dfs, time_col, time)
+        time_zipper = create_zipper(reduced_dfs)
+
+        result_dict[time] = analyze_feature_ranges(time_zipper, cat_feats=cat_feats, num_feats=num_feats,
+                                                      exclude=exclude, include=include, verbose=False)
+    return result_dict

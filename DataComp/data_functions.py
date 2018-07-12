@@ -92,6 +92,12 @@ def reduce_to_common_feats(dfs):
     common_feats = get_common_features(dfs)
     return [df[common_feats] for df in dfs]
 
+def reduce_dfs(dfs, col, val):
+    """ """
+    # create list with reduced dataframes
+    reduced_dfs = [df[df[col] == val] for df in dfs]
+    return reduced_dfs
+
 def get_feature_sets(dfs):
     """
     Creats a list of sets, where each set stores the variable names of one dataframe
