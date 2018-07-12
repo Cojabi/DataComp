@@ -98,7 +98,7 @@ def bp_single_feature(zipper, df_names, feats=None, save_folder=None):
         i += 1
 
 
-def feat_venn_diagram(dfs):
+def feat_venn_diagram(dfs, df_names):
     """
     Plots a venn diagram illustrating the overlap in features between the datasets.
     :param dfs: List of dataframes
@@ -107,7 +107,7 @@ def feat_venn_diagram(dfs):
     feats = get_feature_sets(dfs)
     # plot overlap as venn diagram
     if len(dfs) == 2:
-        mv.venn2(feats)
+        mv.venn2(feats, set_labels=df_names)
 
     if len(dfs) == 3:
-        mv.venn3(feats)
+        mv.venn3(feats, set_labels=df_names)

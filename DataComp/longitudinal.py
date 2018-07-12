@@ -15,8 +15,8 @@ def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
     :param save_folder: A folder in which the longitudinal dataframes shall be saved.
     :return:
     """
+    # create dataframe in which longitudinal data is stored
     long_df = pd.DataFrame()
-
     patients = df[pat_col]
 
     for feat in feats:
@@ -38,8 +38,3 @@ def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
         # save longitudinal version of the current feature
         save_path = os.path.join(save_folder, feat + "_longitudinal.csv")
         long_df.to_csv(save_path)
-
-
-
-
-
