@@ -10,6 +10,7 @@ from collections import Counter
 
 def test_single_cat(dfs, col_name, printer=False):
     """
+    DEPRECATED
     Uses a chi square test to check whether the distribution of categorical features accross the datasets differ
     significantly.
     :param dfs: list containing the two dataframes

@@ -11,16 +11,27 @@ from .data_functions import get_feature_sets
 plt.style.use('ggplot')
 
 
-def bp_all_sig_feats(df, zipper, df_names, feats=None, save_folder=None):
-    """ """
+def bp_all_sig_feats(sig_df, zipper, df_names, subset_feats=None, save_folder=None):
+    """
+    Plots boxplots for each significant feature to allow for visual comparison.
+    :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not.
+    Is provided as outcome of the p_correction or analyze_feature_ranges function
+    :param zipper: zipper dict, that contains variable values. For each key the value is a list containing x
+    lists (the values of the features in the x dataframes)
+    :param df_names: List storing the names of the dataframes. Used for the x-axis label
+    :param subset_feats: list a subset of the features. Only for the mentioned features, a plot will be created.
+    :param save_folder: Path to a folder in which the plots shall be saved
+    :return:
+    """
 
     # grab significant deviances
-    sig_entries = df[df["signf"]]
+    sig_entries = sig_df[sig_df["signf"]]
     index_labels = sig_entries.index.labels[0]
     sig_feats = set(itemgetter(index_labels)(sig_entries.index.levels[0]))
 
+    # create zipper containing only the significantly deviating features
     sig_zipper = {x: zipper[x] for x in sig_feats}
-    bp_single_feature(sig_zipper, df_names, feats=None, save_folder=None)
+    bp_single_features(sig_zipper, df_names, feats=subset_feats, save_folder=save_folder)
 
 
 """Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
@@ -56,7 +67,7 @@ def bp_all_features(num_zipper, df_names, save=None):
         plt.show()
 
 
-def bp_single_feature(zipper, df_names, feats=None, save_folder=None):
+def bp_single_features(zipper, df_names, feats=None, save_folder=None):
     """
     Creates one boxplot figure per feature
     :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x

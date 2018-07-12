@@ -39,3 +39,10 @@ for(diag in diags){
 
   prop_score_matching(data_path, save_path)
 }
+
+
+################### ADNI vs ANM FreeSurfer6 Edition ######################
+save_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/MRI_F6/matches_F6.csv"
+data_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/MRI_F6/prop_compare_data_F6.csv"
+
+prop_score_matching(data_path, save_path)
