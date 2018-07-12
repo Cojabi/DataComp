@@ -4,8 +4,6 @@
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/longitudinal.py" afterPath="$PROJECT_DIR$/DataComp/longitudinal.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/stats.py" afterPath="$PROJECT_DIR$/DataComp/stats.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/visualization.py" afterPath="$PROJECT_DIR$/DataComp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="longitudinal.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="longitudinal.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataComp/longitudinal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="26" column="43" lean-forward="true" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+            <state relative-caret-position="702">
+              <caret line="39" column="34" lean-forward="true" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -72,7 +70,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="visualization.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="visualization.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataComp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="581">
@@ -412,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1531402385383</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="added color scheme to venn diagram function&#10;changed general appearance of venn diagrams (unweighted for venn3 etc)&#10;added some documentation">
+      <created>1531430481647</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1531430481647</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -447,7 +452,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test_num_dist is now able to report pvalues for 3+ comparisms accordingly" />
     <MESSAGE value="finished p_correction function&#10;works with multi index for storing multiple tests per feature" />
     <MESSAGE value="documentation for p_correction function" />
     <MESSAGE value="added plot_signf_feats function to wrap plotting into one function&#10;changed global variable access to parameter thats passed in boxplot functions" />
@@ -472,7 +476,8 @@
     <MESSAGE value="added prop_score matching script&#10;corrected typo in longitudinal" />
     <MESSAGE value="added raw version aof adni vs anm preprocessing function&#10;added df names to venn diagram&#10;added documentation to longitudinal function" />
     <MESSAGE value="added documentation&#10;renamed some parameters" />
-    <option name="LAST_COMMIT_MESSAGE" value="added documentation&#10;renamed some parameters" />
+    <MESSAGE value="added color scheme to venn diagram function&#10;changed general appearance of venn diagrams (unweighted for venn3 etc)&#10;added some documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="added color scheme to venn diagram function&#10;changed general appearance of venn diagrams (unweighted for venn3 etc)&#10;added some documentation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -688,16 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataComp/longitudinal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="26" column="43" lean-forward="true" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataComp/stats.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2502">
@@ -714,6 +709,16 @@
           <caret line="138" column="42" lean-forward="false" selection-start-line="138" selection-start-column="42" selection-end-line="138" selection-end-column="42" />
           <folding>
             <element signature="e#25#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataComp/longitudinal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="39" column="34" lean-forward="true" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
