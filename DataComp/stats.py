@@ -140,7 +140,7 @@ def p_correction(p_values):
     return p.sort_index()
 
 
-def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=None):
+def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=None, verbose=True):
     """
     This function can be used to compare all features easily. It works as a wrapper for the categorical and numerical
     feature comparison functions.
@@ -176,5 +176,7 @@ def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=N
     # test numerical features
     results = p_correction(p_values)
 
-    print("Fraction of significantly deviating features:", str(results["signf"].sum())+"/"+str(len(results["signf"])))
+    if verbose:
+        print("Fraction of significantly deviating features:", str(results["signf"].sum())+"/"+str(len(results["signf"])))
+
     return results.sort_values("signf")
