@@ -9,7 +9,7 @@ def create_prop_match_labels(dfs, label):
 
     return dfs
 
-def create_dfs_for_matching(dfs, label_name, save_path, labels=[1,0]):
+def create_dfs_for_matching(dfs, label_name, save_path, labels=None):
     """
     Will create a combined dataframe in which labels are assigned for propensity score matching. The resulting dataframe
     will be saved under save_path and can be used for propensity_score_matching.
@@ -19,10 +19,16 @@ def create_dfs_for_matching(dfs, label_name, save_path, labels=[1,0]):
     :param labels:
     :return:
     """
+    if labels is None:
+        labels = [1, 0]
+
+    # add labels to dataframes
     for i in range(len(labels)):
         dfs[i][label_name] = labels[i]
 
-    pd.concat(dfs).to_csv(save_path)
+    # combine datasets and save them under save_path
+    prop_df = pd.concat(dfs)
+    prop_df.to_csv(save_path)
 
 def create_prop_matched_dfs(matches_path, dfs):
     """

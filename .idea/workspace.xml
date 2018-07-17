@@ -4,12 +4,7 @@
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/__init__.py" afterPath="$PROJECT_DIR$/DataComp/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/data_functions.py" afterPath="$PROJECT_DIR$/DataComp/data_functions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/dc_prop_score_matching.R" afterPath="$PROJECT_DIR$/DataComp/dc_prop_score_matching.R" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/longitudinal.py" afterPath="$PROJECT_DIR$/DataComp/longitudinal.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/prop_matching.py" afterPath="$PROJECT_DIR$/DataComp/prop_matching.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/stats.py" afterPath="$PROJECT_DIR$/DataComp/stats.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/visualization.py" afterPath="$PROJECT_DIR$/DataComp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,8 +18,8 @@
       <file leaf-file-name="data_functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataComp/data_functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="66" lean-forward="false" selection-start-line="4" selection-start-column="66" selection-end-line="4" selection-end-column="66" />
+            <state relative-caret-position="180">
+              <caret line="10" column="60" lean-forward="false" selection-start-line="10" selection-start-column="60" selection-end-line="10" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -55,8 +50,8 @@
       <file leaf-file-name="prop_matching.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataComp/prop_matching.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="7" lean-forward="true" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
+            <state relative-caret-position="486">
+              <caret line="27" column="8" lean-forward="false" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -91,11 +86,9 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataComp/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="97" lean-forward="false" selection-start-line="4" selection-start-column="97" selection-end-line="4" selection-end-column="97" />
-              <folding>
-                <element signature="e#0#87#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="54">
+              <caret line="3" column="93" lean-forward="false" selection-start-line="3" selection-start-column="93" selection-end-line="3" selection-end-column="93" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -119,11 +112,11 @@
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/DataComp/boxplots.py" />
         <option value="$PROJECT_DIR$/DataComp/adniVanm.py" />
-        <option value="$PROJECT_DIR$/DataComp/__init__.py" />
         <option value="$PROJECT_DIR$/DataComp/longitudinal.py" />
         <option value="$PROJECT_DIR$/DataComp/stats.py" />
         <option value="$PROJECT_DIR$/DataComp/visualization.py" />
         <option value="$PROJECT_DIR$/DataComp/data_functions.py" />
+        <option value="$PROJECT_DIR$/DataComp/__init__.py" />
         <option value="$PROJECT_DIR$/DataComp/prop_matching.py" />
       </list>
     </option>
@@ -446,7 +439,14 @@
       <option name="project" value="LOCAL" />
       <updated>1531432813297</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="added eclude_class option for get_data is groupby is given.&#10;added create_df_for_prop_matching function&#10;added plot title so venn diagram">
+      <created>1531832985164</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1531832985164</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -481,7 +481,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="made functions callable" />
     <MESSAGE value="included propensity score matching checking functions&#10;added some documentation" />
     <MESSAGE value="added example notebook" />
     <MESSAGE value="documentation" />
@@ -506,7 +505,8 @@
     <MESSAGE value="added longitudinal progression table functions" />
     <MESSAGE value="added verbose option for analyze_feature_vals" />
     <MESSAGE value="added analyze_longitudinal_feats function&#10;added some documentation&#10;added reduce_dfs function" />
-    <option name="LAST_COMMIT_MESSAGE" value="added analyze_longitudinal_feats function&#10;added some documentation&#10;added reduce_dfs function" />
+    <MESSAGE value="added eclude_class option for get_data is groupby is given.&#10;added create_df_for_prop_matching function&#10;added plot title so venn diagram" />
+    <option name="LAST_COMMIT_MESSAGE" value="added eclude_class option for get_data is groupby is given.&#10;added create_df_for_prop_matching function&#10;added plot title so venn diagram" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -555,9 +555,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#87#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -603,9 +601,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="5" column="17" lean-forward="true" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#87#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -641,9 +637,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="16" lean-forward="false" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#87#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -702,16 +696,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataComp/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="97" lean-forward="false" selection-start-line="4" selection-start-column="97" selection-end-line="4" selection-end-column="97" />
-          <folding>
-            <element signature="e#0#87#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataComp/longitudinal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
@@ -744,16 +728,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DataComp/data_functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="66" lean-forward="false" selection-start-line="4" selection-start-column="66" selection-end-line="4" selection-end-column="66" />
+        <state relative-caret-position="180">
+          <caret line="10" column="60" lean-forward="false" selection-start-line="10" selection-start-column="60" selection-end-line="10" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataComp/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="93" lean-forward="false" selection-start-line="3" selection-start-column="93" selection-end-line="3" selection-end-column="93" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DataComp/prop_matching.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="7" lean-forward="true" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
+        <state relative-caret-position="486">
+          <caret line="27" column="8" lean-forward="false" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
