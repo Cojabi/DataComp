@@ -40,6 +40,17 @@ for(diag in diags){
   prop_score_matching(data_path, save_path)
 }
 
+################### CASE vs. CONTROLS in ANM and ADNI ######################
+anm_data_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/case_control/anm_casecont_prop_compare_data.csv"
+anm_save_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/case_control/anm_casecont_matches.csv"
+
+adni_data_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/case_control/adni_casecont_prop_compare_data.csv"
+adni_save_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/case_control/adni_casecont_matches.csv"
+
+formula = Cohort ~ PTGENDER+PTEDUCAT+AGE+APOE4
+
+prop_score_matching(formula, anm_data_path, anm_save_path)
+prop_score_matching(formula, adni_data_path, adni_save_path)
 
 ################### ADNI vs ANM FreeSurfer6 Edition ######################
 data_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/MRI_F6/prop_compare_data_F6.csv"

@@ -44,9 +44,25 @@ def test_single_cat(dfs, col_name, printer=False):
     # compute chi-square
     return chisquare(*test_data)
 
-
 def test_num_feats(zipper, feats=None):
     """Perform a hypothesis test to check if the distributions vary signifcantly from each other"""
+
+    def _test_if_all_vals_equal(vals1, vals2):
+        """
+        Checks if the union of two iterables is 1 and returns True if that is the case. Is used in test_num_feats to
+        check if two lists of values have only the same value and nothing else.
+        :param vals1:
+        :param vals2:
+        :return:
+        """
+        # build union between values
+        uni = set.union(set(vals1), set(vals2))
+        # if only one value is in the union, they are equal
+        if len(uni) == 1:
+            return True
+        else:
+            return False
+
     p_values = dict()
 
     if feats is None:
@@ -59,9 +75,27 @@ def test_num_feats(zipper, feats=None):
 
         for i in range(len(zipper[feat]) - 1):  # select dataset1
             for j in range(i + 1, len(zipper[feat])):  # select dataset2
-                # calculate u statistic and return p-value
-                z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
-                p_values[feat][i, j] = z.pvalue
+
+                #handle the case that all values are equal across datasets
+                try:
+                    if zipper[feat][i] and zipper[feat][j]:
+                        # calculate u statistic and return p-value
+                        z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
+                        p_values[feat][i, j] = z.pvalue
+
+                # catch ValueError. Read comments below for further explanation
+                except ValueError:
+                    # check if ValueError was due to same values in both datasets
+                    if _test_if_all_vals_equal(zipper[feat][i], zipper[feat][j]):
+                        # delete already created dict for i, j in p_values and continue with next feature
+                        print(feat)
+                        del p_values[feat]
+                        continue
+
+                    # if yes continue with next comparison, if not raise ValueError
+                    else:
+                        print(feat) # TODO change into warning
+                        raise ValueError
 
     return p_values
 
@@ -92,7 +126,7 @@ def test_cat_feats(zipper, feats=None):
 
         for i in range(len(zipper[feat]) - 1):  # select dataset1
             for j in range(i + 1, len(zipper[feat])):  # select dataset2
-                # count occurences of categorical features
+                # count occurences of categorical features like in a confusion matrix for Chi2 tests
                 test_data = [_categorical_table(zipper[feat][i]), _categorical_table(zipper[feat][j])]
                 # calculate u statistic and return p-value
                 z = chisquare(*test_data)
@@ -170,7 +204,7 @@ def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=N
         cat_feats = set(cat_feats).intersection(include)
         num_feats = set(num_feats).intersection(include)
 
-    # test categorical features:
+    # test features:
     p_values.update(test_cat_feats(zipper, cat_feats))
     p_values.update(test_num_feats(zipper, num_feats))
 
@@ -178,6 +212,7 @@ def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=N
     results = p_correction(p_values)
 
     if verbose:
-        print("Fraction of significantly deviating features:", str(results["signf"].sum())+"/"+str(len(results["signf"])))
+        print("Fraction of significantly deviating features:",
+              str(results["signf"].sum())+"/"+str(len(results["signf"])))
 
     return results.sort_values("signf")
