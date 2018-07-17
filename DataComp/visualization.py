@@ -5,8 +5,7 @@ import numpy as np
 import os
 import matplotlib_venn as mv
 
-from operator import itemgetter
-from .data_functions import get_feature_sets
+from .data_functions import get_feature_sets, get_sig_feats
 
 plt.style.use('ggplot')
 
@@ -24,10 +23,7 @@ def bp_all_sig_feats(sig_df, zipper, df_names, subset_feats=None, save_folder=No
     :return:
     """
 
-    # grab significant deviances
-    sig_entries = sig_df[sig_df["signf"]]
-    index_labels = sig_entries.index.labels[0]
-    sig_feats = set(itemgetter(index_labels)(sig_entries.index.levels[0]))
+    sig_feats = get_sig_feats(sig_df)
 
     # create zipper containing only the significantly deviating features
     sig_zipper = {x: zipper[x] for x in sig_feats}

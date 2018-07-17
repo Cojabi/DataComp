@@ -2,6 +2,8 @@
 
 import pandas as pd
 
+from operator import itemgetter
+
 def get_data(paths, groupby=None, classes=None, exclude_classes=[], rel_cols=None, sep=","):
     """Will load the data and return a list of two dataframes
     that can then be used for later comparism.
@@ -125,3 +127,13 @@ def get_feature_differences(dfs):
             # take union from differences
             diff_dict[i, j] = feats[i].difference(feats[j]).union(feats[j].difference(feats[i]))
 
+def get_sig_feats(sig_df):
+    """
+    Get's the feature names of significantly deviating features from a result table.
+    :param sig_df: Dataframe storing the p_values and the corrected p_values like returned by stats.p_correction()
+    :return:
+    """
+    # grab significant deviances
+    sig_entries = sig_df[sig_df["signf"]]
+    index_labels = sig_entries.index.labels[0]
+    return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
