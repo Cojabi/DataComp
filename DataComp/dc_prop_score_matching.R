@@ -42,7 +42,8 @@ for(diag in diags){
 
 
 ################### ADNI vs ANM FreeSurfer6 Edition ######################
-save_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/MRI_F6/matches_F6.csv"
 data_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/MRI_F6/prop_compare_data_F6.csv"
+save_path = "/home/colin/SCAI/git/Dataset_comparison/compare_sites_data/MRI_F6/matches_F6.csv"
+formula = Cohort ~ PTGENDER+PTEDUCAT+AGE+APOE4+Diagnosis
 
-prop_score_matching(data_path, save_path)
+prop_score_matching(formula, data_path, save_path)

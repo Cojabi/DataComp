@@ -134,6 +134,8 @@ def feat_venn_diagram(dfs, df_names):
         for c in circles:
             c.set_lw(1.0)
 
+        plt.title("Feature Overlap")
+
     if len(dfs) == 3:
         # set variables needed to assign new color scheme
         colors = ["blue", "green", "purple"]
@@ -150,3 +152,5 @@ def feat_venn_diagram(dfs, df_names):
         # reduce line width
         for c in circles:
             c.set_lw(1.0)
+
+        plt.title("Feature Overlap")

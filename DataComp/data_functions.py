@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
+def get_data(paths, groupby=None, classes=None, exclude_classes=[], rel_cols=None, sep=","):
     """Will load the data and return a list of two dataframes
     that can then be used for later comparism.
     :param path1: Path to dataframe1
@@ -11,11 +11,11 @@ def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
     :param rel_cols: List of relevant columns to consider. When given only those columns will be used. Otherwise all
     :param groupby: name of the column which specifies classes to compare to each other. (e.g. sampling site)
     """
-    def _load_data(path):
+    def _load_data(path, sep=sep):
         """small function to load according to the dataformat. (excel or csv)"""
         try:
-            df = pd.read_csv(path, index_col=0)
-        except  :
+            df = pd.read_csv(path, index_col=0, sep=sep)
+        except  : #TODO get fitting error
             df = pd.read_excel(path, index_col=0)
         return df
 
@@ -28,6 +28,10 @@ def get_data(paths, groupby=None, classes=None, rel_cols=None, sep=","):
         grouping = data.groupby(groupby)
 
         for name, grp in grouping:  # split dataframe groups and create a list with all dataframes
+            # skip class if it should be excluded
+            if name in exclude_classes:
+                continue
+
             df = grouping.get_group(name)[::]
 
             # consider all columns as relevant is no rel_cols given.
