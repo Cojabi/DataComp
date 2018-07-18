@@ -78,17 +78,20 @@ def test_num_feats(zipper, feats=None):
 
                 #handle the case that all values are equal across datasets
                 try:
-                    if zipper[feat][i] and zipper[feat][j]:
+                    if zipper[feat][i] and zipper[feat][j]: # only calculate score if there are values in each dataset
                         # calculate u statistic and return p-value
                         z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
                         p_values[feat][i, j] = z.pvalue
+                    else: #if one or both sets are empy
+                        del p_values[feat]
+                        # p_values[feat][i, j] = np.nan
 
-                # catch ValueError. Read comments below for further explanation
+                    # catch ValueError. Read comments below for further explanation
                 except ValueError:
                     # check if ValueError was due to same values in both datasets
                     if _test_if_all_vals_equal(zipper[feat][i], zipper[feat][j]):
                         # delete already created dict for i, j in p_values and continue with next feature
-                        print(feat)
+                        print("Only the same value in both sets:", feat) #TODO insert proper warning
                         del p_values[feat]
                         continue
 
@@ -138,17 +141,17 @@ def test_cat_feats(zipper, feats=None):
 def p_correction(p_values):
     """Apply p value correction for multiple testing"""
 
-    def _transform_p_dict(p):
+    def _transform_p_dict(p_value_dict):
         """
         Transforms a dictionary of dicts into a dataframe representing the dicts as rows (like tuples).
         The resulting DataFrame can then be used to sort the p_values such that
-        :param p: dictionary of dictionaries storing the p_values
+        :param p_value_dict: dictionary of dictionaries storing the p_values
         :return: dataframe where the keys are added to the p_values as columns
         """
         temp_dict = dict()
 
-        for feat in p:
-            temp_dict[feat] = list(p[feat].items())
+        for feat in p_value_dict:
+            temp_dict[feat] = list(p_value_dict[feat].items())
         # building a matrix ordered. extract and sort data from a tuple (x[0], (i[0], i[1]))
         list_repr = [[i[1], i[0], x[0]] for x in list(temp_dict.items()) for i in x[1]]
 

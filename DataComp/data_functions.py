@@ -137,3 +137,19 @@ def get_sig_feats(sig_df):
     sig_entries = sig_df[sig_df["signf"]]
     index_labels = sig_entries.index.labels[0]
     return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
+
+def create_value_set(dfs, col):
+    """
+    Creates a set of all values present in a column of the datasets.
+    :param dfs:
+    :param col:
+    :return:
+    """
+
+    value_set = set()
+
+    for df in dfs:
+        for value in df[col]:
+            value_set.add(value)
+
+    return value_set

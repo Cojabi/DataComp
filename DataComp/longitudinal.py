@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import numpy as np
 
-from .data_functions import create_zipper, reduce_dfs
+from .data_functions import create_zipper, reduce_dfs, create_value_set
 from .stats import analyze_feature_ranges
 
 
@@ -57,18 +57,21 @@ def calc_prog_scores(values, bl_index, method):
         return x / bl
 
     # get baseline value
-    bl = values.loc[bl_index]
+    bl_value = values.loc[bl_index]
 
     # when there is no baseline measurement present return NaN for all values
-    if not pd.isnull(bl):
+    if not pd.isnull(bl_value):
         if method == "z-score":
             # calculate standard deviation
             sd = np.std(values)
-            return values.apply(_z_score_formula, args=(bl, sd))
+            return values.apply(_z_score_formula, args=(bl_value, sd))
+
         elif method == "pobl":
-            return values.apply(_pobl_formula, args=(bl,))
+            return values.apply(_pobl_formula, args=(bl_value,))
+
     else:
         return np.nan
+
 
 def create_progression_tables(dfs, feats, time_col, patient_col, method, bl_index):
     """ """
@@ -90,21 +93,15 @@ def create_progression_tables(dfs, feats, time_col, patient_col, method, bl_inde
                 values.index = df.loc[pat_inds, time_col]
 
                 # calculate scores for patient and reindex to merge back into dataframe copy
-                try:  # DEBUGGING MESS
-                    try:
-                        scores = calc_prog_scores(values, bl_index, method)
-                        try:
-                            scores.index = pat_inds
-                            prog_df.loc[pat_inds, feat] = scores
-                        except AttributeError:
-                            prog_df.loc[pat_inds, feat] = scores
+                scores = calc_prog_scores(values, bl_index, method)
 
-                    # One of the error arises when there is no baseline visit,
-                    # the other if there are multiple baseline visist
-                    except ValueError:
-                        pass  # print(pat_inds)
-                except KeyError:
-                    pass  # print(pat_inds)
+                # if only NaN has been returned as score set patients progression to nan at all visits
+                if type(scores) != pd.Series:
+                    prog_df.loc[pat_inds, feat] = scores
+
+                else:  # normal progression scores inputed for visits
+                    scores.index = pat_inds
+                    prog_df.loc[pat_inds, feat] = scores
 
         # get columns from original dataframe to concatinate them to resulting DF
         concat_columns = df[[patient_col, time_col]]
@@ -114,9 +111,9 @@ def create_progression_tables(dfs, feats, time_col, patient_col, method, bl_inde
 
     return prog_dfs
 
-def analyze_longitudinal_feats(dfs, time_col, cat_feats=None, num_feats=None, include=None, exclude=None):
+def analyze_longitudinal_feats(dfs, time_col, bl_index, cat_feats=None, num_feats=None, include=None, exclude=None):
     """ """
-    result_dict = dict()
+    p_values = dict()
 
     #######
     red_df_store = dict()
@@ -126,19 +123,22 @@ def analyze_longitudinal_feats(dfs, time_col, cat_feats=None, num_feats=None, in
     # if no list of features is given, take all
     if not num_feats:
         num_feats = list(dfs[0])
-
+    # if no categorical features are given take empty list
     if not cat_feats:
         cat_feats = []
 
     # create a set of all time_points present in the dataframes
-    time_points = {time_point for df in dfs for time_point in df[time_col]}
+    time_points = create_value_set(dfs, time_col)
+    time_points.remove(bl_index)
 
     # for each timepoint collect the data and compare the data
     for time in time_points:
+
         reduced_dfs = reduce_dfs(dfs, time_col, time)
         red_df_store[time] = reduced_dfs
         time_zipper = create_zipper(reduced_dfs)
 
-        result_dict[time] = analyze_feature_ranges(time_zipper, cat_feats=cat_feats, num_feats=num_feats,
+        p_values[time] = analyze_feature_ranges(time_zipper, cat_feats=cat_feats, num_feats=num_feats,
                                                       exclude=exclude, include=include, verbose=False)
-    return result_dict, red_df_store
+    return p_values, red_df_store
+
