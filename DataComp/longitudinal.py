@@ -43,7 +43,6 @@ def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
         save_path = os.path.join(save_folder, feat + "_longitudinal.csv")
         long_df.to_csv(save_path)
 
-##### ONGOING WORK######
 
 def calc_prog_scores(values, bl_index, method):
     """ """
@@ -60,6 +59,9 @@ def calc_prog_scores(values, bl_index, method):
     bl_value = values.loc[bl_index]
 
     # when there is no baseline measurement present return NaN for all values
+    if type(bl_value) == pd.Series:
+        raise ValueError
+
     if not pd.isnull(bl_value):
         if method == "z-score":
             # calculate standard deviation
@@ -111,14 +113,14 @@ def create_progression_tables(dfs, feats, time_col, patient_col, method, bl_inde
 
     return prog_dfs
 
+##### ONGOING WORK######
+
 def analyze_longitudinal_feats(dfs, time_col, bl_index, cat_feats=None, num_feats=None, include=None, exclude=None):
     """ """
+    # dict to collect p_values in
     p_values = dict()
-
-    #######
+    # dict to collect dataframes reduced to only one time point. time point will be the key to the dataframe
     red_df_store = dict()
-    #####
-
 
     # if no list of features is given, take all
     if not num_feats:
