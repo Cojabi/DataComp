@@ -2,15 +2,8 @@ import pandas as pd
 from pymatch.Matcher import Matcher
 from .data_functions import reduce_to_feat_subset
 
-def create_prop_match_labels(dfs, label):
-    """creates dataset labels for each data set to use in propensity scoring."""
 
-    for i, df in zip(range(len(dfs)), dfs):
-        df[label] = i
-
-    return dfs
-
-def create_dfs_for_matching(dfs, label_name, prop_feats, save_path, labels=None):
+def create_dfs_for_matching(dfs, label_name, prop_feats, save_path=None, labels=None):
     """
     Will create a combined dataframe in which labels are assigned for propensity score matching. The resulting dataframe
     will be saved under save_path and can be used for propensity_score_matching.
@@ -33,9 +26,12 @@ def create_dfs_for_matching(dfs, label_name, prop_feats, save_path, labels=None)
         storage_dfs[i][label_name] = labels[i]
         storage_dfs[i].dropna(inplace=True)
 
-    # combine datasets and save them under save_path
-    prop_df = pd.concat(storage_dfs)
-    prop_df.to_csv(save_path)
+    # combine datasets and save them under save_path if save_path is given
+    if save_path:
+        prop_df = pd.concat(storage_dfs)
+        prop_df.to_csv(save_path)
+
+    return storage_dfs
 
 def create_prop_matched_dfs(matches_path, dfs):
     """
@@ -101,3 +97,13 @@ def construct_formula(label, rel_cols):
 
     formula = label + " ~ " + "+".join(cols)
     return formula
+
+### UNUSED ###
+
+def create_prop_match_labels(dfs, label):
+    """creates dataset labels for each data set to use in propensity scoring."""
+
+    for i, df in zip(range(len(dfs)), dfs):
+        df[label] = i
+
+    return dfs

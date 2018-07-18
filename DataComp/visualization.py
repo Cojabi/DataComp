@@ -22,7 +22,7 @@ def bp_all_sig_feats(sig_df, zipper, df_names, subset_feats=None, save_folder=No
     :param save_folder: Path to a folder in which the plots shall be saved
     :return:
     """
-
+    # get significant features
     sig_feats = get_sig_feats(sig_df)
 
     # create zipper containing only the significantly deviating features
@@ -73,9 +73,8 @@ def bp_single_features(zipper, df_names, feats=None, save_folder=None):
     :param save_folder: a path to a directory where to store the figures.
     :return:
     """
-
+    # calculate positions for boxplots
     positions = range(1, len(df_names) + 1)
-    xticks = []  # stores the positions where axis ticks shall be
     i = 0  # counter to keep track of the feature names
 
     if feats is None:
