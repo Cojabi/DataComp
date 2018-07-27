@@ -145,14 +145,22 @@ def p_correction(p_values):
         :param p_value_dict: dictionary of dictionaries storing the p_values
         :return: dataframe where the keys are added to the p_values as columns
         """
-        temp_dict = dict()
+
+        # Turn dictionary of dictionaries into a collection of the key-value pairs represented as nested tuples
+        item_dict = dict()
 
         for feat in p_value_dict:
-            temp_dict[feat] = list(p_value_dict[feat].items())
-        # building a matrix ordered. extract and sort data from a tuple (x[0], (i[0], i[1]))
-        list_repr = [[i[1], i[0], x[0]] for x in list(temp_dict.items()) for i in x[1]]
+            item_dict[feat] = list(p_value_dict[feat].items())
 
-        return pd.DataFrame(list_repr)
+        # building a matrix (nested lists) by extracting and sorting data from nested tuples
+        # (items[0], (nested_items[0], nested_items[1]))
+        df_matrix = []
+
+        for items in item_dict.items():
+            for nested_items in items[1]:
+                df_matrix.append([nested_items[1], nested_items[0], items[0]])
+
+        return pd.DataFrame(df_matrix)
 
     p_trans = _transform_p_dict(p_values)
     p = p_trans[0].sort_values()

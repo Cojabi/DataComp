@@ -63,8 +63,8 @@
       <file leaf-file-name="stats.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataComp/stats.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="96" column="45" lean-forward="true" selection-start-line="96" selection-start-column="45" selection-end-line="96" selection-end-column="45" />
+            <state relative-caret-position="419">
+              <caret line="155" column="56" lean-forward="false" selection-start-line="155" selection-start-column="56" selection-end-line="155" selection-end-column="56" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -506,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1531953071261</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="added documentation and some error handling">
+      <created>1532709228835</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1532709228835</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -541,7 +548,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added documentation" />
     <MESSAGE value="print fraction of significantly deviating features" />
     <MESSAGE value="added venn diagram function" />
     <MESSAGE value="added common feature function" />
@@ -566,7 +572,8 @@
     <MESSAGE value="added documentation&#10;added saving option for create_dfs_for_matching" />
     <MESSAGE value="reworked longitudinal functions. replace error catching etc&#10;added new create_value_set function to data_functions&#10;added error_warnings stub" />
     <MESSAGE value="reworked longitudinal part 2&#10;added documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="reworked longitudinal part 2&#10;added documentation" />
+    <MESSAGE value="added documentation and some error handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="added documentation and some error handling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -879,7 +886,7 @@
         <state relative-caret-position="-1350">
           <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding>
-            <element signature="e#3266#3330#0" expanded="true" />
+            <element signature="e#3266#3330#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -910,10 +917,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/statsmodels/stats/multitest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1748">
+          <caret line="59" column="4" lean-forward="false" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DataComp/stats.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="96" column="45" lean-forward="true" selection-start-line="96" selection-start-column="45" selection-end-line="96" selection-end-column="45" />
+        <state relative-caret-position="419">
+          <caret line="155" column="56" lean-forward="false" selection-start-line="155" selection-start-column="56" selection-end-line="155" selection-end-column="56" />
           <folding>
             <element signature="e#25#44#0" expanded="true" />
           </folding>
