@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
+import numpy as np
+import warnings
 
 # stats
 from scipy.stats import mannwhitneyu
@@ -77,28 +79,22 @@ def test_num_feats(zipper, feats=None):
             for j in range(i + 1, len(zipper[feat])):  # select dataset2
 
                 #handle the case that all values are equal across datasets
-                try:
-                    if zipper[feat][i] and zipper[feat][j]: # only calculate score if there are values in each dataset
-                        # calculate u statistic and return p-value
-                        z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
-                        p_values[feat][i, j] = z.pvalue
-                    else: #if one or both sets are empy
-                        del p_values[feat]
-                        # p_values[feat][i, j] = np.nan
+                if _test_if_all_vals_equal(zipper[feat][i], zipper[feat][j]):
+                    # delete already created dict for i, j in p_values and continue with next feature
+                    warnings.warn("Values of \"{}\" are the identical across the two datasets. It will be skipped.".format(feat), UserWarning)
+                    del p_values[feat]
+                    continue
 
-                    # catch ValueError. Read comments below for further explanation
-                except ValueError:
-                    # check if ValueError was due to same values in both datasets
-                    if _test_if_all_vals_equal(zipper[feat][i], zipper[feat][j]):
-                        # delete already created dict for i, j in p_values and continue with next feature
-                        print("Only the same value in both sets:", feat) #TODO insert proper warning
-                        del p_values[feat]
-                        continue
+                # only calculate score if there are values in each dataset
+                if zipper[feat][i] and zipper[feat][j]:
+                    # calculate u statistic and return p-value
+                    z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
+                    p_values[feat][i+1, j+1] = z.pvalue
 
-                    # if yes continue with next comparison, if not raise ValueError
-                    else:
-                        print(feat) # TODO change into warning
-                        raise ValueError
+                # if one or both sets are empty
+                else:
+                    #del p_values[feat]
+                    p_values[feat][i+1, j+1] = np.nan
 
     return p_values
 
@@ -108,7 +104,8 @@ def test_cat_feats(zipper, feats=None):
 
     def _categorical_table(data):
         """
-        Returns the counts of occurences for the categories. Is used to build the observation table for a chi square test.
+        Returns the counts of occurences for the categories. Is used to build the observation table
+        for a chi square test.
         :param series:
         :return:
         """
@@ -133,7 +130,7 @@ def test_cat_feats(zipper, feats=None):
                 test_data = [_categorical_table(zipper[feat][i]), _categorical_table(zipper[feat][j])]
                 # calculate u statistic and return p-value
                 z = chisquare(*test_data)
-                p_values[feat][i, j] = z.pvalue
+                p_values[feat][i+1, j+1] = z.pvalue
 
     return p_values
 
