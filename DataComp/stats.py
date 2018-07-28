@@ -163,24 +163,36 @@ def p_correction(p_values):
         return pd.DataFrame(df_matrix)
 
     p_trans = _transform_p_dict(p_values)
-    p = p_trans[0].sort_values()
+
+    # get and drop features which are NaN to skip them in multitest correction
+    nan_features = p_trans[pd.isnull(p_trans[0])]
+    p_trans = p_trans.dropna(axis=0, subset=[0])
+
+    # extract p_value column to pass into multiple testing correction
+    p_val_col = p_trans[0].sort_values()
+
+    # add NaN features back to p_trans to include them into result table later on
+    p_trans = pd.concat([p_trans, nan_features])
 
     # correct p-values
-    result = multipletests(p.values)
+    result = multipletests(p_val_col.values)
 
     # store test results
-    p = pd.DataFrame(p)
-    p.rename(columns={0: "pv"}, inplace=True)
-    p["cor_pv"] = result[1]
-    p["signf"] = result[0]
+    result_table = pd.DataFrame(p_val_col)
 
-    p = pd.concat([p, p_trans], axis=1, join="inner")
-    # create multi index
-    p.index = p[[2, 1]]
-    p.index = pd.MultiIndex.from_tuples(p.index)
-    p.drop([0, 1, 2], axis=1, inplace=True)
+    # rename columns and set values in result dataframe
+    result_table.rename(columns={0: "pv"}, inplace=True)
+    result_table["cor_pv"] = result[1]
+    result_table["signf"] = result[0]
+    # combine p_value information with dataset and feature information stored in p_trans
+    result_table = pd.concat([result_table, p_trans], axis=1, join="outer")
 
-    return p.sort_index()
+    # create multi index brom feature name result_table[2] and datasets result_table[1]
+    result_table.index = result_table[[2, 1]]
+    result_table.index = pd.MultiIndex.from_tuples(result_table.index)
+    result_table.drop([0, 1, 2], axis=1, inplace=True)
+
+    return result_table.sort_index()
 
 
 def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=None, verbose=True):
