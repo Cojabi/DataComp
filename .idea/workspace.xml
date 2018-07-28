@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="added documentation and improved variable nameing">
+    <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataComp/visualization.py" afterPath="$PROJECT_DIR$/DataComp/visualization.py" />
     </list>
@@ -73,8 +73,8 @@
       <file leaf-file-name="visualization.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataComp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="121" column="24" lean-forward="false" selection-start-line="121" selection-start-column="24" selection-end-line="121" selection-end-column="24" />
+            <state relative-caret-position="594">
+              <caret line="33" column="106" lean-forward="false" selection-start-line="33" selection-start-column="106" selection-end-line="33" selection-end-column="106" />
               <folding>
                 <element signature="e#25#55#0" expanded="true" />
               </folding>
@@ -532,7 +532,14 @@
       <option name="project" value="LOCAL" />
       <updated>1532812517619</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="re worked venn diagram function">
+      <created>1532813832366</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1532813832366</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -567,7 +574,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="included get common features function into innit&#10;changed return from set to list for compatability with pandas" />
     <MESSAGE value="changed create formula function to exluce label column" />
     <MESSAGE value="restructured feature overlap functions into smaller ones" />
     <MESSAGE value="created new module for prop matching functions" />
@@ -592,7 +598,8 @@
     <MESSAGE value="changed p_correction list comprehension into nested loops for better readability" />
     <MESSAGE value="handled case in p_correction that sent warning if p_value for feature was NaN" />
     <MESSAGE value="added documentation&#10;changed df name creation in get_data" />
-    <option name="LAST_COMMIT_MESSAGE" value="added documentation&#10;changed df name creation in get_data" />
+    <MESSAGE value="re worked venn diagram function" />
+    <option name="LAST_COMMIT_MESSAGE" value="re worked venn diagram function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -936,8 +943,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DataComp/visualization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="121" column="24" lean-forward="false" selection-start-line="121" selection-start-column="24" selection-end-line="121" selection-end-column="24" />
+        <state relative-caret-position="594">
+          <caret line="33" column="106" lean-forward="false" selection-start-line="33" selection-start-column="106" selection-end-line="33" selection-end-column="106" />
           <folding>
             <element signature="e#25#55#0" expanded="true" />
           </folding>

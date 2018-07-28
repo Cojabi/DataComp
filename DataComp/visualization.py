@@ -7,6 +7,7 @@ import matplotlib_venn as mv
 
 from .data_functions import get_feature_sets, get_sig_feats
 
+# load plot style
 plt.style.use('ggplot')
 
 
@@ -113,7 +114,6 @@ def feat_venn_diagram(dfs, df_names):
     """
     feat_set = get_feature_sets(dfs)
 
-
     # plot overlap as venn diagram
     if len(dfs) == 2:
         # set variables needed to assign new color scheme
@@ -132,7 +132,6 @@ def feat_venn_diagram(dfs, df_names):
         v = mv.venn3_unweighted(feat_set, set_labels=df_names)
         # create lines around circles
         circles = mv.venn3_circles(subsets=(1, 1, 1, 1, 1, 1, 1))
-
 
     for df_name, color in zip(ids, colors):
         v.get_patch_by_id(df_name).set_color(color)
