@@ -4,7 +4,7 @@ import pandas as pd
 
 from operator import itemgetter
 
-def get_data(paths, groupby=None, classes=None, exclude_classes=[], rel_cols=None, sep=","):
+def get_data(paths, groupby=None, exclude_classes=[], rel_cols=None, sep=",", create_names=False):
     """Will load the data and return a list of two dataframes
     that can then be used for later comparism.
     :param path1: Path to dataframe1
@@ -49,12 +49,11 @@ def get_data(paths, groupby=None, classes=None, exclude_classes=[], rel_cols=Non
             df = _load_data(path)
             dfs.append(df)
 
-    if classes:
-        df_names = classes
-    else:
+    if create_names:
         df_names = ["df" + str(x) for x in range(1, len(dfs) + 1)]
+        return dfs, df_names
 
-    return dfs, df_names
+    return dfs
 
 
 def create_zipper(dfs, feats=None):
