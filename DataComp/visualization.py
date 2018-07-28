@@ -10,7 +10,7 @@ from .data_functions import get_feature_sets, get_sig_feats
 plt.style.use('ggplot')
 
 
-def bp_all_sig_feats(sig_df, zipper, df_names, subset_feats=None, save_folder=None):
+def bp_all_sig_feats(sig_df, zipper, df_names, feat_subset=None, save_folder=None):
     """
     Plots boxplots for each significant feature to allow for visual comparison.
     :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not.
@@ -18,7 +18,7 @@ def bp_all_sig_feats(sig_df, zipper, df_names, subset_feats=None, save_folder=No
     :param zipper: zipper dict, that contains variable values. For each key the value is a list containing x
     lists (the values of the features in the x dataframes)
     :param df_names: List storing the names of the dataframes. Used for the x-axis label
-    :param subset_feats: list a subset of the features. Only for the mentioned features, a plot will be created.
+    :param feat_subset: list a subset of the features. Only for the mentioned features, a plot will be created.
     :param save_folder: Path to a folder in which the plots shall be saved
     :return:
     """
@@ -27,7 +27,7 @@ def bp_all_sig_feats(sig_df, zipper, df_names, subset_feats=None, save_folder=No
 
     # create zipper containing only the significantly deviating features
     sig_zipper = {x: zipper[x] for x in sig_feats}
-    bp_single_features(sig_zipper, df_names, feats=subset_feats, save_folder=save_folder)
+    bp_single_features(sig_zipper, df_names, feat_subset=feat_subset, save_folder=save_folder)
 
 
 """Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
@@ -63,13 +63,14 @@ def bp_all_features(num_zipper, df_names, save=None):
         plt.show()
 
 
-def bp_single_features(zipper, df_names, feats=None, save_folder=None):
+def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
     """
     Creates one boxplot figure per feature
     :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
     lists (the values of the features in the x dataframes)
     :param df_names: names of the datasets to label figures accordingly
-    :param feats: a list of features for which a plot shall be made. One plot per feature
+    :param feat_subset: a list of features for which a plot shall be made. One plot per feature. If None all features
+    will be considered.
     :param save_folder: a path to a directory where to store the figures.
     :return:
     """
@@ -77,10 +78,10 @@ def bp_single_features(zipper, df_names, feats=None, save_folder=None):
     positions = range(1, len(df_names) + 1)
     i = 0  # counter to keep track of the feature names
 
-    if feats is None:
-        feats = zipper.keys()
+    if feat_subset is None:
+        feat_subset = zipper.keys()
 
-    for feat in feats:
+    for feat in feat_subset:
         # create new figure
         fig = plt.figure()
         ax = plt.axes()
@@ -118,34 +119,26 @@ def feat_venn_diagram(dfs, df_names):
         # set variables needed to assign new color scheme
         colors = ["blue", "green"]
         ids = ["A", "B"]
+        # create circles
         v = mv.venn2(feat_set, set_labels=df_names)
-
-        for df_name, color in zip(ids, colors):
-            v.get_patch_by_id(df_name).set_color(color)
-
         # create lines around circles
         circles = mv.venn2_circles(feat_set)
-        # reduce line width
-        for c in circles:
-            c.set_lw(1.0)
-
-        plt.title("Feature Overlap")
 
     if len(dfs) == 3:
         # set variables needed to assign new color scheme
         colors = ["blue", "green", "purple"]
         ids = ["A", "B", "001"]
-
+        # create cirlces
         v = mv.venn3_unweighted(feat_set, set_labels=df_names)
-
-        # set colors
-        for df_name, color in zip(ids, colors):
-            v.get_patch_by_id(df_name).set_color(color)
-
         # create lines around circles
         circles = mv.venn3_circles(subsets=(1, 1, 1, 1, 1, 1, 1))
-        # reduce line width
-        for c in circles:
-            c.set_lw(1.0)
 
-        plt.title("Feature Overlap")
+
+    for df_name, color in zip(ids, colors):
+        v.get_patch_by_id(df_name).set_color(color)
+
+    # reduce line width
+    for c in circles:
+        c.set_lw(1.0)
+
+    plt.title("Feature Overlap")
