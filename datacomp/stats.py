@@ -159,11 +159,12 @@ def p_correction(p_values):
 
     return result_table.sort_index()
 
-
-def analyze_feature_ranges(zipper, cat_feats, num_feats, include=None, exclude=None, verbose=True):
+###### DEPRECATED, taken into DataCollection Class ####
+def analyze_all_features(zipper, cat_feats, num_feats, include=None, exclude=None, verbose=True):
     """
     This function can be used to compare all features easily. It works as a wrapper for the categorical and numerical
     feature comparison functions.
+
     :param zipper:
     :param cat_feats: List of categorical features
     :param num_feats: List of numerical features

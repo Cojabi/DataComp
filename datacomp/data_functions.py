@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
+import os
 
 from operator import itemgetter
 
-def get_data(paths, groupby=None, exclude_classes=[], rel_cols=None, sep=",", create_names=False):
+from .DataCollection import DataCollection
+
+def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """Will load the data and return a list of two dataframes
     that can then be used for later comparism.
     :param path1: Path to dataframe1
@@ -15,9 +18,11 @@ def get_data(paths, groupby=None, exclude_classes=[], rel_cols=None, sep=",", cr
     """
     def _load_data(path, sep=sep):
         """small function to load according to the dataformat. (excel or csv)"""
-        try:
+        filename, file_extension = os.path.splitext(path)
+
+        if file_extension in [".csv", ".tsv"]:
             df = pd.read_csv(path, index_col=0, sep=sep)
-        except  : #TODO get fitting error
+        else:
             df = pd.read_excel(path, index_col=0)
         return df
 
@@ -29,7 +34,8 @@ def get_data(paths, groupby=None, exclude_classes=[], rel_cols=None, sep=",", cr
         data = _load_data(*paths)
         grouping = data.groupby(groupby)
 
-        for name, grp in grouping:  # split dataframe groups and create a list with all dataframes
+        # split dataframe groups and create a list with all dataframes
+        for name, grp in grouping:
             # skip class if it should be excluded
             if name in exclude_classes:
                 continue
@@ -49,12 +55,35 @@ def get_data(paths, groupby=None, exclude_classes=[], rel_cols=None, sep=",", cr
             df = _load_data(path)
             dfs.append(df)
 
-    if create_names:
-        df_names = ["df" + str(x) for x in range(1, len(dfs) + 1)]
-        return dfs, df_names
+    return DataCollection(dfs, df_names)
 
-    return dfs
+def get_sig_feats(sig_df):
+    """
+    Get's the feature names of significantly deviating features from a result table.
+    :param sig_df: Dataframe storing the p_values and the corrected p_values like returned by stats.p_correction()
+    :return:
+    """
+    # grab significant deviances
+    sig_entries = sig_df[sig_df["signf"]]
+    index_labels = sig_entries.index.labels[0]
+    return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
 
+
+####### Deprecated because included into class DataCollection ####
+
+def create_value_set(dfs, col):
+    """
+    Creates a set of the combined dataframe values present in a specific column.
+    :param dfs:
+    :param col:
+    :return:
+    """
+
+    value_set = set()
+
+    for df in dfs:
+        value_set.update(df[col])
+    return value_set
 
 def create_zipper(dfs, feats=None):
     """create zipper containing the values of the same features per df in one list.
@@ -125,30 +154,3 @@ def get_feature_differences(dfs):
         for j in range(i + 1, len(feats)):
             # take union from differences
             diff_dict[i, j] = feats[i].difference(feats[j]).union(feats[j].difference(feats[i]))
-
-def get_sig_feats(sig_df):
-    """
-    Get's the feature names of significantly deviating features from a result table.
-    :param sig_df: Dataframe storing the p_values and the corrected p_values like returned by stats.p_correction()
-    :return:
-    """
-    # grab significant deviances
-    sig_entries = sig_df[sig_df["signf"]]
-    index_labels = sig_entries.index.labels[0]
-    return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
-
-def create_value_set(dfs, col):
-    """
-    Creates a set of all values present in a column of the datasets.
-    :param dfs:
-    :param col:
-    :return:
-    """
-
-    value_set = set()
-
-    for df in dfs:
-        for value in df[col]:
-            value_set.add(value)
-
-    return value_set

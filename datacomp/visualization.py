@@ -3,7 +3,6 @@
 import matplotlib.pylab as plt
 import numpy as np
 import os
-import matplotlib_venn as mv
 
 from .data_functions import get_feature_sets, get_sig_feats
 
@@ -29,40 +28,6 @@ def bp_all_sig_feats(sig_df, zipper, df_names, feat_subset=None, save_folder=Non
     # create zipper containing only the significantly deviating features
     sig_zipper = {x: zipper[x] for x in sig_feats}
     bp_single_features(sig_zipper, df_names, feat_subset=feat_subset, save_folder=save_folder)
-
-
-"""Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
-def bp_all_features(num_zipper, df_names, save=None):
-    """
-    Plots boxplots for all features and all dfs into one figure
-    :param num_zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
-    lists (the values of the features in the x dataframes)
-    :param save: a path where to save the figure to
-    :return:
-    """
-    fig = plt.figure()
-    ax = plt.axes()
-
-    add_value = len(df_names) + 1  # is used to define the positons of the boxplots
-    positions = range(1, add_value)
-    xticks = []  # stores the positions where axis ticks shall be
-
-    for feat_data in num_zipper:
-        bp = plt.boxplot(num_zipper[feat_data], positions=positions, widths=0.6)
-        # colorbp(bp)
-        xticks.append(np.mean(positions))
-        positions = [x + add_value for x in positions]
-
-    # set axes limits and labels
-    plt.xlim(0, np.max(positions))
-    ax.set_xticklabels(num_zipper.keys())
-    ax.set_xticks(xticks)
-
-    if save:
-        fig.savefig(save)
-    else:
-        plt.show()
-
 
 def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
     """
@@ -105,39 +70,35 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
         # increase i to process next feature
         i += 1
 
-
-def feat_venn_diagram(dfs, df_names):
+#### NOT NEEDED???
+"""Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
+def bp_all_features(num_zipper, df_names, save=None):
     """
-    Plots a venn diagram illustrating the overlap in features between the datasets.
-    :param dfs: List of dataframes
+    Plots boxplots for all features and all dfs into one figure
+    :param num_zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
+    lists (the values of the features in the x dataframes)
+    :param save: a path where to save the figure to
     :return:
     """
-    feat_set = get_feature_sets(dfs)
+    fig = plt.figure()
+    ax = plt.axes()
 
-    # plot overlap as venn diagram
-    if len(dfs) == 2:
-        # set variables needed to assign new color scheme
-        colors = ["blue", "green"]
-        ids = ["A", "B"]
-        # create circles
-        v = mv.venn2(feat_set, set_labels=df_names)
-        # create lines around circles
-        circles = mv.venn2_circles(feat_set)
+    add_value = len(df_names) + 1  # is used to define the positons of the boxplots
+    positions = range(1, add_value)
+    xticks = []  # stores the positions where axis ticks shall be
 
-    if len(dfs) == 3:
-        # set variables needed to assign new color scheme
-        colors = ["blue", "green", "purple"]
-        ids = ["A", "B", "001"]
-        # create cirlces
-        v = mv.venn3_unweighted(feat_set, set_labels=df_names)
-        # create lines around circles
-        circles = mv.venn3_circles(subsets=(1, 1, 1, 1, 1, 1, 1))
+    for feat_data in num_zipper:
+        bp = plt.boxplot(num_zipper[feat_data], positions=positions, widths=0.6)
+        # colorbp(bp)
+        xticks.append(np.mean(positions))
+        positions = [x + add_value for x in positions]
 
-    for df_name, color in zip(ids, colors):
-        v.get_patch_by_id(df_name).set_color(color)
+    # set axes limits and labels
+    plt.xlim(0, np.max(positions))
+    ax.set_xticklabels(num_zipper.keys())
+    ax.set_xticks(xticks)
 
-    # reduce line width
-    for c in circles:
-        c.set_lw(1.0)
-
-    plt.title("Feature Overlap")
+    if save:
+        fig.savefig(save)
+    else:
+        plt.show()

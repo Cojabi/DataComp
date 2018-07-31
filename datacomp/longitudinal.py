@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 from .data_functions import create_zipper, reduce_dfs, create_value_set
-from .stats import analyze_feature_ranges
+from .stats import analyze_all_features
 
 
 # !!! STILL VERY TIME INEFFICIENT. WORKS FOR NOW BUT NEEDS REWORK LATER ON !!!
@@ -140,7 +140,7 @@ def analyze_longitudinal_feats(dfs, time_col, bl_index, cat_feats=None, num_feat
         red_df_store[time] = reduced_dfs
         time_zipper = create_zipper(reduced_dfs)
 
-        p_values[time] = analyze_feature_ranges(time_zipper, cat_feats=cat_feats, num_feats=num_feats,
+        p_values[time] = analyze_all_features(time_zipper, cat_feats=cat_feats, num_feats=num_feats,
                                                       exclude=exclude, include=include, verbose=False)
     return p_values, red_df_store
 
