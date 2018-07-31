@@ -2,19 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/datacomp/DataCollection.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/datacomp/__init__.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DataComp/__init__.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DataComp/adniVanm.py" afterPath="$PROJECT_DIR$/datacomp/adniVanm.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DataComp/data_functions.py" afterPath="$PROJECT_DIR$/datacomp/data_functions.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DataComp/dc_prop_score_matching.R" afterPath="$PROJECT_DIR$/datacomp/dc_prop_score_matching.R" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DataComp/errors_warnings.py" afterPath="$PROJECT_DIR$/tests/test_DataCollection.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DataComp/longitudinal.py" afterPath="$PROJECT_DIR$/datacomp/longitudinal.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DataComp/prop_matching.py" afterPath="$PROJECT_DIR$/datacomp/prop_matching.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DataComp/stats.py" afterPath="$PROJECT_DIR$/datacomp/stats.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DataComp/visualization.py" afterPath="$PROJECT_DIR$/datacomp/visualization.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/datacomp/DataCollection.py" afterPath="$PROJECT_DIR$/datacomp/datacollection.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/test_DataCollection.py" afterPath="$PROJECT_DIR$/tests/test_datacollection.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/__init__.py" afterPath="$PROJECT_DIR$/datacomp/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/data_functions.py" afterPath="$PROJECT_DIR$/datacomp/data_functions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/longitudinal.py" afterPath="$PROJECT_DIR$/datacomp/longitudinal.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/prop_matching.py" afterPath="$PROJECT_DIR$/datacomp/prop_matching.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/visualization.py" afterPath="$PROJECT_DIR$/datacomp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,8 +23,8 @@
       <file leaf-file-name="data_functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/data_functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1211">
-              <caret line="71" column="25" lean-forward="false" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+            <state relative-caret-position="216">
+              <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -37,23 +32,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="prop_matching.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="prop_matching.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="18">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_DataCollection.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tests/test_DataCollection.py">
+      <file leaf-file-name="test_datacollection.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/test_datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" column="44" lean-forward="false" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+            <state relative-caret-position="396">
+              <caret line="22" column="32" lean-forward="false" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
               <folding>
                 <element signature="e#25#34#0" expanded="true" />
               </folding>
@@ -61,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/setup.py">
+      <file leaf-file-name="test_data.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/test_data.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="49" lean-forward="false" selection-start-line="17" selection-start-column="49" selection-end-line="17" selection-end-column="49" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -74,8 +67,8 @@
       <file leaf-file-name="longitudinal.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2376">
-              <caret line="132" column="49" lean-forward="true" selection-start-line="132" selection-start-column="49" selection-end-line="132" selection-end-column="49" />
+            <state relative-caret-position="779">
+              <caret line="143" column="0" lean-forward="true" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -86,8 +79,8 @@
       <file leaf-file-name="stats.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="545">
-              <caret line="166" column="0" lean-forward="false" selection-start-line="166" selection-start-column="0" selection-end-line="166" selection-end-column="0" />
+            <state relative-caret-position="761">
+              <caret line="160" column="0" lean-forward="true" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -98,15 +91,17 @@
       <file leaf-file-name="visualization.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-157">
-              <caret line="3" column="18" lean-forward="true" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-              <folding />
+            <state relative-caret-position="18">
+              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding>
+                <element signature="e#25#55#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataCollection.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/datacomp/DataCollection.py">
+      <file leaf-file-name="datacollection.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
               <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
@@ -118,9 +113,11 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="49" lean-forward="false" selection-start-line="2" selection-start-column="49" selection-end-line="2" selection-end-column="49" />
-              <folding />
+            <state relative-caret-position="216">
+              <caret line="12" column="4" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -168,7 +165,14 @@
         <option value="$PROJECT_DIR$/DataComp/longitudinal.py" />
         <option value="$PROJECT_DIR$/DataComp/DataCollection.py" />
         <option value="$PROJECT_DIR$/DataComp/prop_matching.py" />
+        <option value="$PROJECT_DIR$/datacomp/stats.py" />
         <option value="$PROJECT_DIR$/tests/test_DataCollection.py" />
+        <option value="$PROJECT_DIR$/datacomp/prop_matching.py" />
+        <option value="$PROJECT_DIR$/datacomp/visualization.py" />
+        <option value="$PROJECT_DIR$/datacomp/longitudinal.py" />
+        <option value="$PROJECT_DIR$/datacomp/__init__.py" />
+        <option value="$PROJECT_DIR$/tests/test_datacollection.py" />
+        <option value="$PROJECT_DIR$/datacomp/data_functions.py" />
       </list>
     </option>
   </component>
@@ -211,6 +215,11 @@
               <item name="DataComp" type="462c0819:PsiDirectoryNode" />
               <item name="datacomp" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="DataComp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DataComp" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -225,6 +234,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests" />
       <recent name="$PROJECT_DIR$/DataComp" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -581,7 +591,21 @@
       <option name="project" value="LOCAL" />
       <updated>1532813889680</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="big reorganize from &quot;dfs&quot; into DataCollection class, old functions still included">
+      <created>1533043529812</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1533043529812</updated>
+    </task>
+    <task id="LOCAL-00049" summary="big reorganize #2 deleted old functions">
+      <created>1533043609207</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1533043609207</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -616,8 +640,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="restructured feature overlap functions into smaller ones" />
-    <MESSAGE value="created new module for prop matching functions" />
     <MESSAGE value="added reduce_to_common_feats function" />
     <MESSAGE value="fixed get_common_feats" />
     <MESSAGE value="added longitudinal dataframe function" />
@@ -641,7 +663,9 @@
     <MESSAGE value="added documentation&#10;changed df name creation in get_data" />
     <MESSAGE value="re worked venn diagram function" />
     <MESSAGE value="reformat code plus documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="reformat code plus documentation" />
+    <MESSAGE value="big reorganize from &quot;dfs&quot; into DataCollection class, old functions still included" />
+    <MESSAGE value="big reorganize #2 deleted old functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="big reorganize #2 deleted old functions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -662,9 +686,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -690,7 +712,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1422">
           <caret line="84" column="26" lean-forward="false" selection-start-line="84" selection-start-column="25" selection-end-line="84" selection-end-column="26" />
-          <folding />
+          <folding>
+            <element signature="e#25#55#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -756,7 +780,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1350">
           <caret line="81" column="19" lean-forward="false" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
-          <folding />
+          <folding>
+            <element signature="e#25#55#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -784,9 +810,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="19" column="7" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -804,7 +828,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1350">
           <caret line="81" column="19" lean-forward="true" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
-          <folding />
+          <folding>
+            <element signature="e#25#55#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -862,7 +888,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-          <folding />
+          <folding>
+            <element signature="e#25#55#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -930,24 +958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-157">
-          <caret line="3" column="18" lean-forward="true" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="166" column="0" lean-forward="false" selection-start-line="166" selection-start-column="0" selection-end-line="166" selection-end-column="0" />
-          <folding>
-            <element signature="e#25#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/lib/python3.5/collections/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -964,41 +974,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2376">
-          <caret line="132" column="49" lean-forward="true" selection-start-line="132" selection-start-column="49" selection-end-line="132" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/data_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1211">
-          <caret line="71" column="25" lean-forward="false" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
-          <folding>
-            <element signature="e#25#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/DataCollection.py">
+    <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1010,21 +990,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/__init__.py">
+    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="49" lean-forward="false" selection-start-line="2" selection-start-column="49" selection-end-line="2" selection-end-column="49" />
+        <state relative-caret-position="761">
+          <caret line="160" column="0" lean-forward="true" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_data.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_DataCollection.py">
+    <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="44" lean-forward="false" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="779">
+          <caret line="143" column="0" lean-forward="true" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="4" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/data_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_datacollection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="32" lean-forward="false" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
           <folding>
             <element signature="e#25#34#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

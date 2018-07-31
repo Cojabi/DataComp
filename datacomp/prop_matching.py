@@ -1,6 +1,4 @@
 import pandas as pd
-from pymatch.Matcher import Matcher
-from .data_functions import reduce_to_feat_subset
 
 def create_prop_matched_dfs(matches_path, dfs):
     """

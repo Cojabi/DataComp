@@ -5,7 +5,7 @@ import os
 
 from operator import itemgetter
 
-from .DataCollection import DataCollection
+from .datacollection import DataCollection
 
 def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """Will load the data and return a list of two dataframes
@@ -24,14 +24,23 @@ def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, s
             df = pd.read_csv(path, index_col=0, sep=sep)
         else:
             df = pd.read_excel(path, index_col=0)
+
         return df
 
     # initialize list to store dataframes in
     dfs = []
 
     # Handle single path input
-    if groupby and len(paths)==1:
-        data = _load_data(*paths)
+    if groupby and (len(paths)==1 or isinstance(paths, str)):
+
+        # load data depending on if the single path is given in a list of as string
+        if isinstance(paths, str):
+            data = _load_data(paths, sep)
+        elif isinstance(paths, list):
+            data = _load_data(*paths, sep)
+        else:
+            raise ValueError("Seems that the input was a single path. Please input path as string or inside a list.")
+
         grouping = data.groupby(groupby)
 
         # split dataframe groups and create a list with all dataframes
@@ -50,7 +59,7 @@ def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, s
             dfs.append(df[rel_cols])
 
     # Handle multiple paths input
-    if len(paths) > 1:
+    elif len(paths) > 1:
         for path in paths:
             df = _load_data(path)
             dfs.append(df)

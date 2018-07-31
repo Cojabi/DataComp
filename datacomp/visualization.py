@@ -4,7 +4,7 @@ import matplotlib.pylab as plt
 import numpy as np
 import os
 
-from .data_functions import get_feature_sets, get_sig_feats
+from .data_functions import get_sig_feats
 
 # load plot style
 plt.style.use('ggplot')
