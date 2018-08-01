@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/datacollection.py" afterPath="$PROJECT_DIR$/datacomp/datacollection.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_datacollection.py" afterPath="$PROJECT_DIR$/tests/test_datacollection.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_datacollection.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test_datacollection.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/test_datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="653">
-              <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+            <state relative-caret-position="635">
+              <caret line="67" column="16" lean-forward="false" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
               <folding>
                 <element signature="e#25#34#0" expanded="true" />
               </folding>
@@ -81,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="datacollection.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="datacollection.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="132" column="8" lean-forward="false" selection-start-line="132" selection-start-column="8" selection-end-line="132" selection-end-column="8" />
+            <state relative-caret-position="-1939">
+              <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -146,8 +145,8 @@
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/datacomp/__init__.py" />
         <option value="$PROJECT_DIR$/datacomp/data_functions.py" />
-        <option value="$PROJECT_DIR$/tests/test_datacollection.py" />
         <option value="$PROJECT_DIR$/datacomp/datacollection.py" />
+        <option value="$PROJECT_DIR$/tests/test_datacollection.py" />
       </list>
     </option>
   </component>
@@ -236,13 +235,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00007" summary="finished p_correction function&#10;works with multi index for storing multiple tests per feature">
-      <created>1529961574685</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1529961574685</updated>
     </task>
     <task id="LOCAL-00008" summary="documentation for p_correction function">
       <created>1529961988295</created>
@@ -580,7 +572,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533136104647</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="fixed splice dataframe issue with reduce functions part 2, improved tests">
+      <created>1533136337825</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1533136337826</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -636,7 +635,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added color scheme to venn diagram function&#10;changed general appearance of venn diagrams (unweighted for venn3 etc)&#10;added some documentation" />
     <MESSAGE value="added longitudinal progression table functions" />
     <MESSAGE value="added verbose option for analyze_feature_vals" />
     <MESSAGE value="added analyze_longitudinal_feats function&#10;added some documentation&#10;added reduce_dfs function" />
@@ -661,7 +659,8 @@
     <MESSAGE value="added tests for reduce_dfs functions" />
     <MESSAGE value="reformat code" />
     <MESSAGE value="fixed imports, renamed data_functions into utils, corrected splice df issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed imports, renamed data_functions into utils, corrected splice df issues" />
+    <MESSAGE value="fixed splice dataframe issue with reduce functions part 2, improved tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed splice dataframe issue with reduce functions part 2, improved tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1002,22 +1001,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3114">
-          <caret line="173" column="42" lean-forward="false" selection-start-line="173" selection-start-column="42" selection-end-line="173" selection-end-column="42" />
-          <folding>
-            <element signature="e#25#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
             <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1939">
+          <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1030,30 +1037,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
+    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="3114">
+          <caret line="173" column="42" lean-forward="false" selection-start-line="173" selection-start-column="42" selection-end-line="173" selection-end-column="42" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_datacollection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
-          <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+        <state relative-caret-position="635">
+          <caret line="67" column="16" lean-forward="false" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
           <folding>
             <element signature="e#25#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="132" column="8" lean-forward="false" selection-start-line="132" selection-start-column="8" selection-end-line="132" selection-end-column="8" />
-          <folding>
-            <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
