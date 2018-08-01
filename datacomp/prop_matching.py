@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def create_prop_matched_dfs(matches_path, dfs):
     """
     Creats a new list of dataframes but now only containing the matched cases. Propensity Score Matching must be performed
@@ -21,6 +22,7 @@ def create_prop_matched_dfs(matches_path, dfs):
         prop_dfs = [dfs[0].loc[matched.index], dfs[1].loc[matched["Match"]]]
 
     return prop_dfs
+
 
 def construct_formula(label, rel_cols):
     """

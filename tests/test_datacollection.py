@@ -5,7 +5,6 @@ import unittest
 
 from datacomp.data_functions import get_data
 
-
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 test_data_path = os.path.join(dir_path, 'test_data.csv')
@@ -17,12 +16,13 @@ group_col = "Site"
 feat_subset = ["ADAS", "Age", "EmptyFull", "EmptyS1"]
 
 features = [{"ADAS", "MMSE", "Site", "Age", "Diagnosis",
-            "Class", "EmptyS1", "EmptyFull", "Gender"},
+             "Class", "EmptyS1", "EmptyFull", "Gender"},
             {"ADAS", "MMSE", "Site", "Diagnosis", "Age",
              "Class", "EmptyS1", "EmptyFull", "Gender"}]
 
 exclude_feats = ["ADAS", "MMSE", "Site", "Diagnosis",
                  "Age", "Class", "EmptyS1"]
+
 
 class TestDataCollection(unittest.TestCase):
     """ """

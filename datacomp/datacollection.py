@@ -9,6 +9,7 @@ from collections import UserList
 from .stats import test_cat_feats, test_num_feats, p_correction
 from .prop_matching import construct_formula
 
+
 class DataCollection(UserList):
     """
     A class representing the Collection of datasets, that shall be compared. Datasets are stored list like in self.data
@@ -25,7 +26,6 @@ class DataCollection(UserList):
         """
         super().__init__(df_list)
         self.df_names = df_names
-
 
     def create_zipper(self, feats=None):
         """
