@@ -3,7 +3,7 @@
 import os
 import unittest
 
-from datacomp.data_functions import get_data
+from datacomp.datacollection import get_data
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -61,5 +61,5 @@ class TestDataCollection(unittest.TestCase):
 
     def test_reduce_dfs_to_value(self):
         reduced_datacol = self.datacol.reduce_dfs_to_value("Gender", 1)
-        ##self.assertEqual(len(reduced_datacol[0), 3)
+        self.assertEqual(len(reduced_datacol[0]), 3)
         self.assertEqual(list(reduced_datacol[1].index), ["x23", "x25", "x27"])

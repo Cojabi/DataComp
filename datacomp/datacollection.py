@@ -129,7 +129,11 @@ class DataCollection(UserList):
 
         :return: List of dataframes where the features are identical
         """
-        reduced_dfs = [df[feat_subset] for df in self]
+        reduced_dfs = []
+
+        for df in self:
+            reduced_dfs.append(df.loc[:, feat_subset])
+
         return DataCollection(reduced_dfs, self.df_names)
 
     def get_feature_sets(self):
