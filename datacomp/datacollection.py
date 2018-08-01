@@ -70,7 +70,7 @@ class DataCollection(UserList):
 
     def get_feature_sets(self):
         """
-        Creates a list of sets, where in each set the all the feature names of one dataframe are stored respectively.
+        Creates a list of sets, where in each set the a ll the feature names of one dataframe are stored respectively.
 
         :return: List of sets. Each set contains the feature names of one of the dataframes
         """

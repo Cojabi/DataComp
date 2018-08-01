@@ -1,3 +1,7 @@
 pandas
 numpy
 scipy
+matplotlib_venn
+pymatch
+matplotlib
+statsmodels

@@ -2,9 +2,6 @@ import pandas as pd
 import os
 import numpy as np
 
-from .data_functions import create_zipper, reduce_dfs, create_value_set
-from .stats import analyze_all_features
-
 
 # !!! STILL VERY TIME INEFFICIENT. WORKS FOR NOW BUT NEEDS REWORK LATER ON !!!
 def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
@@ -114,7 +111,7 @@ def create_progression_tables(dfs, feats, time_col, patient_col, method, bl_inde
     return prog_dfs
 
 ##### ONGOING WORK######
-
+"""
 def analyze_longitudinal_feats(dfs, time_col, bl_index, cat_feats=None, num_feats=None, include=None, exclude=None):
     """ """
     # dict to collect p_values in
@@ -143,4 +140,4 @@ def analyze_longitudinal_feats(dfs, time_col, bl_index, cat_feats=None, num_feat
         p_values[time] = analyze_all_features(time_zipper, cat_feats=cat_feats, num_feats=num_feats,
                                                       exclude=exclude, include=include, verbose=False)
     return p_values, red_df_store
-
+"""
