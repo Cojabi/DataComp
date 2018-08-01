@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_data.csv" afterPath="$PROJECT_DIR$/tests/test_data.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_datacollection.py" afterPath="$PROJECT_DIR$/tests/test_datacollection.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,8 +50,8 @@
       <file leaf-file-name="test_datacollection.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/test_datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="635">
-              <caret line="67" column="16" lean-forward="false" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
+            <state relative-caret-position="545">
+              <caret line="76" column="52" lean-forward="true" selection-start-line="76" selection-start-column="52" selection-end-line="76" selection-end-column="52" />
               <folding>
                 <element signature="e#25#34#0" expanded="true" />
               </folding>
@@ -235,13 +236,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00008" summary="documentation for p_correction function">
-      <created>1529961988295</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1529961988295</updated>
     </task>
     <task id="LOCAL-00009" summary="added plot_signf_feats function to wrap plotting into one function&#10;changed global variable access to parameter thats passed in boxplot functions">
       <created>1529965264707</created>
@@ -579,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533136337826</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="improved reduce_dfs_to_feat_subset test">
+      <created>1533137221866</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1533137221866</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -635,7 +636,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added longitudinal progression table functions" />
     <MESSAGE value="added verbose option for analyze_feature_vals" />
     <MESSAGE value="added analyze_longitudinal_feats function&#10;added some documentation&#10;added reduce_dfs function" />
     <MESSAGE value="added eclude_class option for get_data is groupby is given.&#10;added create_df_for_prop_matching function&#10;added plot title so venn diagram" />
@@ -660,7 +660,8 @@
     <MESSAGE value="reformat code" />
     <MESSAGE value="fixed imports, renamed data_functions into utils, corrected splice df issues" />
     <MESSAGE value="fixed splice dataframe issue with reduce functions part 2, improved tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed splice dataframe issue with reduce functions part 2, improved tests" />
+    <MESSAGE value="improved reduce_dfs_to_feat_subset test" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved reduce_dfs_to_feat_subset test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1049,8 +1050,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_datacollection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="635">
-          <caret line="67" column="16" lean-forward="false" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
+        <state relative-caret-position="545">
+          <caret line="76" column="52" lean-forward="true" selection-start-line="76" selection-start-column="52" selection-end-line="76" selection-end-column="52" />
           <folding>
             <element signature="e#25#34#0" expanded="true" />
           </folding>

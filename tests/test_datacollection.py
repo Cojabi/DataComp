@@ -76,3 +76,17 @@ class TestDataCollection(unittest.TestCase):
         reduced_datacol = self.datacol.reduce_dfs_to_value("Gender", 1)
         self.assertEqual(len(reduced_datacol[0]), 3)
         self.assertEqual(list(reduced_datacol[1].index), ["x23", "x25", "x27"])
+
+        # test that changes on reduced df do not affect original df
+        changed_feat = feat_subset[0]
+        # before change, drop NaNs because in pandas/numpy NaN != NaN
+        self.assertTrue(
+            (reduced_datacol[1][changed_feat].dropna() == self.datacol[1].loc[
+                ["x23", "x25", "x27"], changed_feat].dropna()).all()
+        )
+        # change
+        reduced_datacol[1][changed_feat] = "changed_value"
+        # after change
+        self.assertFalse(
+            (reduced_datacol[1][changed_feat] == self.datacol[1].loc[["x23", "x25", "x27"], changed_feat]).all()
+        )
