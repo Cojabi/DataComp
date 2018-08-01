@@ -6,8 +6,11 @@ import warnings
 
 from scipy.stats import mannwhitneyu
 from statsmodels.sandbox.stats.multicomp import multipletests
+from statsmodels.multivariate.manova import MANOVA
 from scipy.stats import chisquare
 from collections import Counter
+
+from .utils import construct_formula
 
 
 def test_num_feats(zipper, feats=None):
@@ -158,4 +161,15 @@ def p_correction(p_values):
     result_table.drop([0, 1, 2], axis=1, inplace=True)
 
     return result_table.sort_index()
+
+def manova(datacol, label, rel_cols):
+    """ """
+
+    # create combined dataframe with dataframe membership as label
+    df_manova = datacol.combine_dfs(label, rel_cols)
+
+    # construct formula
+    formula = construct_formula(label, rel_cols)
+
+    MANOVA.from_formula(formula, df_manova)
 

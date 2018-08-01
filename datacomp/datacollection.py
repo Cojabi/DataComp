@@ -3,12 +3,71 @@
 import pandas as pd
 import matplotlib_venn as mv
 import matplotlib.pylab as plt
+import os
 
 from pymatch.Matcher import Matcher
 from collections import UserList
 from .stats import test_cat_feats, test_num_feats, p_correction
-from .prop_matching import construct_formula
+from .utils import construct_formula
 
+def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
+    """Will load the data and return a list of two dataframes
+    that can then be used for later comparism.
+    :param path1: Path to dataframe1
+    :param path2: Path to dataframe2. Optional if all data for comparison is in df1.
+                  Then use groupby argument
+    :param rel_cols: List of relevant columns to consider. When given only those columns will be used. Otherwise all
+    :param groupby: name of the column which specifies classes to compare to each other. (e.g. sampling site)
+    """
+    def _load_data(path, sep=sep):
+        """small function to load according to the dataformat. (excel or csv)"""
+        filename, file_extension = os.path.splitext(path)
+
+        if file_extension in [".csv", ".tsv"]:
+            df = pd.read_csv(path, index_col=0, sep=sep)
+        else:
+            df = pd.read_excel(path, index_col=0)
+
+        return df
+
+    # initialize list to store dataframes in
+    dfs = []
+
+    # Handle single path input
+    if groupby and (len(paths)==1 or isinstance(paths, str)):
+
+        # load data depending on if the single path is given in a list of as string
+        if isinstance(paths, str):
+            data = _load_data(paths, sep)
+        elif isinstance(paths, list):
+            data = _load_data(*paths, sep)
+        else:
+            raise ValueError("Seems that the input was a single path. Please input path as string or inside a list.")
+
+        grouping = data.groupby(groupby)
+
+        # split dataframe groups and create a list with all dataframes
+        for name, grp in grouping:
+            # skip class if it should be excluded
+            if name in exclude_classes:
+                continue
+
+            df = grouping.get_group(name)[::]
+
+            # consider all columns as relevant is no rel_cols given.
+            if rel_cols is None:
+                rel_cols = list(df)
+
+            # consider the relevant columns
+            dfs.append(df[rel_cols])
+
+    # Handle multiple paths input
+    elif len(paths) > 1:
+        for path in paths:
+            df = _load_data(path)
+            dfs.append(df)
+
+    return DataCollection(dfs, df_names)
 
 class DataCollection(UserList):
     """
@@ -56,7 +115,12 @@ class DataCollection(UserList):
         :return:
         """
         # create list with reduced dataframes
-        reduced_dfs = [df[df[col] == val] for df in self]
+        reduced_dfs = []
+
+        for df in self:
+            indices = df[df[col] == val].index
+            reduced_dfs.append(df.loc[indices])
+
         return DataCollection(reduced_dfs, self.df_names)
 
     def reduce_dfs_to_feat_subset(self, feat_subset):
@@ -175,33 +239,39 @@ class DataCollection(UserList):
 
     ## Propensity score matching
 
-    def create_df_for_matching(self, label_name, prop_feats, save_path=None, labels=None):
+    def combine_dfs(self, label_name, feat_subset=None, cca=False, save_path=None, labels=None):
         """
         Will create a combined dataframe in which labels are assigned depending on the dataset membership.
         The resulting dataframe will be saved under save_path and can be used for propensity_score_matching.
-
-        :param label_name:
-        :param save_path:
-        :param labels:
-        :return:
         """
-        if labels is None:
-            labels = [1, 0]
 
-        # reduce dfs to prop_feats only.
-        prop_reduced_datcol = self.reduce_dfs_to_feat_subset(prop_feats)
+        # reduce dfs to feat_subset
+        if feat_subset:
+            reduced_datcol = self.reduce_dfs_to_feat_subset(feat_subset)
+        else:
+            reduced_datcol = self[::]
+
+        # create labels; set label for first df to 1 all others to 0
+        if labels is None:
+            labels = [1] + [0 for i in range(len(self)-1)]
 
         # add labels to dataframes
         for i in range(len(labels)):
-            prop_reduced_datcol[i][label_name] = labels[i]
-            prop_reduced_datcol[i].dropna(inplace=True)
+            reduced_datcol[i][label_name] = labels[i]
 
-        # combine datasets and save them under save_path if save_path is given
+        # drop all non complete cases
+        if cca:
+            for i in range(len(labels)):
+                reduced_datcol[i].dropna(inplace=True)
+
+        # combine datasets
+        combined_df = pd.concat(reduced_datcol)
+
+        # save them under save_path if save_path is given
         if save_path:
-            prop_df = pd.concat(prop_reduced_datcol)
-            prop_df.to_csv(save_path)
+            combined_df.to_csv(save_path)
 
-        return prop_reduced_datcol
+        return combined_df
 
     def qc_prop_matching(dfs, rel_cols, label):
         """

@@ -23,18 +23,3 @@ def create_prop_matched_dfs(matches_path, dfs):
 
     return prop_dfs
 
-
-def construct_formula(label, rel_cols):
-    """
-    Constructs a formula string from column names and label
-    :param label: Label or class which should be regressed for. (case/control, treatment/untreated etc.)
-    :param rel_cols: Relevant columns for the formula
-    :return: formula string
-    """
-    cols = rel_cols[::]
-
-    if label in rel_cols:
-        cols.remove(label)
-
-    formula = label + " ~ " + "+".join(cols)
-    return formula
