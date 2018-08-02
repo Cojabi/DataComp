@@ -42,7 +42,6 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
     """
     # calculate positions for boxplots
     positions = range(1, len(df_names) + 1)
-    i = 0  # counter to keep track of the feature names
 
     if feat_subset is None:
         feat_subset = zipper.keys()
@@ -63,12 +62,11 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
         plt.title(feat)
 
         if save_folder:
-            save_file = os.path.join(save_folder, zipper.keys()[i] + ".png")
+            save_file = os.path.join(save_folder, feat + ".png")
             fig.savefig(save_file)
         else:
             plt.show()
-        # increase i to process next feature
-        i += 1
+
 
 #### NOT NEEDED???
 """Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
