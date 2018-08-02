@@ -13,7 +13,7 @@ def get_sig_feats(sig_df):
     index_labels = sig_entries.index.labels[0]
     return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
 
-def construct_formula(label, rel_cols):
+def construct_formula(label, rel_cols, label_side="l"):
     """
     Constructs a formula string from column names and label
     :param label: Label or class which should be regressed for. (case/control, treatment/untreated etc.)
@@ -22,8 +22,13 @@ def construct_formula(label, rel_cols):
     """
     cols = rel_cols[::]
 
+    # exclude label from rel_cols if contained
     if label in rel_cols:
         cols.remove(label)
 
-    formula = label + " ~ " + "+".join(cols)
+    if label_side == "left" or label_side == "l":
+        formula = label + " ~ " + "+".join(cols)
+    elif label_side == "right" or label_side == "r":
+        formula = "+".join(cols) + " ~ " + label
+
     return formula

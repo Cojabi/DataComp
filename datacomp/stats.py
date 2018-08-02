@@ -162,14 +162,23 @@ def p_correction(p_values):
 
     return result_table.sort_index()
 
-def manova(datacol, label, rel_cols):
-    """ """
+def manova(datacol, label, variable_cols):
+    """
+    Performs a MANOVA to assess for example batch effects: Check if a significant proportion of the data variance is
+    explained by the dataset membership.
+    For more documentation see: https://www.statsmodels.org/stable/generated/statsmodels.multivariate.manova.MANOVA.html
+
+    :param datacol: A DataCollection object storing the datasets
+    :param label: The name of the label column that will be created and represents the factor in the MANOVA
+    :param variable_cols: A subset of features which shall be used as variables in the MANOVA
+    :return: A multiindex dataframe listing important outcome statistics of the MANOVA.
+    """
 
     # create combined dataframe with dataframe membership as label
-    df_manova = datacol.combine_dfs(label, rel_cols)
+    df_manova = datacol.combine_dfs(label, variable_cols)
 
     # construct formula
-    formula = construct_formula(label, rel_cols)
+    formula = construct_formula(label, variable_cols)
 
-    MANOVA.from_formula(formula, df_manova)
+    return MANOVA.from_formula(formula, df_manova).mv_test().summary()
 
