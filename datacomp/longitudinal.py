@@ -9,6 +9,7 @@ def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
     Transforms a long format (each visit of patient stored in one row) dataframe feature into a longitudinal format
     dataframe. The values in time column will give the column names while one row will store all the consecutive
     visits of a patient.
+
     :param df: The pandas dataframe storing the features in long format
     :param feats: A list of features for which longitudinal dataframes shall be constructed
     :param pat_col: The column name listing the patient IDs
@@ -41,8 +42,17 @@ def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
         long_df.to_csv(save_path)
 
 
-def calc_prog_scores(values, bl_index, method):
-    """ """
+def calc_prog_scores(time_series, bl_index, method):
+    """
+    Calculates the progression scores. Can be done using either a z-score normalization to baseline or expressing the
+    score as percent of baseline value.
+
+    :param time_series: pandas.Series storing the values at the different points in time which shall be transformed into
+    progression scores.
+    :param bl_index: Index of time_series where the baseline value is stored.
+    :param method: Specifies which progression score should be calculated. z-score or percent of baseline
+    :return:
+    """
 
     def _z_score_formula(x, bl, sd):
         """ """
@@ -53,32 +63,43 @@ def calc_prog_scores(values, bl_index, method):
         return x / bl
 
     # get baseline value
-    bl_value = values.loc[bl_index]
+    bl_value = time_series.loc[bl_index]
 
     # when there is no baseline measurement present return NaN for all values
     if type(bl_value) == pd.Series:
-        raise ValueError
+        raise ValueError("Multiple baseline entries have been found have been found for one entity.")
 
     if not pd.isnull(bl_value):
         if method == "z-score":
             # calculate standard deviation
-            sd = np.std(values)
-            return values.apply(_z_score_formula, args=(bl_value, sd))
+            sd = np.std(time_series)
+            return time_series.apply(_z_score_formula, args=(bl_value, sd))
 
         elif method == "pobl":
-            return values.apply(_pobl_formula, args=(bl_value,))
+            return time_series.apply(_pobl_formula, args=(bl_value,))
 
     else:
         return np.nan
 
 
 def create_progression_tables(dfs, feats, time_col, patient_col, method, bl_index):
-    """ """
+    """
+
+
+    :param dfs:
+    :param feats:
+    :param time_col:
+    :param patient_col:
+    :param method:
+    :param bl_index:
+    :return:
+    """
 
     prog_dfs = []
 
     for df in dfs:
         patients = df[patient_col]
+
         # create dataframe copy to keep from alternating original dataframe
         prog_df = df[feats][::]
 
@@ -98,17 +119,21 @@ def create_progression_tables(dfs, feats, time_col, patient_col, method, bl_inde
                 if type(scores) != pd.Series:
                     prog_df.loc[pat_inds, feat] = scores
 
-                else:  # normal progression scores inputed for visits
+                else:  # input normal progression scores for visits
                     scores.index = pat_inds
                     prog_df.loc[pat_inds, feat] = scores
 
         # get columns from original dataframe to concatinate them to resulting DF
         concat_columns = df[[patient_col, time_col]]
+
         prog_df = pd.concat([prog_df, concat_columns], join="outer", axis=1)
+
         # add prog_df to list
         prog_dfs.append(prog_df)
 
     return prog_dfs
+
+
 
 ##### ONGOING WORK######
 """
