@@ -3,6 +3,7 @@
 import matplotlib.pylab as plt
 import numpy as np
 import os
+import seaborn as sns
 
 from .utils import get_sig_feats
 
@@ -13,6 +14,7 @@ plt.style.use('ggplot')
 def bp_all_sig_feats(sig_df, zipper, df_names, feat_subset=None, save_folder=None):
     """
     Plots boxplots for each significant feature to allow for visual comparison.
+
     :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not.
     Is provided as outcome of the p_correction or analyze_feature_ranges function
     :param zipper: zipper dict, that contains variable values. For each key the value is a list containing x
@@ -32,6 +34,7 @@ def bp_all_sig_feats(sig_df, zipper, df_names, feat_subset=None, save_folder=Non
 def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
     """
     Creates one boxplot figure per feature
+
     :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
     lists (the values of the features in the x dataframes)
     :param df_names: names of the datasets to label figures accordingly
@@ -67,6 +70,28 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
         else:
             plt.show()
 
+
+def feature_distplots(zipper, feat_subset=None, save_folder=None):
+    # set colors
+    colors = ["b", "c", "r"]
+
+    # if no feature subset is provided, consider all features
+    if feat_subset is None:
+        feat_subset = zipper.keys()
+
+    for feat in feat_subset:
+        # include feature distributions of all dataframes into plot
+        for dataset_feature, color in zip(zipper[feat], colors):
+            sns.distplot(dataset_feature, hist=False, color=color, kde_kws={"shade": True})
+
+            # set title
+            plt.title(feat)
+
+        if save_folder:
+            save_file = os.path.join(save_folder, feat + ".png")
+            plt.savefig(save_file)
+        else:
+            plt.show()
 
 #### NOT NEEDED???
 """Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
