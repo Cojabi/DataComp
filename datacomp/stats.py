@@ -17,9 +17,9 @@ def test_num_feats(zipper, feats=None):
     """Perform a hypothesis test to check if the distributions vary signifcantly from each other"""
 
     def _test_if_all_vals_equal(vals1, vals2):
-        """
-        Checks if the union of two iterables is 1 and returns True if that is the case. Is used in test_num_feats to
+        """Checks if the union of two iterables is 1 and returns True if that is the case. Is used in test_num_feats to
         check if two lists of values have only the same value and nothing else.
+
         :param vals1:
         :param vals2:
         :return:
@@ -74,6 +74,7 @@ def test_cat_feats(zipper, feats=None):
         """
         Returns the counts of occurences for the categories. Is used to build the observation table
         for a chi square test.
+
         :param series:
         :return:
         """
@@ -110,6 +111,7 @@ def p_correction(p_values):
         """
         Transforms a dictionary of dicts into a dataframe representing the dicts as rows (like tuples).
         The resulting DataFrame can then be used to sort the p_values such that
+
         :param p_value_dict: dictionary of dictionaries storing the p_values
         :return: dataframe where the keys are added to the p_values as columns
         """

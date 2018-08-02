@@ -20,7 +20,7 @@ def bp_all_sig_feats(sig_df, zipper, df_names, feat_subset=None, save_folder=Non
     :param zipper: zipper dict, that contains variable values. For each key the value is a list containing x
     lists (the values of the features in the x dataframes)
     :param df_names: List storing the names of the dataframes. Used for the x-axis label
-    :param feat_subset: list a subset of the features. Only for the mentioned features, a plot will be created.
+    :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
     :param save_folder: Path to a folder in which the plots shall be saved
     :return:
     """
@@ -72,6 +72,14 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
 
 
 def feature_distplots(zipper, feat_subset=None, save_folder=None):
+    """
+    Plots distribution plots for each dataframe in one figure.
+
+    :param zipper:
+    :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
+    :param save_folder: Path to a folder in which the plots shall be saved
+    :return:
+    """
     # set colors
     colors = ["b", "c", "r"]
 

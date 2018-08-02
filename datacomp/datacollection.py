@@ -281,6 +281,7 @@ class DataCollection(UserList):
         """
         Evaluates the need for a propensity score matching and can be used to quality control a propensity score matched
         population. Will train classifiers and create a plot.
+
         :param dfs: List of dataframes
         :param rel_cols: relevant columns
         :param label: Label or class which should be regressed. (cohort1/cohort2, case/control, treatment/untreated etc.)
