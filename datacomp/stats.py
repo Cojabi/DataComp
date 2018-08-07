@@ -144,6 +144,10 @@ def p_correction(p_values):
     # add NaN features back to p_trans to include them into result table later on
     p_trans = pd.concat([p_trans, nan_features])
 
+    # raise Error if no p_values where calculated that can be passed into multipletest correction
+    if not p_val_col.values:
+        raise ValueError("Empty list of p_values have been submitted into multiple test correction.")
+
     # correct p-values
     result = multipletests(p_val_col.values)
 
