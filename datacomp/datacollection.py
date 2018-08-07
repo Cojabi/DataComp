@@ -293,6 +293,35 @@ class DataCollection(UserList):
 
         return DataCollection(prog_dfs, self.df_names)
 
+    def analyze_longitudinal_feats(self, time_col, bl_index, cat_feats=None, num_feats=None, include=None,
+                                   exclude=None):
+        """ """
+
+        # dict to collect p_values in
+        p_values = dict()
+        # dict to collect dataframes reduced to only one time point. time point will be the key to the dataframe
+        red_df_store = dict()
+
+        # if no list of features is given, take all
+        if not num_feats:
+            num_feats = list(self[0])
+        # if no categorical features are given take empty list
+        if not cat_feats:
+            cat_feats = []
+
+        # create a set of all time_points present in the dataframes
+        time_points = self.create_value_set(time_col)
+        time_points.remove(bl_index)
+
+        # for each timepoint collect the data and compare the data
+        for time in time_points:
+            time_point_datacol = self.reduce_dfs_to_value(time_col, time)
+            red_df_store[time] = time_point_datacol
+
+            p_values[time] = time_point_datacol.analyze_feature_ranges(cat_feats=cat_feats, num_feats=num_feats,
+                                                       exclude=exclude, include=include, verbose=False)
+        return p_values, red_df_store
+
     ## Propensity score matching
 
     def combine_dfs(self, label_name, feat_subset=None, cca=False, save_path=None, labels=None):

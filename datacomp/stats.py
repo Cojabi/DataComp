@@ -67,18 +67,24 @@ def test_num_feats(zipper, feats=None):
     return p_values
 
 
-def test_cat_feats(zipper, feats=None):
-    """Perform a hypothesis test to check if the distributions vary signifcantly from each other"""
+def test_cat_feats(zipper, feat_subset=None):
+    """
+    Perform a hypothesis test to check if the distributions vary signifcantly from each other
+
+    :param zipper:
+    :param feat_subset:
+    :return:
+    """
 
     def _categorical_table(data):
         """
         Returns the counts of occurences for the categories. Is used to build the observation table
         for a chi square test.
 
-        :param series:
+        :param data:
         :return:
         """
-
+        # count occurences
         c = Counter(data)
         # get rid of NaNs
         c = {key: c[key] for key in c if not pd.isnull(key)}
@@ -86,10 +92,11 @@ def test_cat_feats(zipper, feats=None):
 
     p_values = dict()
 
-    if feats is None:
-        feats = zipper.keys()
+    # consider all features is no feature subset was specified
+    if feat_subset is None:
+        feat_subset = zipper.keys()
 
-    for feat in feats:  # run through all variables
+    for feat in feat_subset:
         # initiate dict in dict for d1 vs d2, d2 vs d3 etc. per feature
         p_values[feat] = dict()
 
@@ -115,7 +122,6 @@ def p_correction(p_values):
         :param p_value_dict: dictionary of dictionaries storing the p_values
         :return: dataframe where the keys are added to the p_values as columns
         """
-
         # Turn dictionary of dictionaries into a collection of the key-value pairs represented as nested tuples
         item_dict = dict()
 
@@ -129,8 +135,25 @@ def p_correction(p_values):
         for items in item_dict.items():
             for nested_items in items[1]:
                 df_matrix.append([nested_items[1], nested_items[0], items[0]])
-
         return pd.DataFrame(df_matrix)
+
+    def _create_result_table(result, p_val_col, p_trans):
+        """ """
+        # store test results
+        result_table = pd.DataFrame(p_val_col)
+
+        # rename columns and set values in result dataframe
+        result_table.rename(columns={0: "pv"}, inplace=True)
+        result_table["cor_pv"] = result[1]
+        result_table["signf"] = result[0]
+        # combine p_value information with dataset and feature information stored in p_trans
+        result_table = pd.concat([result_table, p_trans], axis=1, join="outer")
+
+        # create multi index brom feature name result_table[2] and datasets result_table[1]
+        result_table.index = result_table[[2, 1]]
+        result_table.index = pd.MultiIndex.from_tuples(result_table.index)
+        result_table.drop([0, 1, 2], axis=1, inplace=True)
+        return result_table
 
     p_trans = _transform_p_dict(p_values)
 
@@ -145,26 +168,13 @@ def p_correction(p_values):
     p_trans = pd.concat([p_trans, nan_features])
 
     # raise Error if no p_values where calculated that can be passed into multipletest correction
-    if not p_val_col.values:
+    if p_val_col.values == []:
         raise ValueError("Empty list of p_values have been submitted into multiple test correction.")
 
     # correct p-values
     result = multipletests(p_val_col.values)
-
-    # store test results
-    result_table = pd.DataFrame(p_val_col)
-
-    # rename columns and set values in result dataframe
-    result_table.rename(columns={0: "pv"}, inplace=True)
-    result_table["cor_pv"] = result[1]
-    result_table["signf"] = result[0]
-    # combine p_value information with dataset and feature information stored in p_trans
-    result_table = pd.concat([result_table, p_trans], axis=1, join="outer")
-
-    # create multi index brom feature name result_table[2] and datasets result_table[1]
-    result_table.index = result_table[[2, 1]]
-    result_table.index = pd.MultiIndex.from_tuples(result_table.index)
-    result_table.drop([0, 1, 2], axis=1, inplace=True)
+    # build a table storing the p_values and corrected p_values for all features
+    result_table = _create_result_table(result, p_val_col, p_trans)
 
     return result_table.sort_index()
 

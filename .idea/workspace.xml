@@ -31,8 +31,8 @@
       <file leaf-file-name="stats.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1261">
-              <caret line="150" column="22" lean-forward="true" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
+            <state relative-caret-position="478">
+              <caret line="152" column="49" lean-forward="true" selection-start-line="152" selection-start-column="49" selection-end-line="152" selection-end-column="49" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -77,8 +77,8 @@
       <file leaf-file-name="datacollection.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="233" column="23" lean-forward="false" selection-start-line="233" selection-start-column="23" selection-end-line="233" selection-end-column="23" />
+            <state relative-caret-position="451">
+              <caret line="221" column="32" lean-forward="true" selection-start-line="221" selection-start-column="32" selection-end-line="221" selection-end-column="32" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -232,13 +232,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00017" summary="added documentation">
-      <created>1530272283099</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1530272283099</updated>
     </task>
     <task id="LOCAL-00018" summary="print fraction of significantly deviating features">
       <created>1530277217602</created>
@@ -576,7 +569,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533652212033</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="added error raise if no p-values are submitted into multiple test correction">
+      <created>1533655151492</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1533655151492</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -632,7 +632,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="reworked longitudinal part 2&#10;added documentation" />
     <MESSAGE value="added documentation and some error handling" />
     <MESSAGE value="changed p_correction list comprehension into nested loops for better readability" />
     <MESSAGE value="handled case in p_correction that sent warning if p_value for feature was NaN" />
@@ -657,7 +656,8 @@
     <MESSAGE value="added more documentation" />
     <MESSAGE value="updated documentation in longitudinal" />
     <MESSAGE value="include progression_table creation into datacollection&#10;included progression score calculation into utils&#10;added documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="include progression_table creation into datacollection&#10;included progression score calculation into utils&#10;added documentation" />
+    <MESSAGE value="added error raise if no p-values are submitted into multiple test correction" />
+    <option name="LAST_COMMIT_MESSAGE" value="added error raise if no p-values are submitted into multiple test correction" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1076,8 +1076,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="233" column="23" lean-forward="false" selection-start-line="233" selection-start-column="23" selection-end-line="233" selection-end-column="23" />
+        <state relative-caret-position="451">
+          <caret line="221" column="32" lean-forward="true" selection-start-line="221" selection-start-column="32" selection-end-line="221" selection-end-column="32" />
           <folding>
             <element signature="e#25#44#0" expanded="true" />
           </folding>
@@ -1086,8 +1086,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1261">
-          <caret line="150" column="22" lean-forward="true" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
+        <state relative-caret-position="478">
+          <caret line="152" column="49" lean-forward="true" selection-start-line="152" selection-start-column="49" selection-end-line="152" selection-end-column="49" />
           <folding>
             <element signature="e#25#44#0" expanded="true" />
           </folding>

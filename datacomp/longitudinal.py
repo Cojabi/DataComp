@@ -2,36 +2,10 @@ import pandas as pd
 import os
 
 ##### ONGOING WORK######
-"""
-def analyze_longitudinal_feats(dfs, time_col, bl_index, cat_feats=None, num_feats=None, include=None, exclude=None):
-    """ """
-    # dict to collect p_values in
-    p_values = dict()
-    # dict to collect dataframes reduced to only one time point. time point will be the key to the dataframe
-    red_df_store = dict()
 
-    # if no list of features is given, take all
-    if not num_feats:
-        num_feats = list(dfs[0])
-    # if no categorical features are given take empty list
-    if not cat_feats:
-        cat_feats = []
 
-    # create a set of all time_points present in the dataframes
-    time_points = create_value_set(dfs, time_col)
-    time_points.remove(bl_index)
 
-    # for each timepoint collect the data and compare the data
-    for time in time_points:
 
-        reduced_dfs = reduce_dfs(dfs, time_col, time)
-        red_df_store[time] = reduced_dfs
-        time_zipper = create_zipper(reduced_dfs)
-
-        p_values[time] = analyze_all_features(time_zipper, cat_feats=cat_feats, num_feats=num_feats,
-                                                      exclude=exclude, include=include, verbose=False)
-    return p_values, red_df_store
-"""
 
 # !!! STILL VERY TIME INEFFICIENT. WORKS FOR NOW BUT NEEDS REWORK LATER ON !!!
 def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
