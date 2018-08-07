@@ -8,6 +8,4 @@ from .utils import get_sig_feats, construct_formula
 
 from .prop_matching import create_prop_matched_dfs
 
-from .longitudinal import create_progression_tables, calc_prog_scores
-
 name = "datacomp"

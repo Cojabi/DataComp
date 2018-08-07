@@ -8,7 +8,7 @@ import os
 from pymatch.Matcher import Matcher
 from collections import UserList
 from .stats import test_cat_feats, test_num_feats, p_correction
-from .utils import construct_formula
+from .utils import construct_formula, calc_prog_scores
 
 def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """Will load the data and return a list of two dataframes
@@ -241,12 +241,71 @@ class DataCollection(UserList):
 
         return results.sort_values("signf")
 
+    ## longitudinal
+
+    def create_progression_tables(self, feat_subset, time_col, patient_col, method, bl_index):
+        """
+
+
+        :param self:
+        :param feat_subset:
+        :param time_col:
+        :param patient_col:
+        :param method:
+        :param bl_index:
+        :return:
+        """
+
+        prog_dfs = []
+
+        for df in self:
+            patients = df[patient_col]
+
+            # create dataframe copy to keep from alternating original dataframe
+            prog_df = df[feat_subset][::]
+
+            for feat in feat_subset:
+
+                for patient in patients.unique():
+                    # collect values for sinlge patient
+                    pat_inds = df[df[patient_col] == patient].index
+                    # create value series storing the values of a patient
+                    values = df.loc[pat_inds, feat]
+                    values.index = df.loc[pat_inds, time_col]
+
+                    # calculate scores for patient and reindex to merge back into dataframe copy
+                    scores = calc_prog_scores(values, bl_index, method)
+
+                    # if only NaN has been returned as score set patients progression to nan at all visits
+                    if type(scores) != pd.Series:
+                        prog_df.loc[pat_inds, feat] = scores
+
+                    else:  # input normal progression scores for visits
+                        scores.index = pat_inds
+                        prog_df.loc[pat_inds, feat] = scores
+
+            # get columns from original dataframe to concatinate them to resulting DF
+            concat_columns = df[[patient_col, time_col]]
+            prog_df = pd.concat([concat_columns, prog_df], join="outer", axis=1)
+
+            # add prog_df to list
+            prog_dfs.append(prog_df)
+
+        return DataCollection(prog_dfs, self.df_names)
+
     ## Propensity score matching
 
     def combine_dfs(self, label_name, feat_subset=None, cca=False, save_path=None, labels=None):
         """
         Will create a combined dataframe in which labels are assigned depending on the dataset membership.
         The resulting dataframe will be saved under save_path and can be used for propensity_score_matching.
+
+        :param label_name:
+        :param feat_subset:
+        :param cca: If true only complete cases are kept (cases where all features are non missing values)
+        :param save_path:
+        :param labels:
+        :return:
         """
 
         # reduce dfs to feat_subset
@@ -277,12 +336,11 @@ class DataCollection(UserList):
 
         return combined_df
 
-    def qc_prop_matching(dfs, rel_cols, label):
+    def qc_prop_matching(self, rel_cols, label):
         """
         Evaluates the need for a propensity score matching and can be used to quality control a propensity score matched
         population. Will train classifiers and create a plot.
 
-        :param dfs: List of dataframes
         :param rel_cols: relevant columns
         :param label: Label or class which should be regressed. (cohort1/cohort2, case/control, treatment/untreated etc.)
         """
@@ -291,7 +349,7 @@ class DataCollection(UserList):
 
         # create reduced copies of the dataframes for propensity score quality control
         qc_dfs = []
-        for df in dfs:
+        for df in self:
             qc_dfs.append(df[cols])
 
         # construct formula
