@@ -168,7 +168,7 @@ def p_correction(p_values):
     p_trans = pd.concat([p_trans, nan_features])
 
     # raise Error if no p_values where calculated that can be passed into multipletest correction
-    if p_val_col.values == []:
+    if p_val_col.values.size == 0:
         raise ValueError("Empty list of p_values have been submitted into multiple test correction.")
 
     # correct p-values
