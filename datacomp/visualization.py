@@ -101,6 +101,64 @@ def feature_distplots(zipper, feat_subset=None, save_folder=None):
         else:
             plt.show()
 
+### Ongoing work
+
+def plot_prog_scores(time_dfs, feat):
+    """ """
+
+    def _calculate_means_per_timepoint(time_dfs, feat):
+        """ """
+
+        values = dict()
+        means = dict()
+        length_datacol = len(time_dfs)
+
+        for time_datcol in time_dfs.values():
+            for i in range(len(time_datcol)):
+
+                if i in means.keys():
+                    means[i].append(time_datcol[i][feat].mean())
+                    values[i].append(time_datcol[i][feat].replace(np.inf, np.nan).dropna())  # .values)
+
+                else:
+                    means[i] = []
+                    values[i] = []
+                    means[i].append(time_datcol[i][feat].mean())
+                    values[i].append(time_datcol[i][feat].replace(np.inf, np.nan).dropna())  # .values)
+
+        return means, values
+
+    def _plot_pro_score_bp(scores):
+        """ """
+        BP_COLORS = ["#1f77b4", "#17becf", "#d62728"]
+
+        # plot boxplots
+        for dataset_scores, color in zip(scores.values(), BP_COLORS):
+            bxplts = plt.boxplot(dataset_scores, patch_artist=True)
+
+            # change box patch color
+            for patch in bxplts["boxes"]:
+                patch.set_facecolor(color)
+
+            # change boxplot outline colors
+            for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
+                for element in bxplts[bp_part]:
+                    plt.setp(element, color=color)
+
+    def _plot_prog_score_means(means):
+        """ """
+        LN_COLORS = ["#1799B5", "#00FFFF"]
+
+        # plot lines
+        for dataset_means, color in zip(means.values(), LN_COLORS):
+            plt.plot(range(1, len(dataset_means) + 1), dataset_means, "-", color=color)
+
+    means, scores = _calculate_means_per_timepoint(time_dfs, feat)
+    print(scores[0])
+    _plot_pro_score_bp(scores)
+    # _plot_prog_score_means(means)
+
+
 #### NOT NEEDED???
 """Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
 def bp_all_features(num_zipper, df_names, save=None):

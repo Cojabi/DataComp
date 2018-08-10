@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/stats.py" afterPath="$PROJECT_DIR$/datacomp/stats.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/visualization.py" afterPath="$PROJECT_DIR$/datacomp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,10 +26,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stats.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="stats.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
+            <state relative-caret-position="990">
               <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
@@ -41,7 +41,7 @@
       <file leaf-file-name="longitudinal.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-13">
               <caret line="0" column="19" lean-forward="true" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
               <folding />
             </state>
@@ -58,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="visualization.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="visualization.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+            <state relative-caret-position="1463">
+              <caret line="160" column="0" lean-forward="true" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
               <folding>
                 <element signature="e#25#55#0" expanded="true" />
               </folding>
@@ -73,7 +73,7 @@
       <file leaf-file-name="datacollection.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
+            <state relative-caret-position="5958">
               <caret line="331" column="77" lean-forward="false" selection-start-line="331" selection-start-column="77" selection-end-line="331" selection-end-column="77" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
@@ -135,12 +135,12 @@
         <option value="$PROJECT_DIR$/datacomp/data_functions.py" />
         <option value="$PROJECT_DIR$/tests/test_datacollection.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/datacomp/visualization.py" />
         <option value="$PROJECT_DIR$/datacomp/__init__.py" />
         <option value="$PROJECT_DIR$/datacomp/utils.py" />
         <option value="$PROJECT_DIR$/datacomp/longitudinal.py" />
         <option value="$PROJECT_DIR$/datacomp/datacollection.py" />
         <option value="$PROJECT_DIR$/datacomp/stats.py" />
+        <option value="$PROJECT_DIR$/datacomp/visualization.py" />
       </list>
     </option>
   </component>
@@ -229,13 +229,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00021" summary="included get common features function into innit&#10;changed return from set to list for compatability with pandas">
-      <created>1530638634732</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1530638634733</updated>
     </task>
     <task id="LOCAL-00022" summary="changed create formula function to exluce label column">
       <created>1530638920445</created>
@@ -573,7 +566,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533899219721</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="included t-test as alternative option to u-test">
+      <created>1533899248107</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1533899248108</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -629,7 +629,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added documentation&#10;changed df name creation in get_data" />
     <MESSAGE value="re worked venn diagram function" />
     <MESSAGE value="reformat code plus documentation" />
     <MESSAGE value="big reorganize from &quot;dfs&quot; into DataCollection class, old functions still included" />
@@ -654,7 +653,8 @@
     <MESSAGE value="created new fucntion in p_correction for creating the results table" />
     <MESSAGE value="fixed p_correction if empty p_value lsit was given" />
     <MESSAGE value="catch warning in longitudinal if one dataframe is empty" />
-    <option name="LAST_COMMIT_MESSAGE" value="catch warning in longitudinal if one dataframe is empty" />
+    <MESSAGE value="included t-test as alternative option to u-test" />
+    <option name="LAST_COMMIT_MESSAGE" value="included t-test as alternative option to u-test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1008,16 +1008,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-          <folding>
-            <element signature="e#25#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_datacollection.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1368">
@@ -1053,9 +1043,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="-13">
           <caret line="0" column="19" lean-forward="true" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
@@ -1063,7 +1063,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
+        <state relative-caret-position="5958">
           <caret line="331" column="77" lean-forward="false" selection-start-line="331" selection-start-column="77" selection-end-line="331" selection-end-column="77" />
           <folding>
             <element signature="e#25#44#0" expanded="true" />
@@ -1071,12 +1071,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
+    <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+        <state relative-caret-position="1463">
+          <caret line="160" column="0" lean-forward="true" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
           <folding>
-            <element signature="e#25#44#0" expanded="true" />
+            <element signature="e#25#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
