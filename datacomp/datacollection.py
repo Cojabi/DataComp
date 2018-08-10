@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib_venn as mv
 import matplotlib.pylab as plt
 import os
+import warnings
 
 from pymatch.Matcher import Matcher
 from collections import UserList
@@ -84,6 +85,9 @@ class DataCollection(UserList):
         :param df_names: List of strings containing the names of the datasets in df_list
         """
         super().__init__(df_list)
+        # check if there is an empty dataframe in the datacollection
+        if True in {df.empty for df in self}:
+            warnings.warn("One of the dataframes in the DataCollection is empty!", UserWarning)
         self.df_names = df_names
 
     def create_zipper(self, feats=None):
@@ -293,8 +297,7 @@ class DataCollection(UserList):
 
         return DataCollection(prog_dfs, self.df_names)
 
-    def analyze_longitudinal_feats(self, time_col, bl_index, cat_feats=None, num_feats=None, include=None,
-                                   exclude=None):
+    def analyze_longitudinal_feats(self, time_col, bl_index, cat_feats=None, num_feats=None, include=None, exclude=None):
         """ """
 
         # dict to collect p_values in
@@ -315,11 +318,21 @@ class DataCollection(UserList):
 
         # for each timepoint collect the data and compare the data
         for time in time_points:
-            time_point_datacol = self.reduce_dfs_to_value(time_col, time)
-            red_df_store[time] = time_point_datacol
 
-            p_values[time] = time_point_datacol.analyze_feature_ranges(cat_feats=cat_feats, num_feats=num_feats,
-                                                       exclude=exclude, include=include, verbose=False)
+            # set filterwarnings to error to catch warning, that one dataframe is empty and jump to next timepoint
+            with warnings.catch_warnings():
+                warnings.filterwarnings("error", category=UserWarning)
+                # catch Warning that one dataframe is empty
+                try:
+                    time_point_datacol = self.reduce_dfs_to_value(time_col, time)
+                    red_df_store[time] = time_point_datacol
+
+                    p_values[time] = time_point_datacol.analyze_feature_ranges(cat_feats=cat_feats, num_feats=num_feats,
+                                                               exclude=exclude, include=include, verbose=False)
+                # skip time point if only values in one dataset are available
+                except UserWarning:
+                    continue
+
         return p_values, red_df_store
 
     ## Propensity score matching
