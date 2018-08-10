@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import warnings
 
-from scipy.stats import mannwhitneyu
+from scipy.stats import mannwhitneyu, ttest_ind
 from statsmodels.sandbox.stats.multicomp import multipletests
 from statsmodels.multivariate.manova import MANOVA
 from scipy.stats import chisquare
@@ -13,7 +13,7 @@ from collections import Counter
 from .utils import construct_formula
 
 
-def test_num_feats(zipper, feats=None):
+def test_num_feats(zipper, method=None, feats=None):
     """Perform a hypothesis test to check if the distributions vary signifcantly from each other"""
 
     def _test_if_all_vals_equal(vals1, vals2):
@@ -32,6 +32,10 @@ def test_num_feats(zipper, feats=None):
         else:
             return False
 
+    if method is None:
+        method = "u"
+
+    # initialize dictionary which stores the p_values
     p_values = dict()
 
     if feats is None:
@@ -56,8 +60,12 @@ def test_num_feats(zipper, feats=None):
 
                 # only calculate score if there are values in each dataset
                 if zipper[feat][i] and zipper[feat][j]:
-                    # calculate u statistic and return p-value
-                    z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
+                    # calculate u-test and return p-value
+                    if method == "u":
+                        z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
+                    # calculate t-test and return p-value
+                    elif method == "t":
+                        z = ttest_ind(zipper[feat][i], zipper[feat][j])
                     p_values[feat][i + 1, j + 1] = z.pvalue
 
                 # if one or both sets are empty
