@@ -13,8 +13,17 @@ from collections import Counter
 from .utils import construct_formula
 
 
-def test_num_feats(zipper, feats=None, method=None):
-    """Perform a hypothesis test to check if the distributions vary signifcantly from each other"""
+def test_num_feats(zipper, feat_subset=None, method=None):
+    """
+    Performs a hypothesis test to check if the value distributions of numerical features deviate signifcantly between
+    the datasets. Currently t-test as a parametric and U-test as a non-parametric test are supported.
+
+    :param zipper: Dictionary storing the feature values of the datasets in a list. Feature name is used as the key.
+    :param feat_subset: A list containing feature names. If given, analysis will only be performed for the contained
+    features. If not given all features will be considered.
+    :param method: Specify which statistical test should be used. "u" for Mann-Whitney-U-test and "t" for t-test.
+    :return: dictionary storing the p_values of the analysis. Feature names are used as keys.
+    """
 
     def _test_if_all_vals_equal(vals1, vals2):
         """Checks if the union of two iterables is 1 and returns True if that is the case. Is used in test_num_feats to
@@ -32,16 +41,17 @@ def test_num_feats(zipper, feats=None, method=None):
         else:
             return False
 
+    # if no method is specified used Mann-Whitney-U-test as standard
     if method is None:
         method = "u"
 
     # initialize dictionary which stores the p_values
     p_values = dict()
 
-    if feats is None:
-        feats = zipper.keys()
+    if feat_subset is None:
+        feat_subset = zipper.keys()
 
-    for feat in feats:  # run through all variables
+    for feat in feat_subset:  # run through all variables
 
         # initiate dict in dict for d1 vs d2, d2 vs d3 etc. per feature
         p_values[feat] = dict()
@@ -78,10 +88,11 @@ def test_num_feats(zipper, feats=None, method=None):
 
 def test_cat_feats(zipper, feat_subset=None):
     """
-    Perform a hypothesis test to check if the distributions vary signifcantly from each other
+    Performs hypothesis testing to identify significantly deviating categorical features. A chi-squared test is used.
 
-    :param zipper:
-    :param feat_subset:
+    :param zipper: Dictionary storing the feature values of the datasets in a list. Feature name is used as the key.
+    :param feat_subset: A list containing feature names. If given, analysis will only be performed for the contained
+    features. If not given all features will be considered.
     :return:
     """
 
@@ -121,7 +132,13 @@ def test_cat_feats(zipper, feat_subset=None):
 
 
 def p_correction(p_values):
-    """Apply p value correction for multiple testing"""
+    """
+    Corrects p_values for multiple testing.
+
+    :param p_values: Dictionary storing p_values with corresponding feature names as keys.
+    :return: DataFrame which shows the results of the analysis; p-value, corrected p-value and boolean indicating
+    significance.
+    """
 
     def _transform_p_dict(p_value_dict):
         """
@@ -147,7 +164,14 @@ def p_correction(p_values):
         return pd.DataFrame(df_matrix)
 
     def _create_result_table(result, p_val_col, p_trans):
-        """ """
+        """
+        Builds the dataframe showing the results
+
+        :param result:
+        :param p_val_col:
+        :param p_trans:
+        :return:
+        """
         # store test results
         result_table = pd.DataFrame(p_val_col)
 
