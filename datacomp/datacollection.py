@@ -14,6 +14,7 @@ from .utils import construct_formula, calc_prog_scores
 def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """Will load the data and return a list of two dataframes
     that can then be used for later comparism.
+
     :param path1: Path to dataframe1
     :param path2: Path to dataframe2. Optional if all data for comparison is in df1.
                   Then use groupby argument
@@ -249,15 +250,19 @@ class DataCollection(UserList):
 
     def create_progression_tables(self, feat_subset, time_col, patient_col, method, bl_index):
         """
+        Creates a new datacollection object which now stores the feature values not as absolute numbers but "progression
+        scores". The feature values of patients are normalized to their baseline values using either the "visit to
+        baseline" ratio or a z-score normalized to baseline.
 
-
-        :param self:
-        :param feat_subset:
-        :param time_col:
-        :param patient_col:
-        :param method:
-        :param bl_index:
-        :return:
+        :param feat_subset: List containing feature names, which shall be included into the new progression score
+        datacollection.
+        :param time_col: Name of the column in which the time information is stored. e.g. Months, Days, Visit number
+        :param patient_col: Name of the column in which the patient identifiers connecting the separate visits are
+        stored.
+        :param method: String indicating which progression score shall be calculated. z-score ("z-score") or
+        ratio of baseline ("robl")
+        :param bl_index: Value representing the baseline measurement in the time column.
+        :return: DataCollection storing the progression scores for the features
         """
 
         prog_dfs = []
@@ -298,14 +303,24 @@ class DataCollection(UserList):
         return DataCollection(prog_dfs, self.df_names)
 
     def analyze_longitudinal_feats(self, time_col, bl_index, cat_feats=None, num_feats=None, include=None, exclude=None):
-        """ """
+        """
+        Performs the longitudinal analysis. For each
+
+        :param time_col:
+        :param bl_index:
+        :param cat_feats:
+        :param num_feats:
+        :param include:
+        :param exclude:
+        :return:
+        """
 
         # dict to collect p_values in
         p_values = dict()
         # dict to collect dataframes reduced to only one time point. time point will be the key to the dataframe
-        red_df_store = dict()
+        time_dfs = dict()
 
-        # if no list of features is given, take all
+        # if no list of features is given, take all  #TODO handle the standard assignment for cat_feats and num_feats or skip them
         if not num_feats:
             num_feats = list(self[0])
         # if no categorical features are given take empty list
@@ -325,7 +340,7 @@ class DataCollection(UserList):
                 # catch Warning that one dataframe is empty
                 try:
                     time_point_datacol = self.reduce_dfs_to_value(time_col, time)
-                    red_df_store[time] = time_point_datacol
+                    time_dfs[time] = time_point_datacol
 
                     p_values[time] = time_point_datacol.analyze_feature_ranges(cat_feats=cat_feats, num_feats=num_feats,
                                                                exclude=exclude, include=include, verbose=False)
@@ -333,7 +348,10 @@ class DataCollection(UserList):
                 except UserWarning:
                     continue
 
-        return p_values, red_df_store
+        # concatinate dataframes of single time points and sort by feature name
+        long_result_table = pd.concat(p_values).swaplevel(0,1).sort_index()
+
+        return long_result_table, time_dfs
 
     ## Propensity score matching
 

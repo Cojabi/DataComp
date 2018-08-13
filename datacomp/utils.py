@@ -46,8 +46,9 @@ def calc_prog_scores(time_series, bl_index, method):
 
     :param time_series: pandas.Series storing the values at the different points in time which shall be transformed into
     progression scores.
-    :param bl_index: Index of time_series where the baseline value is stored.
-    :param method: Specifies which progression score should be calculated. z-score or ratio of baseline
+    :param bl_index: Value representing the baseline measurement in the time column.
+    :param method: Specifies which progression score should be calculated. z-score ("z-score") or
+    ratio of baseline ("robl")
     :return:
     """
 
