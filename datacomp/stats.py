@@ -13,7 +13,7 @@ from collections import Counter
 from .utils import construct_formula
 
 
-def test_num_feats(zipper, method=None, feats=None):
+def test_num_feats(zipper, feats=None, method=None):
     """Perform a hypothesis test to check if the distributions vary signifcantly from each other"""
 
     def _test_if_all_vals_equal(vals1, vals2):
@@ -62,11 +62,12 @@ def test_num_feats(zipper, method=None, feats=None):
                 if zipper[feat][i] and zipper[feat][j]:
                     # calculate u-test and return p-value
                     if method == "u":
-                        z = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
+                        stat_test_result = mannwhitneyu(zipper[feat][i], zipper[feat][j], alternative="two-sided")
                     # calculate t-test and return p-value
                     elif method == "t":
-                        z = ttest_ind(zipper[feat][i], zipper[feat][j])
-                    p_values[feat][i + 1, j + 1] = z.pvalue
+                        stat_test_result = ttest_ind(zipper[feat][i], zipper[feat][j])
+
+                    p_values[feat][i + 1, j + 1] = stat_test_result.pvalue
 
                 # if one or both sets are empty
                 else:
