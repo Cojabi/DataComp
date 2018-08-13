@@ -192,8 +192,8 @@ class DataCollection(UserList):
         """
         Creates a set of the combined dataframe values present in a specific column.
 
-        :param col:
-        :return:
+        :param col: Column which contains the values that should be put into a set.
+        :return: Set containing all values represented in column.
         """
 
         value_set = set()
