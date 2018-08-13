@@ -101,93 +101,96 @@ def feature_distplots(zipper, feat_subset=None, save_folder=None):
         else:
             plt.show()
 
-### Ongoing work
+## longitudinal plotting
 
-def plot_prog_scores(time_dfs, feat):
+def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, save_folder=None):
     """ """
 
     def _calculate_means_per_timepoint(time_dfs, feat):
         """ """
-
-        values = dict()
         means = dict()
-        length_datacol = len(time_dfs)
 
         for time_datcol in time_dfs.values():
             for i in range(len(time_datcol)):
 
                 if i in means.keys():
-                    means[i].append(time_datcol[i][feat].mean())
-                    values[i].append(time_datcol[i][feat].replace(np.inf, np.nan).dropna())  # .values)
-
+                    means[i].append(time_datcol[i][feat].replace(np.inf, np.nan).mean())
                 else:
                     means[i] = []
-                    values[i] = []
-                    means[i].append(time_datcol[i][feat].mean())
-                    values[i].append(time_datcol[i][feat].replace(np.inf, np.nan).dropna())  # .values)
+                    means[i].append(time_datcol[i][feat].replace(np.inf, np.nan).mean())
 
-        return means, values
+        return means
 
-    def _plot_pro_score_bp(scores):
+    def _calc_positions(num_dfs, num_time):
         """ """
-        BP_COLORS = ["#1f77b4", "#17becf", "#d62728"]
+        add_value = num_dfs + 1  # is used to define the positons of the boxplots
+        bp_positions = [range(1, add_value)]
+        xticks = []  # stores the positions where x axis ticks shall be
 
-        # plot boxplots
-        for dataset_scores, color in zip(scores.values(), BP_COLORS):
-            bxplts = plt.boxplot(dataset_scores, patch_artist=True)
+        # calculate and store positions
+        for i in range(num_time):
+            xticks.append(np.mean(bp_positions[i]))
+            bp_positions.append([x + add_value for x in bp_positions[i]])
 
-            # change box patch color
-            for patch in bxplts["boxes"]:
-                patch.set_facecolor(color)
+        return bp_positions, xticks
 
-            # change boxplot outline colors
-            for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
-                for element in bxplts[bp_part]:
-                    plt.setp(element, color=color)
-
-    def _plot_prog_score_means(means):
+    def _plot_prog_score_means(means, xticks_positions):
         """ """
         LN_COLORS = ["#1799B5", "#00FFFF"]
 
         # plot lines
         for dataset_means, color in zip(means.values(), LN_COLORS):
-            plt.plot(range(1, len(dataset_means) + 1), dataset_means, "-", color=color)
+            plt.plot(xticks_positions, dataset_means, "-", color=color)
 
-    means, scores = _calculate_means_per_timepoint(time_dfs, feat)
-    print(scores[0])
-    _plot_pro_score_bp(scores)
-    # _plot_prog_score_means(means)
+    def _bp_all_timepoints(time_dfs, bp_positions, feat):
+        """ """
 
+        colors = ["#1f77b4", "#17becf", "#d62728"]
 
-#### NOT NEEDED???
-"""Muss noch nen colorschema bekommen plus legende, damit man die verschiedenen dfs unterscheiden kann."""
-def bp_all_features(num_zipper, df_names, save=None):
-    """
-    Plots boxplots for all features and all dfs into one figure
-    :param num_zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
-    lists (the values of the features in the x dataframes)
-    :param save: a path where to save the figure to
-    :return:
-    """
-    fig = plt.figure()
-    ax = plt.axes()
+        for time, bp_time_pos in zip(time_dfs, bp_positions):
 
-    add_value = len(df_names) + 1  # is used to define the positons of the boxplots
-    positions = range(1, add_value)
-    xticks = []  # stores the positions where axis ticks shall be
+            # prepare data for plotting: extract feature data and exclude NaN's and inf's
+            time_data = [timepoint[feat].replace(np.inf, np.nan).dropna() for timepoint in time_dfs[time]]
 
-    for feat_data in num_zipper:
-        bp = plt.boxplot(num_zipper[feat_data], positions=positions, widths=0.6)
-        # colorbp(bp)
-        xticks.append(np.mean(positions))
-        positions = [x + add_value for x in positions]
+            # create boxplots
+            for i in range(len(time_data)):
 
-    # set axes limits and labels
-    plt.xlim(0, np.max(positions))
-    ax.set_xticklabels(num_zipper.keys())
-    ax.set_xticks(xticks)
+                # create boxplot at specific position
+                bp = plt.boxplot(time_data[i], positions=[bp_time_pos[i]], patch_artist=True, widths=0.6)
 
-    if save:
-        fig.savefig(save)
-    else:
-        plt.show()
+                # change boxplot outline colors
+                for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
+                    for element in bp[bp_part]:
+                        plt.setp(element, color=colors[i])
+
+    # get the number of dataframes and the dataframe names
+    df_names = list(time_dfs.values())[0].df_names
+    num_dfs = len(df_names)
+    num_timepoints = len(time_dfs.keys())
+
+    # plot one figure for each feature
+    for feat in feat_subset:
+        # calculate positions on x axis
+        means = _calculate_means_per_timepoint(time_dfs, feat)
+        bp_positions, xticks_positions = _calc_positions(num_dfs, num_timepoints)
+
+        # plot mean progression
+        if plot_means:
+            _plot_prog_score_means(means, xticks_positions)
+
+        # plot progression scores at each time point as boxplots
+        if plot_bp:
+            _bp_all_timepoints(time_dfs, bp_positions, feat)
+
+        # set axes limits, labels and plot title
+        ax = plt.axes()
+        plt.xlim(0, np.max(bp_positions))
+        ax.set_xticklabels(time_dfs.keys())
+        ax.set_xticks(xticks_positions)
+        plt.title(feat)
+
+        if save_folder:
+            save_file = os.path.join(save_folder, feat + "prog_score.png")
+            plt.savefig(save_file)
+        else:
+            plt.show()
