@@ -142,8 +142,9 @@ def p_correction(p_values):
 
     def _transform_p_dict(p_value_dict):
         """
-        Transforms a dictionary of dicts into a dataframe representing the dicts as rows (like tuples).
-        The resulting DataFrame can then be used to sort the p_values such that
+        Utility function that transforms a dictionary of dicts into a dataframe representing the dicts as rows
+        (like tuples). Is needed to keep track of the feature names and corresponding values.
+        The underlying datastructures are confusing.
 
         :param p_value_dict: dictionary of dictionaries storing the p_values
         :return: dataframe where the keys are added to the p_values as columns

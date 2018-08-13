@@ -29,8 +29,8 @@
       <file leaf-file-name="stats.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1746">
-              <caret line="97" column="0" lean-forward="true" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+            <state relative-caret-position="2628">
+              <caret line="146" column="52" lean-forward="false" selection-start-line="146" selection-start-column="52" selection-end-line="146" selection-end-column="52" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -227,13 +227,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00025" summary="added reduce_to_common_feats function">
-      <created>1530882628855</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1530882628855</updated>
     </task>
     <task id="LOCAL-00026" summary="fixed get_common_feats">
       <created>1531136161940</created>
@@ -571,7 +564,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534163089954</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="improved stats documentation">
+      <created>1534163788585</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1534163788585</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -627,7 +627,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="big reorganize #2 deleted old functions" />
     <MESSAGE value="fixed imports, improved get_data function" />
     <MESSAGE value="updated requirements, imports and documentation" />
     <MESSAGE value="added test_data.csv" />
@@ -652,7 +651,8 @@
     <MESSAGE value="added longitudinal visualization" />
     <MESSAGE value="added plot_pro_score function" />
     <MESSAGE value="fixed statistical test usage in test_num_feats" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed statistical test usage in test_num_feats" />
+    <MESSAGE value="improved stats documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved stats documentation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1063,8 +1063,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1746">
-          <caret line="97" column="0" lean-forward="true" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+        <state relative-caret-position="2628">
+          <caret line="146" column="52" lean-forward="false" selection-start-line="146" selection-start-column="52" selection-end-line="146" selection-end-column="52" />
           <folding>
             <element signature="e#25#44#0" expanded="true" />
           </folding>
