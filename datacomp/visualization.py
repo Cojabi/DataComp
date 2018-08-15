@@ -207,3 +207,9 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         else:
             plt.show()
 
+def plot_all_sig_progs(time_dfs, p_values, plot_bp=True, plot_means=True, save_folder=None):
+    """ """
+
+    sig_feats = get_sig_feats(p_values)
+    plot_prog_scores(time_dfs, sig_feats, plot_bp=plot_bp, plot_means=plot_means, show_sig=True, p_values=p_values,
+                     save_folder=save_folder)
