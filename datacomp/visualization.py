@@ -6,6 +6,7 @@ import os
 import seaborn as sns
 
 from .utils import get_sig_feats
+from itertools import compress
 
 # load plot style
 plt.style.use('ggplot')
@@ -103,7 +104,8 @@ def feature_distplots(zipper, feat_subset=None, save_folder=None):
 
 ## longitudinal plotting
 
-def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, save_folder=None):
+def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_sig=False, p_values=None,
+                     save_folder=None):
     """ """
 
     def _calculate_means_per_timepoint(time_dfs, feat):
@@ -136,7 +138,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, save_
 
     def _plot_prog_score_means(means, xticks_positions):
         """ """
-        LN_COLORS = ["#1799B5", "#00FFFF"]
+        LN_COLORS = ["#1799B5", "#00FFFF"] #TODO change color palette
 
         # plot lines
         for dataset_means, color in zip(means.values(), LN_COLORS):
@@ -145,7 +147,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, save_
     def _bp_all_timepoints(time_dfs, bp_positions, feat):
         """ """
 
-        colors = ["#1f77b4", "#17becf", "#d62728"]
+        colors = ["#1f77b4", "#17becf", "#d62728"] #TODO change color palette
 
         for time, bp_time_pos in zip(time_dfs, bp_positions):
 
@@ -162,6 +164,13 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, save_
                 for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
                     for element in bp[bp_part]:
                         plt.setp(element, color=colors[i])
+
+    def plot_significances(xticks_positions, p_values):
+        """ """
+        significances = p_values.loc[feat, "signf"]
+        sig_ticks = list(compress(xticks_positions, significances))
+        y_axis_values = [0 for i in range(len(sig_ticks))]
+        plt.plot(sig_ticks, y_axis_values, "*")
 
     # get the number of dataframes and the dataframe names
     df_names = list(time_dfs.values())[0].df_names
@@ -182,6 +191,9 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, save_
         if plot_bp:
             _bp_all_timepoints(time_dfs, bp_positions, feat)
 
+        if show_sig:
+            plot_significances(xticks_positions, p_values)
+
         # set axes limits, labels and plot title
         ax = plt.axes()
         plt.xlim(0, np.max(bp_positions))
@@ -194,3 +206,4 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, save_
             plt.savefig(save_file)
         else:
             plt.show()
+
