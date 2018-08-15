@@ -206,8 +206,8 @@ class DataCollection(UserList):
 
     def analyze_feature_ranges(self, cat_feats, num_feats, include=None, exclude=None, verbose=True):
         """
-        This function can be used to compare all features easily. It works as a wrapper for the categorical and numerical
-        feature comparison functions.
+        This function can be used to compare all features easily. It works as a wrapper for the categorical and
+        numerical feature comparison functions.
 
         :param cat_feats: List of the categorical features found in the dataframes.
         :param num_feats: List of numerical features found in the dataframes.
