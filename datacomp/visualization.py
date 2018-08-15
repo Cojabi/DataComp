@@ -82,7 +82,7 @@ def feature_distplots(zipper, feat_subset=None, save_folder=None):
     :return:
     """
     # set colors
-    colors = ["b", "c", "r"]
+    colors = ["b", "c", "r"] #TODO adjust color pallette
 
     # if no feature subset is provided, consider all features
     if feat_subset is None:
@@ -106,10 +106,28 @@ def feature_distplots(zipper, feat_subset=None, save_folder=None):
 
 def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_sig=False, p_values=None,
                      save_folder=None):
-    """ """
+    """
+    Creates one plot per feature displaying the progession scores calculated for the datasets in comparison to each
+    other. Plots the distribution of the progression scores as boxplots and the means as a line connecting the different
+    time points.
+
+    :param time_dfs: Dictionary storing the calculated progression scores per time point.
+    :param feat_subset: List containing feature names for which plots shall be created.
+    :param plot_bp: Flag if boxplots shall be plotted.
+    :param plot_means: Flag is line connecting the means shall be plotted.
+    :param show_sig: Flag if significant deviations shall be marked in the plot.
+    :param p_values: Result table from significance testing on the progression scores.
+    :param save_folder: Folder in which plots will be saved.
+    :return:
+    """
 
     def _calculate_means_per_timepoint(time_dfs, feat):
-        """ """
+        """
+
+        :param time_dfs: Dictionary storing the calculated progression scores per time point.
+        :param feat: Feature name for which the means shall be calculated.
+        :return: Dictionary storing lists with the means at the time points for each dataset
+        """
         means = dict()
 
         for time_datcol in time_dfs.values():
@@ -124,20 +142,32 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         return means
 
     def _calc_positions(num_dfs, num_time):
-        """ """
+        """
+        Calculates the x-axis positions of the boxplots and lines.
+
+        :param num_dfs: Number of datasets
+        :param num_time: Number of time points
+        :return: List storing the boxplot positions; List storing the x-axis-tick positions.
+        """
         add_value = num_dfs + 1  # is used to define the positons of the boxplots
         bp_positions = [range(1, add_value)]
-        xticks = []  # stores the positions where x axis ticks shall be
+        xticks_positions = []  # stores the positions where x axis ticks shall be
 
         # calculate and store positions
         for i in range(num_time):
-            xticks.append(np.mean(bp_positions[i]))
+            xticks_positions.append(np.mean(bp_positions[i]))
             bp_positions.append([x + add_value for x in bp_positions[i]])
 
-        return bp_positions, xticks
+        return bp_positions, xticks_positions
 
     def _plot_prog_score_means(means, xticks_positions):
-        """ """
+        """
+        Plots the means of the progression scores over time.
+
+        :param means: Dictionary storing lists with the means at the time points for each dataset
+        :param xticks_positions: List storing the x-axis-tick positions.
+        :return:
+        """
         LN_COLORS = ["#1799B5", "#00FFFF"] #TODO change color palette
 
         # plot lines
@@ -145,7 +175,14 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
             plt.plot(xticks_positions, dataset_means, "-", color=color)
 
     def _bp_all_timepoints(time_dfs, bp_positions, feat):
-        """ """
+        """
+        Plot progression score distributions per time point as boxplots.
+
+        :param time_dfs: Dictionary storing the calculated progression scores per time point.
+        :param bp_positions: List storing the boxplot positions
+        :param feat: Feature name for which plot shall be created.
+        :return:
+        """
 
         colors = ["#1f77b4", "#17becf", "#d62728"] #TODO change color palette
 
@@ -166,7 +203,13 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
                         plt.setp(element, color=colors[i])
 
     def plot_significances(xticks_positions, p_values):
-        """ """
+        """
+        Plot significance marker.
+
+        :param xticks_positions: List storing the x-axis-tick positions.
+        :param p_values: Result table from significance testing on the progression scores.
+        :return:
+        """
         significances = p_values.loc[feat, "signf"]
         sig_ticks = list(compress(xticks_positions, significances))
         y_axis_values = [0 for i in range(len(sig_ticks))]
@@ -208,7 +251,16 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
             plt.show()
 
 def plot_all_sig_progs(time_dfs, p_values, plot_bp=True, plot_means=True, save_folder=None):
-    """ """
+    """
+    Plots progression score plots for each feature that shows significant deviations at some time point.
+
+    :param time_dfs: Dictionary storing the calculated progression scores per time point.
+    :param p_values: Result table from significance testing on the progression scores.
+    :param plot_bp: Flag if boxplots shall be plotted.
+    :param plot_means: Flag is line connecting the means shall be plotted.
+    :param save_folder: Folder in which plots will be saved.
+    :return:
+    """
 
     sig_feats = get_sig_feats(p_values)
     plot_prog_scores(time_dfs, sig_feats, plot_bp=plot_bp, plot_means=plot_means, show_sig=True, p_values=p_values,

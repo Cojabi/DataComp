@@ -61,8 +61,8 @@
       <file leaf-file-name="visualization.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="887">
-              <caret line="214" column="45" lean-forward="false" selection-start-line="214" selection-start-column="45" selection-end-line="214" selection-end-column="45" />
+            <state relative-caret-position="563">
+              <caret line="251" column="0" lean-forward="true" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
               <folding>
                 <element signature="e#25#55#0" expanded="true" />
               </folding>
@@ -227,13 +227,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00031" summary="added color scheme to venn diagram function&#10;changed general appearance of venn diagrams (unweighted for venn3 etc)&#10;added some documentation">
-      <created>1531430481647</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1531430481647</updated>
     </task>
     <task id="LOCAL-00032" summary="added longitudinal progression table functions">
       <created>1531430507240</created>
@@ -571,7 +564,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534348635793</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="added plot_all_sig prog score">
+      <created>1534348657284</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1534348657284</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -627,7 +627,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed imports, renamed data_functions into utils, corrected splice df issues" />
     <MESSAGE value="fixed splice dataframe issue with reduce functions part 2, improved tests" />
     <MESSAGE value="improved reduce_dfs_to_feat_subset test" />
     <MESSAGE value="improved reduce_dfs_to_value test" />
@@ -652,7 +651,8 @@
     <MESSAGE value="minor documentation changes" />
     <MESSAGE value="implemented significance marker in prog score plot" />
     <MESSAGE value="documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="documentation" />
+    <MESSAGE value="added plot_all_sig prog score" />
+    <option name="LAST_COMMIT_MESSAGE" value="added plot_all_sig prog score" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1063,8 +1063,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="887">
-          <caret line="214" column="45" lean-forward="false" selection-start-line="214" selection-start-column="45" selection-end-line="214" selection-end-column="45" />
+        <state relative-caret-position="563">
+          <caret line="251" column="0" lean-forward="true" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
           <folding>
             <element signature="e#25#55#0" expanded="true" />
           </folding>
