@@ -12,14 +12,15 @@ from .stats import test_cat_feats, test_num_feats, p_correction
 from .utils import construct_formula, calc_prog_scores
 
 def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
-    """Will load the data and return a list of two dataframes
-    that can then be used for later comparism.
+    """
 
-    :param path1: Path to dataframe1
-    :param path2: Path to dataframe2. Optional if all data for comparison is in df1.
-                  Then use groupby argument
-    :param rel_cols: List of relevant columns to consider. When given only those columns will be used. Otherwise all
-    :param groupby: name of the column which specifies classes to compare to each other. (e.g. sampling site)
+    :param paths:
+    :param df_names:
+    :param groupby:
+    :param exclude_classes:
+    :param rel_cols:
+    :param sep:
+    :return:
     """
     def _load_data(path, sep=sep):
         """small function to load according to the dataformat. (excel or csv)"""
@@ -93,8 +94,8 @@ class DataCollection(UserList):
 
     def create_zipper(self, feats=None):
         """
-        Create zipper containing the values of the same features per df in one list.
-        (df1_feat1, df2_feat1, df3_feat1), (df1_feat2, df2_feat2, df3_feat2)
+        Create a Dictionary containing the values of the same features per dataset in one list.
+        featname : (df1_feat1, df2_feat1, df3_feat1)
 
         :param feats:
         :return:
