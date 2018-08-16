@@ -4,7 +4,6 @@
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/__init__.py" afterPath="$PROJECT_DIR$/datacomp/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/datacollection.py" afterPath="$PROJECT_DIR$/datacomp/datacollection.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/prop_matching.py" afterPath="$PROJECT_DIR$/datacomp/prop_matching.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -231,13 +230,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00036" summary="changed create_df_for_propmatching function">
-      <created>1531833563218</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1531833563219</updated>
     </task>
     <task id="LOCAL-00037" summary="renamed reduce_to_common_feats into reduce_to_feat_subset to be more &#10;general&#10;reworked test_num_feats function to handle edge cases (empty list, same values)">
       <created>1531841725747</created>
@@ -575,7 +567,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534421569633</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="added print number of entities function">
+      <created>1534427569171</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1534427569171</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -631,7 +630,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="improved figure saving in boxplot function" />
     <MESSAGE value="implemented distplot function, added requirements" />
     <MESSAGE value="added documentation" />
     <MESSAGE value="added more documentation" />
@@ -656,7 +654,8 @@
     <MESSAGE value="adapted create prop matching dfs" />
     <MESSAGE value="implemented patients_per_timepoint plot&#10;added documentation" />
     <MESSAGE value="fixed MANOVA" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed MANOVA" />
+    <MESSAGE value="added print number of entities function" />
+    <option name="LAST_COMMIT_MESSAGE" value="added print number of entities function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
