@@ -112,6 +112,15 @@ class DataCollection(UserList):
         zipper = dict(zip(feats, zip_values))
         return zipper
 
+    def print_number_of_entities(self, pat_col):
+        """
+
+        :param pat_col:
+        :return:
+        """
+        for df in self:
+            print("# of entities: ", len(df[pat_col].unique()))
+
     def reduce_dfs_to_value(self, col, val):
         """
         Keep only the rows in the dataframes where a specific column holds a specific value.
