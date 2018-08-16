@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/datacollection.py" afterPath="$PROJECT_DIR$/datacomp/datacollection.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/stats.py" afterPath="$PROJECT_DIR$/datacomp/stats.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/visualization.py" afterPath="$PROJECT_DIR$/datacomp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -231,13 +229,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00034" summary="added analyze_longitudinal_feats function&#10;added some documentation&#10;added reduce_dfs function">
-      <created>1531432813297</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1531432813297</updated>
     </task>
     <task id="LOCAL-00035" summary="added eclude_class option for get_data is groupby is given.&#10;added create_df_for_prop_matching function&#10;added plot title so venn diagram">
       <created>1531832985164</created>
@@ -575,7 +566,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534370806331</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="implemented patients_per_timepoint plot&#10;added documentation">
+      <created>1534421562350</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1534421562350</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -631,7 +629,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="improved reduce_dfs_to_value test" />
     <MESSAGE value="added MANOVA function" />
     <MESSAGE value="improved figure saving in boxplot function" />
     <MESSAGE value="implemented distplot function, added requirements" />
@@ -656,7 +653,8 @@
     <MESSAGE value="added plot_all_sig prog score" />
     <MESSAGE value="added documentation to prog score plotting" />
     <MESSAGE value="adapted create prop matching dfs" />
-    <option name="LAST_COMMIT_MESSAGE" value="adapted create prop matching dfs" />
+    <MESSAGE value="implemented patients_per_timepoint plot&#10;added documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented patients_per_timepoint plot&#10;added documentation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

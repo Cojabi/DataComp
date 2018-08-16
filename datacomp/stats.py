@@ -228,7 +228,7 @@ def manova(datacol, label, variable_cols):
     df_manova = datacol.combine_dfs(label, variable_cols)
 
     # construct formula
-    formula = construct_formula(label, variable_cols)
+    formula = construct_formula(label, variable_cols, label_side="r")
 
     return MANOVA.from_formula(formula, df_manova).mv_test().summary()
 
