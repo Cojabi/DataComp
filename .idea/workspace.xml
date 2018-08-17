@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/__init__.py" afterPath="$PROJECT_DIR$/datacomp/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/longitudinal.py" afterPath="$PROJECT_DIR$/datacomp/longitudinal.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/prop_matching.py" afterPath="$PROJECT_DIR$/datacomp/prop_matching.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,7 +19,7 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="617">
+            <state relative-caret-position="1566">
               <caret line="87" column="9" lean-forward="false" selection-start-line="87" selection-start-column="9" selection-end-line="87" selection-end-column="9" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
@@ -29,8 +31,8 @@
       <file leaf-file-name="stats.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2659">
-              <caret line="38" column="28" lean-forward="false" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+            <state relative-caret-position="0">
+              <caret line="0" column="10" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -38,13 +40,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="longitudinal.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="longitudinal.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="24" lean-forward="true" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+            <state relative-caret-position="18">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#25#44#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,10 +55,10 @@
       <file leaf-file-name="prop_matching.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="32" column="42" lean-forward="false" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
+            <state relative-caret-position="0">
+              <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#25#44#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -86,13 +88,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
               <folding>
-                <element signature="e#0#52#0" expanded="true" />
+                <element signature="e#25#77#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -138,13 +140,13 @@
         <option value="$PROJECT_DIR$/datacomp/data_functions.py" />
         <option value="$PROJECT_DIR$/tests/test_datacollection.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/datacomp/prop_matching.py" />
         <option value="$PROJECT_DIR$/datacomp/stats.py" />
         <option value="$PROJECT_DIR$/datacomp/utils.py" />
         <option value="$PROJECT_DIR$/datacomp/visualization.py" />
         <option value="$PROJECT_DIR$/datacomp/datacollection.py" />
-        <option value="$PROJECT_DIR$/datacomp/__init__.py" />
         <option value="$PROJECT_DIR$/datacomp/longitudinal.py" />
+        <option value="$PROJECT_DIR$/datacomp/prop_matching.py" />
+        <option value="$PROJECT_DIR$/datacomp/__init__.py" />
       </list>
     </option>
   </component>
@@ -233,13 +235,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00039" summary="added documentation&#10;added saving option for create_dfs_for_matching">
-      <created>1531910812172</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1531910812172</updated>
     </task>
     <task id="LOCAL-00040" summary="reworked longitudinal functions. replace error catching etc&#10;added new create_value_set function to data_functions&#10;added error_warnings stub">
       <created>1531952620525</created>
@@ -577,7 +572,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534502882252</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="deprecation comment">
+      <created>1534503035828</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1534503035828</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -633,7 +635,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added more documentation" />
     <MESSAGE value="updated documentation in longitudinal" />
     <MESSAGE value="include progression_table creation into datacollection&#10;included progression score calculation into utils&#10;added documentation" />
     <MESSAGE value="added error raise if no p-values are submitted into multiple test correction" />
@@ -658,7 +659,8 @@
     <MESSAGE value="added print number of entities function" />
     <MESSAGE value="added longitudinal version of create prop matched dfs" />
     <MESSAGE value="reformat code" />
-    <option name="LAST_COMMIT_MESSAGE" value="reformat code" />
+    <MESSAGE value="deprecation comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="deprecation comment" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -672,7 +674,7 @@
         <state relative-caret-position="1674">
           <caret line="95" column="7" lean-forward="true" selection-start-line="95" selection-start-column="7" selection-end-line="95" selection-end-column="7" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -692,7 +694,7 @@
         <state relative-caret-position="270">
           <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -702,7 +704,7 @@
         <state relative-caret-position="1242">
           <caret line="74" column="21" lean-forward="false" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -723,7 +725,7 @@
         <state relative-caret-position="54">
           <caret line="3" column="28" lean-forward="false" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
           <folding>
-            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#25#77#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -760,7 +762,7 @@
         <state relative-caret-position="378">
           <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -790,7 +792,7 @@
         <state relative-caret-position="36">
           <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding>
-            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#25#77#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -810,7 +812,7 @@
         <state relative-caret-position="324">
           <caret line="19" column="7" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -840,7 +842,7 @@
         <state relative-caret-position="36">
           <caret line="5" column="17" lean-forward="true" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding>
-            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#25#77#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -850,7 +852,7 @@
         <state relative-caret-position="198">
           <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -880,7 +882,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="16" lean-forward="false" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
           <folding>
-            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#25#77#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1033,20 +1035,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
+    <entry file="file://$PROJECT_DIR$/datacomp/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2659">
-          <caret line="38" column="28" lean-forward="false" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+        <state relative-caret-position="1566">
+          <caret line="87" column="9" lean-forward="false" selection-start-line="87" selection-start-column="9" selection-end-line="87" selection-end-column="9" />
           <folding>
             <element signature="e#25#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/utils.py">
+    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="617">
-          <caret line="87" column="9" lean-forward="false" selection-start-line="87" selection-start-column="9" selection-end-line="87" selection-end-column="9" />
+        <state relative-caret-position="0">
+          <caret line="0" column="10" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
           <folding>
             <element signature="e#25#44#0" expanded="true" />
           </folding>
@@ -1075,30 +1097,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
           <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="32" column="42" lean-forward="false" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="24" lean-forward="true" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#25#77#0" expanded="true" />
           </folding>
         </state>
       </provider>
