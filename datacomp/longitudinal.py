@@ -2,12 +2,7 @@ import pandas as pd
 import os
 
 
-##### ONGOING WORK######
-
-
-
-
-
+##### DEPRECATED? ######
 # !!! STILL VERY TIME INEFFICIENT. WORKS FOR NOW BUT NEEDS REWORK LATER ON !!!
 def transform_to_longitudinal(df, feats, pat_col, time_col, save_folder):
     """
