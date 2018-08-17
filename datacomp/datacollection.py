@@ -11,6 +11,7 @@ from collections import UserList
 from .stats import test_cat_feats, test_num_feats, p_correction
 from .utils import construct_formula, calc_prog_scores
 
+
 def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """
 
@@ -22,6 +23,7 @@ def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, s
     :param sep:
     :return:
     """
+
     def _load_data(path, sep=sep):
         """small function to load according to the dataformat. (excel or csv)"""
         filename, file_extension = os.path.splitext(path)
@@ -37,7 +39,7 @@ def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, s
     dfs = []
 
     # Handle single path input
-    if groupby and (len(paths)==1 or isinstance(paths, str)):
+    if groupby and (len(paths) == 1 or isinstance(paths, str)):
 
         # load data depending on if the single path is given in a list of as string
         if isinstance(paths, str):
@@ -71,6 +73,7 @@ def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, s
             dfs.append(df)
 
     return DataCollection(dfs, df_names)
+
 
 class DataCollection(UserList):
     """
@@ -312,7 +315,8 @@ class DataCollection(UserList):
 
         return DataCollection(prog_dfs, self.df_names)
 
-    def analyze_longitudinal_feats(self, time_col, bl_index, cat_feats=None, num_feats=None, include=None, exclude=None):
+    def analyze_longitudinal_feats(self, time_col, bl_index, cat_feats=None, num_feats=None, include=None,
+                                   exclude=None):
         """
         Performs the longitudinal analysis. For each
 
@@ -353,13 +357,14 @@ class DataCollection(UserList):
                     time_dfs[time] = time_point_datacol
 
                     p_values[time] = time_point_datacol.analyze_feature_ranges(cat_feats=cat_feats, num_feats=num_feats,
-                                                               exclude=exclude, include=include, verbose=False)
+                                                                               exclude=exclude, include=include,
+                                                                               verbose=False)
                 # skip time point if only values in one dataset are available
                 except UserWarning:
                     continue
 
         # concatinate dataframes of single time points and sort by feature name
-        long_result_table = pd.concat(p_values).swaplevel(0,1).sort_index()
+        long_result_table = pd.concat(p_values).swaplevel(0, 1).sort_index()
 
         return long_result_table, time_dfs
 
@@ -386,7 +391,7 @@ class DataCollection(UserList):
 
         # create labels; set label for first df to 1 all others to 0
         if labels is None:
-            labels = [1] + [0 for i in range(len(self)-1)]
+            labels = [1] + [0 for i in range(len(self) - 1)]
 
         # add labels to dataframes
         for i in range(len(labels)):

@@ -36,10 +36,7 @@ def test_num_feats(zipper, feat_subset=None, method=None):
         # build union between values
         uni = set.union(set(vals1), set(vals2))
         # if only one value is in the union, they are equal
-        if len(uni) == 1:
-            return True
-        else:
-            return False
+        return len(uni) == 1
 
     # if no method is specified used Mann-Whitney-U-test as standard
     if method is None:
@@ -212,6 +209,7 @@ def p_correction(p_values):
 
     return result_table.sort_index()
 
+
 def manova(datacol, label, variable_cols):
     """
     Performs a MANOVA to assess for example batch effects: Check if a significant proportion of the data variance is
@@ -231,4 +229,3 @@ def manova(datacol, label, variable_cols):
     formula = construct_formula(label, variable_cols, label_side="r")
 
     return MANOVA.from_formula(formula, df_manova).mv_test().summary()
-

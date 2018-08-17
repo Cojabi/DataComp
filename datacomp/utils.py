@@ -5,6 +5,7 @@ import numpy as np
 
 from operator import itemgetter
 
+
 def get_sig_feats(sig_df):
     """
     Get's the feature names of significantly deviating features from a result table.
@@ -16,6 +17,7 @@ def get_sig_feats(sig_df):
     sig_entries = sig_df[sig_df["signf"]]
     index_labels = sig_entries.index.labels[0]
     return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
+
 
 def construct_formula(label, rel_cols, label_side="l"):
     """
@@ -38,6 +40,7 @@ def construct_formula(label, rel_cols, label_side="l"):
         formula = "+".join(cols) + " ~ " + label
 
     return formula
+
 
 def calc_prog_scores(time_series, bl_index, method):
     """
@@ -82,8 +85,8 @@ def calc_prog_scores(time_series, bl_index, method):
 
     # when there is no baseline measurement present return NaN for all values
     if type(bl_value) == pd.Series:
-        raise ValueError("Multiple baseline entries have been found have been found for one entity.")
-
+        # raise ValueError("Multiple baseline entries have been found have been found for one entity.")
+        return np.nan  # TODO FIX THIS ITS just added
     if not pd.isnull(bl_value):
         if method == "z-score":
             # calculate standard deviation

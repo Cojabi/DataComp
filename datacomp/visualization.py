@@ -32,6 +32,7 @@ def bp_all_sig_feats(sig_df, zipper, df_names, feat_subset=None, save_folder=Non
     sig_zipper = {x: zipper[x] for x in sig_feats}
     bp_single_features(sig_zipper, df_names, feat_subset=feat_subset, save_folder=save_folder)
 
+
 def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
     """
     Creates one boxplot figure per feature
@@ -82,7 +83,7 @@ def feature_distplots(zipper, feat_subset=None, save_folder=None):
     :return:
     """
     # set colors
-    colors = ["b", "c", "r"] #TODO adjust color pallette
+    colors = ["b", "c", "r"]  # TODO adjust color pallette
 
     # if no feature subset is provided, consider all features
     if feat_subset is None:
@@ -101,6 +102,7 @@ def feature_distplots(zipper, feat_subset=None, save_folder=None):
             plt.savefig(save_file)
         else:
             plt.show()
+
 
 ## longitudinal plotting
 
@@ -168,7 +170,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :param xticks_positions: List storing the x-axis-tick positions.
         :return:
         """
-        LN_COLORS = ["#1799B5", "#00FFFF"] #TODO change color palette
+        LN_COLORS = ["#1799B5", "#00FFFF"]  # TODO change color palette
 
         # plot lines
         for dataset_means, color in zip(means.values(), LN_COLORS):
@@ -184,7 +186,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :return:
         """
 
-        colors = ["#1f77b4", "#17becf", "#d62728"] #TODO change color palette
+        colors = ["#1f77b4", "#17becf", "#d62728"]  # TODO change color palette
 
         for time, bp_time_pos in zip(time_dfs, bp_positions):
 
@@ -250,6 +252,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         else:
             plt.show()
 
+
 def plot_all_sig_progs(time_dfs, p_values, plot_bp=True, plot_means=True, save_folder=None):
     """
     Plots progression score plots for each feature that shows significant deviations at some time point.
@@ -276,4 +279,4 @@ def plot_patients_per_timepoint(datacol, time_col, label_name):
     :return:
     """
     combined = datacol.combine_dfs(label_name)
-    sns.countplot(x=time_col,  hue=label_name, data=combined)
+    sns.countplot(x=time_col, hue=label_name, data=combined)
