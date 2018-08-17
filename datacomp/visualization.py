@@ -125,6 +125,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
 
     def _calculate_means_per_timepoint(time_dfs, feat):
         """
+        Calculates the means for each time point for each dataset.
 
         :param time_dfs: Dictionary storing the calculated progression scores per time point.
         :param feat: Feature name for which the means shall be calculated.
@@ -270,12 +271,13 @@ def plot_all_sig_progs(time_dfs, p_values, plot_bp=True, plot_means=True, save_f
                      save_folder=save_folder)
 
 
-def plot_patients_per_timepoint(datacol, time_col, label_name):
+def plot_entities_per_timepoint(datacol, time_col, label_name):
     """
+    Plots a bar plot which shows the number of entities at each point in time for each dataset.
 
-    :param datacol:
-    :param time_col:
-    :param label_name:
+    :param datacol: DataCollection storing the data
+    :param time_col: Column name of the column storing the time information.
+    :param label_name: Name of the label which should be used to organize the x-axis.
     :return:
     """
     combined = datacol.combine_dfs(label_name)
