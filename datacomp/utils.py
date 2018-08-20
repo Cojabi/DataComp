@@ -14,7 +14,7 @@ def get_sig_feats(sig_df):
     :return:
     """
     # grab significant deviances
-    sig_entries = sig_df[sig_df["signf"]]
+    sig_entries = sig_df[sig_df["signf"].replace(np.nan, False)]
     index_labels = sig_entries.index.labels[0]
     return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
 
@@ -85,8 +85,8 @@ def calc_prog_scores(time_series, bl_index, method):
 
     # when there is no baseline measurement present return NaN for all values
     if type(bl_value) == pd.Series:
-        # raise ValueError("Multiple baseline entries have been found have been found for one entity.")
-        return np.nan  # TODO FIX THIS ITS just added
+        raise ValueError("Multiple baseline entries have been found have been found for one entity.")
+
     if not pd.isnull(bl_value):
         if method == "z-score":
             # calculate standard deviation
