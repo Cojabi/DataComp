@@ -254,7 +254,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
             plt.show()
 
 
-def plot_all_sig_progs(time_dfs, p_values, plot_bp=True, plot_means=True, save_folder=None):
+def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, save_folder=None):
     """
     Plots progression score plots for each feature that shows significant deviations at some time point.
 
