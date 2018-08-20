@@ -132,10 +132,15 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :return: Dictionary storing lists with the means at the time points for each dataset
         """
         means = dict()
+        time_data = [time_dfs[timepoint] for timepoint in sorted(time_dfs.keys())]
 
-        for time_datcol in time_dfs.values():
+        # iterate over the time points
+        for time_datcol in time_data:
+
+            # iterate over the number of datasets
             for i in range(len(time_datcol)):
 
+                # if list for dataset exists append to it, if not create list for dataset and append then
                 if i in means.keys():
                     means[i].append(time_datcol[i][feat].replace(np.inf, np.nan).mean())
                 else:
@@ -188,22 +193,28 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         """
 
         colors = ["#1f77b4", "#17becf", "#d62728"]  # TODO change color palette
+        timepoints = list(time_dfs.keys())
+        timepoints.sort()
 
-        for time, bp_time_pos in zip(time_dfs, bp_positions):
+        for time, bp_time_pos in zip(timepoints, bp_positions):
 
             # prepare data for plotting: extract feature data and exclude NaN's and inf's
             time_data = [timepoint[feat].replace(np.inf, np.nan).dropna() for timepoint in time_dfs[time]]
 
-            # create boxplots
+            # create boxplots, i iterates over the number of different datasets
             for i in range(len(time_data)):
 
-                # create boxplot at specific position
-                bp = plt.boxplot(time_data[i], positions=[bp_time_pos[i]], patch_artist=True, widths=0.6)
+                # check and skip dataset for current time point if no data is available
+                if len(time_data[i]) > 1:
+                    # create boxplot at specific position
+                    bp = plt.boxplot(time_data[i], positions=[bp_time_pos[i]], patch_artist=True, widths=0.6)
 
-                # change boxplot outline colors
-                for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
-                    for element in bp[bp_part]:
-                        plt.setp(element, color=colors[i])
+                    # change boxplot outline colors
+                    for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
+                        for element in bp[bp_part]:
+                            plt.setp(element, color=colors[i])
+                else:
+                    continue
 
     def plot_significances(xticks_positions, p_values):
         """
@@ -243,7 +254,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         # set axes limits, labels and plot title
         ax = plt.axes()
         plt.xlim(0, np.max(bp_positions))
-        ax.set_xticklabels(time_dfs.keys())
+        ax.set_xticklabels(sorted(time_dfs.keys()))
         ax.set_xticks(xticks_positions)
         plt.title(feat)
 
