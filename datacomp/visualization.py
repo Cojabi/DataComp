@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import matplotlib.pylab as plt
+import matplotlib.patches as mpatches
 import numpy as np
 import os
 import seaborn as sns
