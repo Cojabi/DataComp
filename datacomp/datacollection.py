@@ -215,6 +215,48 @@ class DataCollection(UserList):
             value_set.update(df[col])
         return value_set
 
+    def combine_dfs(self, label_name, feat_subset=None, cca=False, save_path=None, labels=None):
+        """
+        Will create a combined dataframe in which labels are assigned depending on the dataset membership.
+        The resulting dataframe will be saved under save_path and can be used for propensity_score_matching.
+
+        :param label_name:
+        :param feat_subset:
+        :param cca: If true only complete cases are kept (cases where all features are non missing values)
+        :param save_path:
+        :param labels:
+        :return:
+        """
+
+        # reduce dfs to feat_subset
+        if feat_subset:
+            reduced_datcol = self.reduce_dfs_to_feat_subset(feat_subset)
+        else:
+            reduced_datcol = self[::]
+
+        # create labels; set label for first df to 1 all others to 0
+        if labels is None:
+            labels = [1] + [0 for i in range(len(self) - 1)]
+
+        # add labels to dataframes
+        for i in range(len(labels)):
+            reduced_datcol[i][label_name] = labels[i]
+
+        # drop all non complete cases
+        if cca:
+            for i in range(len(labels)):
+                reduced_datcol[i].dropna(inplace=True)
+
+        # combine datasets
+        combined_df = pd.concat(reduced_datcol)
+
+        # save them under save_path if save_path is given
+        if save_path:
+            combined_df.to_csv(save_path)
+
+        return combined_df
+
+
     ## Stats
 
     def analyze_feature_ranges(self, cat_feats, num_feats, include=None, exclude=None, verbose=True):
@@ -368,48 +410,7 @@ class DataCollection(UserList):
 
         return long_result_table, time_dfs
 
-    ## Propensity score matching
-
-    def combine_dfs(self, label_name, feat_subset=None, cca=False, save_path=None, labels=None):
-        """
-        Will create a combined dataframe in which labels are assigned depending on the dataset membership.
-        The resulting dataframe will be saved under save_path and can be used for propensity_score_matching.
-
-        :param label_name:
-        :param feat_subset:
-        :param cca: If true only complete cases are kept (cases where all features are non missing values)
-        :param save_path:
-        :param labels:
-        :return:
-        """
-
-        # reduce dfs to feat_subset
-        if feat_subset:
-            reduced_datcol = self.reduce_dfs_to_feat_subset(feat_subset)
-        else:
-            reduced_datcol = self[::]
-
-        # create labels; set label for first df to 1 all others to 0
-        if labels is None:
-            labels = [1] + [0 for i in range(len(self) - 1)]
-
-        # add labels to dataframes
-        for i in range(len(labels)):
-            reduced_datcol[i][label_name] = labels[i]
-
-        # drop all non complete cases
-        if cca:
-            for i in range(len(labels)):
-                reduced_datcol[i].dropna(inplace=True)
-
-        # combine datasets
-        combined_df = pd.concat(reduced_datcol)
-
-        # save them under save_path if save_path is given
-        if save_path:
-            combined_df.to_csv(save_path)
-
-        return combined_df
+## propensity score matching
 
     def qc_prop_matching(self, rel_cols, label):
         """
