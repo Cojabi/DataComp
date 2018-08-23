@@ -107,6 +107,23 @@ def test_cat_feats(zipper, feat_subset=None):
         c = {key: c[key] for key in c if not pd.isnull(key)}
         return pd.Series(c)
 
+    def _non_present_values_to_zero(test_data):
+        """
+        Fills keys in the test data of one dataframe if it is not present but present in one of the other datasets.
+
+        :param test_data:
+        :return:
+        """
+        for dataset1 in test_data:
+            for dataset2 in test_data:
+
+                for key in dataset1.keys():
+
+                    if key not in dataset2:
+                        dataset2[key] = 0
+        return test_data
+
+
     p_values = dict()
 
     # consider all features is no feature subset was specified
@@ -121,6 +138,10 @@ def test_cat_feats(zipper, feat_subset=None):
             for j in range(i + 1, len(zipper[feat])):  # select dataset2
                 # count occurences of categorical features like in a confusion matrix for Chi2 tests
                 test_data = [_categorical_table(zipper[feat][i]), _categorical_table(zipper[feat][j])]
+
+                # fill missing keys in test data:
+                test_data = _non_present_values_to_zero(test_data)
+
                 # calculate u statistic and return p-value
                 z = chisquare(*test_data)
                 p_values[feat][i + 1, j + 1] = z.pvalue
