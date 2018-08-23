@@ -101,6 +101,8 @@ class DataCollection(UserList):
         # get numerical features if not given
         if numerical_feats is None:
             self.numerical_feats = self.get_numerical_features(self.categorical_feats)
+        else:
+            self.numerical_feats = numerical_feats
 
 
     def get_numerical_features(self, categorical_feats):
