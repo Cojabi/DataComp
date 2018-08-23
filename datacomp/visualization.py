@@ -32,16 +32,39 @@ def plot_sig_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=True
     # create zipper
     sig_zipper = datacol.create_zipper(sig_feats)
 
+    # work with numerical features
     if feat_subset:
-        feats_to_plot = set(datacol.numerical_feats).intersection(sig_feats).intersection(feat_subset)
+        num_feats_to_plot = set(datacol.numerical_feats).intersection(sig_feats).intersection(feat_subset)
     else:
-        feats_to_plot = set(datacol.numerical_feats).intersection(sig_feats)
+        num_feats_to_plot = set(datacol.numerical_feats).intersection(sig_feats)
 
+    # plot boxplots
     if boxplot:
-        bp_single_features(sig_zipper, datacol.df_names, feat_subset=feats_to_plot, save_folder=save_folder)
-
+        bp_single_features(sig_zipper, datacol.df_names, feat_subset=num_feats_to_plot, save_folder=save_folder)
+    # plot kde plots
     if kdeplot:
-        feature_kdeplots(sig_zipper, feat_subset=feats_to_plot, save_folder=save_folder)
+        feature_kdeplots(sig_zipper, feat_subset=num_feats_to_plot, save_folder=save_folder)
+
+def countplot_single_features(datacol, feat_subset=None, save_folder=None):
+    """
+    Creates countplots with discrete feature split over x axis and number of occurences on y axis.
+
+    :param datacol:
+    :param feat_subset:
+    :param save_folder:
+    :return:
+    """
+
+    combined = datacol.combine_dfs("Dataset", labels=datacol.df_names)
+
+    for feat in feat_subset:
+        sns.countplot(x=feat, hue="Dataset", data=combined)
+
+        if save_folder:
+            save_file = os.path.join(save_folder, feat + ".png")
+            plt.savefig(save_file)
+        else:
+            plt.show()
 
 
 def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
@@ -64,7 +87,7 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
 
     for feat in feat_subset:
         # create new figure
-        fig = plt.figure()
+        plt.figure()
         ax = plt.axes()
         plt.boxplot(zipper[feat], positions=positions, widths=0.6)
         # colorbps(bp)
@@ -78,7 +101,7 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
-            fig.savefig(save_file)
+            plt.savefig(save_file)
         else:
             plt.show()
 
