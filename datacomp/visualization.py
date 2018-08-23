@@ -20,6 +20,8 @@ def plot_sig_num_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=
     :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not.
     Is provided as outcome of the p_correction or analyze_feature_ranges function
     :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
+    :param boxplot: Flag that indicates if boxplot figures shall be created
+    :param kdeplot: Flag that indicates if kde plot figures shall be created
     :param save_folder: Path to a folder in which the plots shall be saved
     :return:
     """
@@ -41,6 +43,7 @@ def plot_sig_num_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=
     # plot kde plots
     if kdeplot:
         feature_kdeplots(sig_zipper, feat_subset=num_feats_to_plot, save_folder=save_folder)
+
 
 def plot_sig_cat_feats(datacol, sig_df, feat_subset=None, save_folder=None):
     """
@@ -66,6 +69,7 @@ def plot_sig_cat_feats(datacol, sig_df, feat_subset=None, save_folder=None):
 
     # plot countplots
     countplot_single_features(datacol, feat_subset=cat_feats_to_plot, save_folder=save_folder)
+
 
 def countplot_single_features(datacol, feat_subset=None, save_folder=None):
     """
@@ -231,10 +235,10 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :param xticks_positions: List storing the x-axis-tick positions.
         :return:
         """
-        LN_COLORS = ["#1799B5", "#00FFFF", "#f7b42e", "#8ff74a"]  # TODO change color palette
+        colors = ["#1799B5", "#00FFFF", "#f7b42e", "#8ff74a"]  # TODO change color palette
 
         # plot lines
-        for dataset_means, color in zip(means.values(), LN_COLORS):
+        for dataset_means, color in zip(means.values(), colors):
             plt.plot(xticks_positions, dataset_means, "-", color=color)
 
     def _bp_all_timepoints(time_dfs, bp_positions, feat):

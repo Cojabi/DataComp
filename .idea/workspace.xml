@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/__init__.py" afterPath="$PROJECT_DIR$/datacomp/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/visualization.py" afterPath="$PROJECT_DIR$/datacomp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,8 +65,8 @@
       <file leaf-file-name="visualization.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-260">
-              <caret line="23" column="12" lean-forward="true" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+            <state relative-caret-position="-2402">
+              <caret line="189" column="0" lean-forward="false" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
               <folding>
                 <element signature="e#25#55#0" expanded="true" />
               </folding>
@@ -249,13 +248,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00056" summary="fixed splice dataframe issue with reduce functions part 2, improved tests">
-      <created>1533136337825</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1533136337826</updated>
     </task>
     <task id="LOCAL-00057" summary="improved reduce_dfs_to_feat_subset test">
       <created>1533137221866</created>
@@ -593,7 +585,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535029389196</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="implemented plot_sig_cat_feats">
+      <created>1535030221559</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1535030221559</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -649,7 +648,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="documentation" />
     <MESSAGE value="added plot_all_sig prog score" />
     <MESSAGE value="added documentation to prog score plotting" />
     <MESSAGE value="adapted create prop matching dfs" />
@@ -674,7 +672,8 @@
     <MESSAGE value="included kde plots into plot_sig_feats" />
     <MESSAGE value="fixied numerical_feats in init" />
     <MESSAGE value="added countplot for categorical feats" />
-    <option name="LAST_COMMIT_MESSAGE" value="added countplot for categorical feats" />
+    <MESSAGE value="implemented plot_sig_cat_feats" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented plot_sig_cat_feats" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1109,8 +1108,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-260">
-          <caret line="23" column="12" lean-forward="true" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+        <state relative-caret-position="-2402">
+          <caret line="189" column="0" lean-forward="false" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
           <folding>
             <element signature="e#25#55#0" expanded="true" />
           </folding>
