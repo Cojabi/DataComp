@@ -13,15 +13,12 @@ from itertools import compress
 plt.style.use('ggplot')
 
 
-def plot_sig_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=True, save_folder=None):
+def plot_sig_num_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=True, save_folder=None):
     """
     Plots boxplots for each significant feature to allow for visual comparison.
 
     :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not.
     Is provided as outcome of the p_correction or analyze_feature_ranges function
-    :param zipper: zipper dict, that contains variable values. For each key the value is a list containing x
-    lists (the values of the features in the x dataframes)
-    :param df_names: List storing the names of the dataframes. Used for the x-axis label
     :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
     :param save_folder: Path to a folder in which the plots shall be saved
     :return:
@@ -44,6 +41,31 @@ def plot_sig_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=True
     # plot kde plots
     if kdeplot:
         feature_kdeplots(sig_zipper, feat_subset=num_feats_to_plot, save_folder=save_folder)
+
+def plot_sig_cat_feats(datacol, sig_df, feat_subset=None, save_folder=None):
+    """
+    Plots boxplots for each significant feature to allow for visual comparison.
+
+    :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not.
+    Is provided as outcome of the p_correction or analyze_feature_ranges function
+    :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
+    :param save_folder: Path to a folder in which the plots shall be saved
+    :return:
+    """
+    # get significant features
+    sig_feats = get_sig_feats(sig_df)
+
+    # create zipper
+    sig_zipper = datacol.create_zipper(sig_feats)
+
+    # work with numerical features
+    if feat_subset:
+        cat_feats_to_plot = set(datacol.categorical_feats).intersection(sig_feats).intersection(feat_subset)
+    else:
+        cat_feats_to_plot = set(datacol.categorical_feats).intersection(sig_feats)
+
+    # plot countplots
+    countplot_single_features(datacol, feat_subset=cat_feats_to_plot, save_folder=save_folder)
 
 def countplot_single_features(datacol, feat_subset=None, save_folder=None):
     """
