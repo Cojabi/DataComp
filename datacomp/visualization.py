@@ -177,7 +177,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :param xticks_positions: List storing the x-axis-tick positions.
         :return:
         """
-        LN_COLORS = ["#1799B5", "#00FFFF", "#f7b42e"]  # TODO change color palette
+        LN_COLORS = ["#1799B5", "#00FFFF", "#f7b42e", "#8ff74a"]  # TODO change color palette
 
         # plot lines
         for dataset_means, color in zip(means.values(), LN_COLORS):
@@ -193,7 +193,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :return:
         """
 
-        colors = ["#1f77b4", "#17becf", "#e8a145"]  # TODO change color palette
+        colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]  # TODO change color palette
         timepoints = list(time_dfs.keys())
         timepoints.sort()
 
@@ -268,7 +268,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         ax.set_xticks(xticks_positions)
         plt.title(feat)
 
-        colors = ["#1f77b4", "#17becf", "#e8a145"]
+        colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
         create_legend(df_names, colors)
 
         if save_folder:

@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/datacollection.py" afterPath="$PROJECT_DIR$/datacomp/datacollection.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/stats.py" afterPath="$PROJECT_DIR$/datacomp/stats.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/visualization.py" afterPath="$PROJECT_DIR$/datacomp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,7 +26,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stats.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="stats.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="252">
@@ -63,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="visualization.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="visualization.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="279" column="0" lean-forward="false" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
+            <state relative-caret-position="347">
+              <caret line="189" column="93" lean-forward="true" selection-start-line="189" selection-start-column="93" selection-end-line="189" selection-end-column="93" />
               <folding>
                 <element signature="e#25#55#0" expanded="true" />
               </folding>
@@ -154,9 +153,9 @@
         <option value="$PROJECT_DIR$/datacomp/__init__.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/datacomp/utils.py" />
-        <option value="$PROJECT_DIR$/datacomp/visualization.py" />
         <option value="$PROJECT_DIR$/datacomp/datacollection.py" />
         <option value="$PROJECT_DIR$/datacomp/stats.py" />
+        <option value="$PROJECT_DIR$/datacomp/visualization.py" />
       </list>
     </option>
   </component>
@@ -245,13 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00050" summary="fixed imports, improved get_data function">
-      <created>1533045882883</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1533045882884</updated>
     </task>
     <task id="LOCAL-00051" summary="updated requirements, imports and documentation">
       <created>1533118140383</created>
@@ -589,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535018964113</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="reformat code">
+      <created>1535019042603</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1535019042603</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -658,7 +657,6 @@
     <MESSAGE value="fixed MANOVA" />
     <MESSAGE value="added print number of entities function" />
     <MESSAGE value="added longitudinal version of create prop matched dfs" />
-    <MESSAGE value="reformat code" />
     <MESSAGE value="deprecation comment" />
     <MESSAGE value="added shebang where missing" />
     <MESSAGE value="added visualization documentation" />
@@ -670,7 +668,8 @@
     <MESSAGE value="reorganized datacollection code" />
     <MESSAGE value="included legend into longitudinal plot" />
     <MESSAGE value="added visualization import" />
-    <option name="LAST_COMMIT_MESSAGE" value="added visualization import" />
+    <MESSAGE value="reformat code" />
+    <option name="LAST_COMMIT_MESSAGE" value="reformat code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1073,16 +1072,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="279" column="0" lean-forward="false" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
-          <folding>
-            <element signature="e#25#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/prop_matching.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1109,6 +1098,16 @@
           <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
             <element signature="e#25#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="189" column="93" lean-forward="true" selection-start-line="189" selection-start-column="93" selection-end-line="189" selection-end-column="93" />
+          <folding>
+            <element signature="e#25#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
