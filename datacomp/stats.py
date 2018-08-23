@@ -123,7 +123,6 @@ def test_cat_feats(zipper, feat_subset=None):
                         dataset2[key] = 0
         return test_data
 
-
     p_values = dict()
 
     # consider all features is no feature subset was specified

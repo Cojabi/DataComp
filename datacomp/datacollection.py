@@ -256,7 +256,6 @@ class DataCollection(UserList):
 
         return combined_df
 
-
     ## Stats
 
     def analyze_feature_ranges(self, cat_feats, num_feats, include=None, exclude=None, verbose=True):
@@ -410,7 +409,7 @@ class DataCollection(UserList):
 
         return long_result_table, time_dfs
 
-## propensity score matching
+    ## propensity score matching
 
     def qc_prop_matching(self, rel_cols, label):
         """
