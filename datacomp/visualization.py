@@ -13,7 +13,7 @@ from itertools import compress
 plt.style.use('ggplot')
 
 
-def bp_all_sig_feats(sig_df, zipper, df_names, feat_subset=None, save_folder=None):
+def plot_sig_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=True, save_folder=None):
     """
     Plots boxplots for each significant feature to allow for visual comparison.
 
@@ -29,9 +29,19 @@ def bp_all_sig_feats(sig_df, zipper, df_names, feat_subset=None, save_folder=Non
     # get significant features
     sig_feats = get_sig_feats(sig_df)
 
-    # create zipper containing only the significantly deviating features
-    sig_zipper = {x: zipper[x] for x in sig_feats}
-    bp_single_features(sig_zipper, df_names, feat_subset=feat_subset, save_folder=save_folder)
+    # create zipper
+    sig_zipper = datacol.create_zipper(sig_feats)
+
+    if feat_subset:
+        feats_to_plot = set(datacol.numerical_feats).intersection(sig_feats).intersection(feat_subset)
+    else:
+        feats_to_plot = set(datacol.numerical_feats).intersection(sig_feats)
+
+    if boxplot:
+        bp_single_features(sig_zipper, datacol.df_names, feat_subset=feats_to_plot, save_folder=save_folder)
+
+    if kdeplot:
+        feature_kdeplots(sig_zipper, feat_subset=feats_to_plot, save_folder=save_folder)
 
 
 def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
@@ -56,8 +66,7 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
         # create new figure
         fig = plt.figure()
         ax = plt.axes()
-
-        bp = plt.boxplot(zipper[feat], positions=positions, widths=0.6)
+        plt.boxplot(zipper[feat], positions=positions, widths=0.6)
         # colorbps(bp)
 
         # set axes limits and labels
@@ -74,7 +83,7 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
             plt.show()
 
 
-def feature_distplots(zipper, feat_subset=None, save_folder=None):
+def feature_kdeplots(zipper, feat_subset=None, save_folder=None):
     """
     Plots distribution plots for each dataframe in one figure.
 

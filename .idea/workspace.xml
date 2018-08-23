@@ -4,8 +4,6 @@
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/__init__.py" afterPath="$PROJECT_DIR$/datacomp/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/datacollection.py" afterPath="$PROJECT_DIR$/datacomp/datacollection.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/prop_matching.py" afterPath="$PROJECT_DIR$/datacomp/prop_matching.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/visualization.py" afterPath="$PROJECT_DIR$/datacomp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -68,8 +66,8 @@
       <file leaf-file-name="visualization.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+            <state relative-caret-position="558">
+              <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
               <folding>
                 <element signature="e#25#55#0" expanded="true" />
               </folding>
@@ -250,13 +248,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00052" summary="added test_data.csv">
-      <created>1533118210907</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1533118210908</updated>
     </task>
     <task id="LOCAL-00053" summary="added tests for reduce_dfs functions">
       <created>1533121723768</created>
@@ -594,7 +585,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535019156265</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="included cat_feats and num_feats into datacollection class as attributes">
+      <created>1535023348527</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1535023348527</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -650,7 +648,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="again improved stats documentation" />
     <MESSAGE value="added more documentation, slight changes in analyze_longitudinal" />
     <MESSAGE value="minor documentation changes" />
     <MESSAGE value="implemented significance marker in prog score plot" />
@@ -675,7 +672,8 @@
     <MESSAGE value="added visualization import" />
     <MESSAGE value="reformat code" />
     <MESSAGE value="added colors to long plot" />
-    <option name="LAST_COMMIT_MESSAGE" value="added colors to long plot" />
+    <MESSAGE value="included cat_feats and num_feats into datacollection class as attributes" />
+    <option name="LAST_COMMIT_MESSAGE" value="included cat_feats and num_feats into datacollection class as attributes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1110,8 +1108,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+        <state relative-caret-position="558">
+          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
           <folding>
             <element signature="e#25#55#0" expanded="true" />
           </folding>
