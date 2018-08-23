@@ -12,7 +12,7 @@ from .stats import test_cat_feats, test_num_feats, p_correction
 from .utils import construct_formula, calc_prog_scores
 
 
-def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
+def get_data(paths, df_names, categorical_feats, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """
 
     :param paths:
@@ -72,7 +72,7 @@ def get_data(paths, df_names, groupby=None, exclude_classes=[], rel_cols=None, s
             df = _load_data(path)
             dfs.append(df)
 
-    return DataCollection(dfs, df_names)
+    return DataCollection(dfs, df_names, categorical_feats)
 
 
 class DataCollection(UserList):
@@ -82,18 +82,37 @@ class DataCollection(UserList):
     subsets of features or to compare the feature ranges of the two dataframes to each other.
     """
 
-    def __init__(self, df_list, df_names):
+    def __init__(self, df_list, df_names, categorical_feats, numerical_feats=None):
         """
         Initialize DataCollection object.
 
         :param df_list: List containing pandas.DataFrames
         :param df_names: List of strings containing the names of the datasets in df_list
+        :param categorical_feats: List of categorical features
         """
         super().__init__(df_list)
+
         # check if there is an empty dataframe in the datacollection
         if True in {df.empty for df in self}:
             warnings.warn("One of the dataframes in the DataCollection is empty!", UserWarning)
+
         self.df_names = df_names
+        self.categorical_feats = categorical_feats
+        # get numerical features if not given
+        if numerical_feats is None:
+            self.numerical_feats = self.get_numerical_features(self.categorical_feats)
+
+
+    def get_numerical_features(self, categorical_feats):
+        """
+        Given the categorical features, this function will return the features being non-categorical.
+
+        :param categorical_feats:
+        :return: Set of numerical features
+        """
+        common_feats = self.get_common_features()
+        return list(set(common_feats).difference(categorical_feats))
+
 
     def create_zipper(self, feats=None):
         """
@@ -139,7 +158,7 @@ class DataCollection(UserList):
             indices = df[df[col] == val].index
             reduced_dfs.append(df.loc[indices])
 
-        return DataCollection(reduced_dfs, self.df_names)
+        return DataCollection(reduced_dfs, self.df_names, self.categorical_feats, self.numerical_feats)
 
     def reduce_dfs_to_feat_subset(self, feat_subset):
         """
@@ -152,7 +171,10 @@ class DataCollection(UserList):
         for df in self:
             reduced_dfs.append(df.loc[:, feat_subset])
 
-        return DataCollection(reduced_dfs, self.df_names)
+        # keep only categorical feats that are present in the feat_subset
+        categorical_feats = list(set(self.categorical_feats).intersection(feat_subset))
+
+        return DataCollection(reduced_dfs, self.df_names, categorical_feats)
 
     def get_feature_sets(self):
         """
@@ -258,13 +280,11 @@ class DataCollection(UserList):
 
     ## Stats
 
-    def analyze_feature_ranges(self, cat_feats, num_feats, include=None, exclude=None, verbose=True):
+    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True):
         """
         This function can be used to compare all features easily. It works as a wrapper for the categorical and
         numerical feature comparison functions.
 
-        :param cat_feats: List of the categorical features found in the dataframes.
-        :param num_feats: List of numerical features found in the dataframes.
         :param include: List of features that should be considered for the comparison solely.
         :param exclude: List of features that should be excluded from the comparison.
         :return: pandas.Dataframe showing the p-values and corrected p-values of the comparison
@@ -274,6 +294,9 @@ class DataCollection(UserList):
         zipper = self.create_zipper()
         # create dictionary that will store the results for feature comparison
         p_values = dict()
+
+        cat_feats = self.categorical_feats[::]
+        num_feats = self.numerical_feats[::]
 
         # delete label if given
         if exclude:
@@ -354,17 +377,15 @@ class DataCollection(UserList):
             # add prog_df to list
             prog_dfs.append(prog_df)
 
-        return DataCollection(prog_dfs, self.df_names)
+        return DataCollection(prog_dfs, self.df_names, self.categorical_feats, self.numerical_feats)
 
-    def analyze_longitudinal_feats(self, time_col, bl_index, cat_feats=None, num_feats=None, include=None,
+    def analyze_longitudinal_feats(self, time_col, bl_index, include=None,
                                    exclude=None):
         """
         Performs the longitudinal analysis. For each
 
         :param time_col:
         :param bl_index:
-        :param cat_feats:
-        :param num_feats:
         :param include:
         :param exclude:
         :return:
@@ -374,13 +395,6 @@ class DataCollection(UserList):
         p_values = dict()
         # dict to collect dataframes reduced to only one time point. time point will be the key to the dataframe
         time_dfs = dict()
-
-        # if no list of features is given, take all  #TODO handle the standard assignment for cat_feats and num_feats or skip them
-        if not num_feats:
-            num_feats = list(self[0])
-        # if no categorical features are given take empty list
-        if not cat_feats:
-            cat_feats = []
 
         # create a set of all time_points present in the dataframes
         time_points = self.create_value_set(time_col)
@@ -397,8 +411,7 @@ class DataCollection(UserList):
                     time_point_datacol = self.reduce_dfs_to_value(time_col, time)
                     time_dfs[time] = time_point_datacol
 
-                    p_values[time] = time_point_datacol.analyze_feature_ranges(cat_feats=cat_feats, num_feats=num_feats,
-                                                                               exclude=exclude, include=include,
+                    p_values[time] = time_point_datacol.analyze_feature_ranges(exclude=exclude, include=include,
                                                                                verbose=False)
                 # skip time point if only values in one dataset are available
                 except UserWarning:

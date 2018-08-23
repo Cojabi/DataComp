@@ -25,7 +25,7 @@ def create_prop_matched_dfs(matches_path, datacol):
     except KeyError:
         prop_dfs = [datacol[0].loc[matched.index], datacol[1].loc[matched["Match"]]]
 
-    return DataCollection(prop_dfs, datacol.df_names)
+    return DataCollection(prop_dfs, datacol.df_names, datacol.categorical_feats)
 
 
 def create_prop_matched_dfs_longitudinal(matches_path, datacol, pat_col):
@@ -66,4 +66,4 @@ def create_prop_matched_dfs_longitudinal(matches_path, datacol, pat_col):
 
         prop_dfs = [majority_df, minority_df]
 
-    return DataCollection(prop_dfs, datacol.df_names)
+    return DataCollection(prop_dfs, datacol.df_names, datacol.categorical_feats)
