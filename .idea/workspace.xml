@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/datacollection.py" afterPath="$PROJECT_DIR$/datacomp/datacollection.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/stats.py" afterPath="$PROJECT_DIR$/datacomp/stats.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/visualization.py" afterPath="$PROJECT_DIR$/datacomp/visualization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -246,20 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00046" summary="re worked venn diagram function">
-      <created>1532813832366</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1532813832366</updated>
-    </task>
-    <task id="LOCAL-00047" summary="reformat code plus documentation">
-      <created>1532813889680</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1532813889680</updated>
     </task>
     <task id="LOCAL-00048" summary="big reorganize from &quot;dfs&quot; into DataCollection class, old functions still included">
       <created>1533043529812</created>
@@ -590,7 +574,21 @@
       <option name="project" value="LOCAL" />
       <updated>1534772731266</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="fixed categorical feature testing to account for missing keys">
+      <created>1535018821440</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1535018821440</updated>
+    </task>
+    <task id="LOCAL-00096" summary="reorganized datacollection code">
+      <created>1535018842037</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1535018842037</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -646,8 +644,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="included t-test as alternative option to u-test" />
-    <MESSAGE value="added longitudinal visualization" />
     <MESSAGE value="added plot_pro_score function" />
     <MESSAGE value="fixed statistical test usage in test_num_feats" />
     <MESSAGE value="improved stats documentation" />
@@ -671,7 +667,9 @@
     <MESSAGE value="renamed function" />
     <MESSAGE value="fixed get_sig_feats to work with Nan values" />
     <MESSAGE value="fixed progression score plotting" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed progression score plotting" />
+    <MESSAGE value="fixed categorical feature testing to account for missing keys" />
+    <MESSAGE value="reorganized datacollection code" />
+    <option name="LAST_COMMIT_MESSAGE" value="reorganized datacollection code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

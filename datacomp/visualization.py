@@ -176,7 +176,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :param xticks_positions: List storing the x-axis-tick positions.
         :return:
         """
-        LN_COLORS = ["#1799B5", "#00FFFF"]  # TODO change color palette
+        LN_COLORS = ["#1799B5", "#00FFFF", "#f7b42e"]  # TODO change color palette
 
         # plot lines
         for dataset_means, color in zip(means.values(), LN_COLORS):
@@ -192,7 +192,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :return:
         """
 
-        colors = ["#1f77b4", "#17becf", "#d62728"]  # TODO change color palette
+        colors = ["#1f77b4", "#17becf", "#e8a145"]  # TODO change color palette
         timepoints = list(time_dfs.keys())
         timepoints.sort()
 
@@ -229,6 +229,15 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         y_axis_values = [0 for i in range(len(sig_ticks))]
         plt.plot(sig_ticks, y_axis_values, "*")
 
+    def create_legend(labels, colors):
+        """ """
+        patches = []
+
+        for color, label in zip(colors, df_names):
+            patches.append(mpatches.Patch(color=color, label=label))
+
+        plt.legend(handles=patches)
+
     # get the number of dataframes and the dataframe names
     df_names = list(time_dfs.values())[0].df_names
     num_dfs = len(df_names)
@@ -257,6 +266,9 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         ax.set_xticklabels(sorted(time_dfs.keys()))
         ax.set_xticks(xticks_positions)
         plt.title(feat)
+
+        colors = ["#1f77b4", "#17becf", "#e8a145"]
+        create_legend(df_names, colors)
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + "prog_score.png")
