@@ -71,7 +71,7 @@ def plot_sig_cat_feats(datacol, sig_df, feat_subset=None, save_folder=None):
     countplot_single_features(datacol, feat_subset=cat_feats_to_plot, save_folder=save_folder)
 
 
-def countplot_single_features(datacol, feat_subset=None, save_folder=None):
+def countplot_single_features(datacol, feat_subset=None, normalize=False, save_folder=None):
     """
     Creates countplots with discrete feature split over x axis and number of occurences on y axis.
 
@@ -80,10 +80,18 @@ def countplot_single_features(datacol, feat_subset=None, save_folder=None):
     :param save_folder:
     :return:
     """
+    def normalize_to_count(df): #TODO add normalization to the total number of entities in that group.
+        """ """
+        raise NotImplementedError
+
 
     combined = datacol.combine_dfs("Dataset", labels=datacol.df_names)
 
     for feat in feat_subset:
+
+        if normalize:
+            normalize_to_count(combined) #TODO add normalization to the total number of entities in that group.
+
         sns.countplot(x=feat, hue="Dataset", data=combined)
 
         if save_folder:

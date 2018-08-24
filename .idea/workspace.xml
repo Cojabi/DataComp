@@ -29,8 +29,8 @@
       <file leaf-file-name="stats.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="238" column="30" lean-forward="false" selection-start-line="238" selection-start-column="22" selection-end-line="238" selection-end-column="30" />
+            <state relative-caret-position="36">
+              <caret line="101" column="16" lean-forward="true" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="16" />
               <folding>
                 <element signature="e#25#44#0" expanded="true" />
               </folding>
@@ -65,8 +65,8 @@
       <file leaf-file-name="visualization.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2402">
-              <caret line="189" column="0" lean-forward="false" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
+            <state relative-caret-position="576">
+              <caret line="89" column="28" lean-forward="true" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
               <folding>
                 <element signature="e#25#55#0" expanded="true" />
               </folding>
@@ -124,9 +124,9 @@
       <find>warn</find>
       <find>print</find>
       <find>cat</find>
-      <find>datacoll</find>
       <find>datacolle</find>
       <find>create_pro</find>
+      <find>datacoll</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -248,13 +248,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00057" summary="improved reduce_dfs_to_feat_subset test">
-      <created>1533137221866</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1533137221866</updated>
     </task>
     <task id="LOCAL-00058" summary="improved reduce_dfs_to_value test">
       <created>1533153390279</created>
@@ -592,7 +585,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535030221559</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="documentation + reformat code">
+      <created>1535037137939</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1535037137939</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -648,7 +648,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added plot_all_sig prog score" />
     <MESSAGE value="added documentation to prog score plotting" />
     <MESSAGE value="adapted create prop matching dfs" />
     <MESSAGE value="implemented patients_per_timepoint plot&#10;added documentation" />
@@ -673,7 +672,8 @@
     <MESSAGE value="fixied numerical_feats in init" />
     <MESSAGE value="added countplot for categorical feats" />
     <MESSAGE value="implemented plot_sig_cat_feats" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented plot_sig_cat_feats" />
+    <MESSAGE value="documentation + reformat code" />
+    <option name="LAST_COMMIT_MESSAGE" value="documentation + reformat code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1056,16 +1056,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="238" column="30" lean-forward="false" selection-start-line="238" selection-start-column="22" selection-end-line="238" selection-end-column="30" />
-          <folding>
-            <element signature="e#25#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/longitudinal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -1106,10 +1096,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/datacomp/stats.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="101" column="16" lean-forward="true" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="16" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/visualization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2402">
-          <caret line="189" column="0" lean-forward="false" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
+        <state relative-caret-position="576">
+          <caret line="89" column="28" lean-forward="true" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
           <folding>
             <element signature="e#25#55#0" expanded="true" />
           </folding>
