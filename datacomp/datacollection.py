@@ -456,7 +456,7 @@ class DataCollection(UserList):
 
     ## Visualization
 
-    def feat_venn_diagram(self):
+    def feat_venn_diagram(self, save_path=None):
         """
         Plots a venn diagram illustrating the overlap in features between the datasets.
 
@@ -496,3 +496,8 @@ class DataCollection(UserList):
             c.set_lw(1.0)
 
         plt.title("Feature Overlap")
+
+        if save_path:
+            plt.savefig(save_path)
+        else:
+            plt.show()
