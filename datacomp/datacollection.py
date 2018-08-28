@@ -8,6 +8,7 @@ import warnings
 
 from pymatch.Matcher import Matcher
 from collections import UserList
+from sklearn.cluster import AgglomerativeClustering
 from .stats import test_cat_feats, test_num_feats, p_correction
 from .utils import construct_formula, calc_prog_scores
 
@@ -324,6 +325,36 @@ class DataCollection(UserList):
                   str(results["signf"].sum()) + "/" + str(len(results["signf"])))
 
         return results.sort_values("signf")
+
+    ## Clustering
+
+    def hierarchical_clustering(datacol, label=None, str_cols=None):
+        """ """
+
+        def calculate_cluster_score(cl_data):
+            """ """
+            raise NotImplementedError
+
+        # pre-process data to allow for clustering
+        cl_data = datacol.combine_dfs(label)
+        num_datasets = len(cl_data[label].unique())
+
+        # exclude string columns if given
+        if str_cols:
+            cl_data.drop(str_cols, axis=1, inplace=True)
+
+        # make CCA
+        cl_data.dropna(inplace=True)
+
+        # create model for clustering and fit it to the data
+        model = AgglomerativeClustering(num_datasets)
+        cl_labels = model.fit_predict(cl_data)
+
+        # set label column
+        cl_data["Cluster"] = cl_labels
+
+        # calculate datasets distributions across clusters
+        calculate_cluster_score(cl_data)
 
     ## longitudinal
 

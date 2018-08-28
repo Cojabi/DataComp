@@ -77,11 +77,9 @@
       <file leaf-file-name="datacollection.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="838">
-              <caret line="501" column="13" lean-forward="true" selection-start-line="501" selection-start-column="13" selection-end-line="501" selection-end-column="13" />
-              <folding>
-                <element signature="e#25#44#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-468">
+              <caret line="10" column="51" lean-forward="false" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -249,13 +247,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00059" summary="added MANOVA function">
-      <created>1533216840171</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1533216840171</updated>
     </task>
     <task id="LOCAL-00060" summary="improved figure saving in boxplot function">
       <created>1533222056882</created>
@@ -593,7 +584,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535101818924</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="added save option to venn diagram">
+      <created>1535103161085</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1535103161085</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -649,7 +647,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adapted create prop matching dfs" />
     <MESSAGE value="implemented patients_per_timepoint plot&#10;added documentation" />
     <MESSAGE value="fixed MANOVA" />
     <MESSAGE value="added print number of entities function" />
@@ -674,7 +671,8 @@
     <MESSAGE value="implemented plot_sig_cat_feats" />
     <MESSAGE value="documentation + reformat code" />
     <MESSAGE value="added stub for normalization in count plot" />
-    <option name="LAST_COMMIT_MESSAGE" value="added stub for normalization in count plot" />
+    <MESSAGE value="added save option to venn diagram" />
+    <option name="LAST_COMMIT_MESSAGE" value="added save option to venn diagram" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1109,11 +1107,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="838">
-          <caret line="501" column="13" lean-forward="true" selection-start-line="501" selection-start-column="13" selection-end-line="501" selection-end-column="13" />
-          <folding>
-            <element signature="e#25#44#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-468">
+          <caret line="10" column="51" lean-forward="false" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
