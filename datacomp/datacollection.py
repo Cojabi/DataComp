@@ -7,7 +7,7 @@ import os
 import warnings
 
 from pymatch.Matcher import Matcher
-from collections import UserList
+from collections import UserList, Counter
 from sklearn.cluster import AgglomerativeClustering
 from .stats import test_cat_feats, test_num_feats, p_correction
 from .utils import construct_formula, calc_prog_scores
@@ -331,12 +331,35 @@ class DataCollection(UserList):
     def hierarchical_clustering(datacol, label=None, str_cols=None):
         """ """
 
-        def calculate_cluster_score(cl_data):
+        def _confusion_matrix(data, label):
             """ """
-            raise NotImplementedError
+            confusion_matrix = dict()
+
+            # count for each label
+            for dataset_nr in data[label].unique():
+                # select subset out of dataframe
+                dataset = data[data[label] == dataset_nr]
+
+                # count occurences
+                c = Counter(dataset["Cluster"])
+
+                # get rid of NaNs
+                c = {key: c[key] for key in c if not pd.isnull(key)}
+
+                # add to confusion matrix
+                confusion_matrix[dataset_nr] = c
+
+            return pd.DataFrame(confusion_matrix).transpose()
+
+        def calculate_cluster_purity(confusion_matrix):
+            """ """
+            return confusion_matrix.max().sum() / confusion_matrix.values.sum()
+
+        if label is None:
+            label = "Dataset"
 
         # pre-process data to allow for clustering
-        cl_data = datacol.combine_dfs(label)
+        cl_data = datacol.combine_dfs(label, labels=[8, 9])
         num_datasets = len(cl_data[label].unique())
 
         # exclude string columns if given
@@ -352,9 +375,10 @@ class DataCollection(UserList):
 
         # set label column
         cl_data["Cluster"] = cl_labels
+        confusion_m = _confusion_matrix(cl_data, label)
 
         # calculate datasets distributions across clusters
-        calculate_cluster_score(cl_data)
+        return calculate_cluster_purity(confusion_m)
 
     ## longitudinal
 
