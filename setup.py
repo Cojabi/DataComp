@@ -23,4 +23,16 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ),
+    install_requires=[
+        'pandas',
+        'xlrd',
+        'numpy',
+        'scipy',
+        'sklearn',
+        'matplotlib_venn',
+        'pymatch',
+        'matplotlib',
+        'statsmodels',
+        'seaborn',
+    ]
 )
