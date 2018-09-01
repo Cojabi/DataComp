@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Setup.py for DataComp."""
+
 import setuptools
 
 with open("README.rst", "r") as fh:
