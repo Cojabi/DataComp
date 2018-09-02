@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Setup.py for DataComp."""
+
 import setuptools
 
-with open("README.md", "r") as fh:
+with open("README.rst", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
@@ -21,4 +23,16 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ),
+    install_requires=[
+        'pandas',
+        'xlrd',
+        'numpy',
+        'scipy',
+        'sklearn',
+        'matplotlib_venn',
+        'pymatch',
+        'matplotlib',
+        'statsmodels',
+        'seaborn',
+    ]
 )
