@@ -15,14 +15,20 @@ setuptools.setup(
     author_email="colin.birken@gmail.com",
     description="A small example package",
     long_description=long_description,
-    long_description_content_type="text/markdown",
     url="https://github.com/Cojabi/datacomp",
     packages=setuptools.find_packages("datacomp"),
-    classifiers=(
+    zip_safe=False,
+    keywords=[
+        'clinical trial',
+    ],
+    classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
-    ),
+    ],
+    license='Apache Software License',
     install_requires=[
         'pandas',
         'xlrd',
