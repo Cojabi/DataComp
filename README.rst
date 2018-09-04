@@ -1,5 +1,6 @@
 DataComp: A python framework to statistically compare multiple data sets
 ========================================================================
+
 Description
 -----------
 DataComp can be used to systematically compare and statistically assess differences across multipe data sets. This
@@ -13,10 +14,10 @@ features, otherwise those will be handled as not in common.
 Main Features
 -------------
 DataComp supports:
+
 - Evaluating and visualizing the overlap in features across the data sets
 - Parametric and non-parametric statistical hypothesis testing to compare the feature value distributions
-- (Automatically) visualizing feature distributions of (significantly deviating) features for visual comparison in
-  form of boxplots or overlapping kde plots
+- (Automatically) visualizing feature distributions of (significantly deviating) features for visual comparison in form of boxplots or overlapping kde plots
 - Performing MANOVA to assess how much of an influence features show onto the data set membership
 - Hierarchical clustering of the entities in the data sets to evaluate if data set membership labels are evenly
   distributed across clusters or separated
@@ -32,4 +33,21 @@ Installation
 
 Documentation
 -------------
-Still in the works
+Full package documentation can be found here_.
+
+.. _here: https://datacomp.readthedocs.io/en/latest/
+
+Examples
+~~~~~~~~
+Example notebooks showcasing Datacomp workflows and results can be found at DataComp_Examples_:
+
+.. _DataComp_Examples:
+
+- `Cross-sectional Comparison Example`_
+
+.. _Cross-sectional Comparison Example: https://github.com/Cojabi/DataComp_Examples/blob/master/cross-sectional_example.ipynb
+
+- `Longitudinal Comparison Example`_
+
+.. _Longitudinal Comparison Example: https://github.com/Cojabi/DataComp_Examples/blob/master/longitudinal_example.ipynb
+
