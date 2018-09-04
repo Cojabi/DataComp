@@ -22,7 +22,7 @@ def plot_sig_num_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=
     :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
     :param boxplot: Flag that indicates if boxplot figures shall be created
     :param kdeplot: Flag that indicates if kde plot figures shall be created
-    :param save_folder: Path to a folder in which the plots shall be saved
+    :param save_folder: Path to a folder in which all the plots shall be saved
     :return:
     """
     # get significant features
