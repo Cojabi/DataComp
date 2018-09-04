@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="">
+    <list default="true" id="b70f46e5-7a4f-4472-b6b5-7f66cfa93414" name="Default" comment="minor documentation">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datacomp/datacollection.py" afterPath="$PROJECT_DIR$/datacomp/datacollection.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -77,11 +76,9 @@
       <file leaf-file-name="datacollection.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2538">
-              <caret line="141" column="50" lean-forward="false" selection-start-line="141" selection-start-column="50" selection-end-line="141" selection-end-column="50" />
-              <folding>
-                <element signature="e#25#44#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="144">
+              <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -203,7 +200,22 @@
             <path>
               <item name="DataComp" type="b2602c69:ProjectViewProjectNode" />
               <item name="DataComp" type="462c0819:PsiDirectoryNode" />
+              <item name=".ipynb_checkpoints" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DataComp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DataComp" type="462c0819:PsiDirectoryNode" />
               <item name="datacomp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DataComp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DataComp" type="462c0819:PsiDirectoryNode" />
+              <item name="DataComp.egg-info" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DataComp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DataComp" type="462c0819:PsiDirectoryNode" />
+              <item name="datacomp.egg-info" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DataComp" type="b2602c69:ProjectViewProjectNode" />
@@ -250,13 +262,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529512560286</updated>
-    </task>
-    <task id="LOCAL-00062" summary="added documentation">
-      <created>1533223268003</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1533223268003</updated>
     </task>
     <task id="LOCAL-00063" summary="added more documentation">
       <created>1533227244779</created>
@@ -594,7 +599,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535636402654</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="minor documentation">
+      <created>1536063058118</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1536063058120</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -607,7 +619,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13261455" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13261455" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -650,7 +662,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added print number of entities function" />
     <MESSAGE value="added longitudinal version of create prop matched dfs" />
     <MESSAGE value="deprecation comment" />
     <MESSAGE value="added shebang where missing" />
@@ -675,7 +686,8 @@
     <MESSAGE value="added save option to venn diagram" />
     <MESSAGE value="added raw version of clustering" />
     <MESSAGE value="implemented clustering plus cluster purity calculation" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented clustering plus cluster purity calculation" />
+    <MESSAGE value="minor documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor documentation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1104,11 +1116,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/datacomp/datacollection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2538">
-          <caret line="141" column="50" lean-forward="false" selection-start-line="141" selection-start-column="50" selection-end-line="141" selection-end-column="50" />
-          <folding>
-            <element signature="e#25#44#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="144">
+          <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
