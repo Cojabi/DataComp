@@ -6,3 +6,5 @@ pymatch
 matplotlib
 statsmodels
 seaborn
+sklearn
+xlrd
