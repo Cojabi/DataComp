@@ -15,14 +15,20 @@ from .utils import construct_formula, calc_prog_scores
 
 def get_data(paths, df_names, categorical_feats, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """
+    This function will load the data and create a DataCollection object. It takes either a list of paths to the datasets
+    of a single path as string. If only a single path is given, the given dataset will be split into different datasets
+    based on the value in the groupby column.
 
-    :param paths:
-    :param df_names:
-    :param groupby:
-    :param exclude_classes:
-    :param rel_cols:
-    :param sep:
-    :return:
+    :param paths: List of paths to the different datasets or just a single path to one dataset. If only single pa
+    :param df_names: List of the dataframe names
+    :param categorical_feats: List of feautres which are categorical
+    :param groupby: Column name of the column by which the dataset shall be splitted
+    :param exclude_classes: A value present in the groupby column can be specified here. All entries containing that
+    value will not be included into the DataCollection.
+    :param rel_cols: A list of feature names can be given to consider only those features of the datasets. Other columns
+    will be excluded from the DataCollection.
+    :param sep: Separator for .csv files. Can be changed e.g. to "\t" is file is tab separated.
+    :return: DataCollection object
     """
 
     def _load_data(path, sep=sep):
@@ -246,12 +252,13 @@ class DataCollection(UserList):
         Will create a combined dataframe in which labels are assigned depending on the dataset membership.
         The resulting dataframe will be saved under save_path and can be used for propensity_score_matching.
 
-        :param label_name:
-        :param feat_subset:
+        :param label_name: Name of the label column, that will be created.
+        :param feat_subset: List of feature names. All features not in the list will be excluded.
         :param cca: If true only complete cases are kept (cases where all features are non missing values)
-        :param save_path:
-        :param labels:
-        :return:
+        :param save_path: Path where to save the combined dataset.
+        :param labels: List of labels that shall be assigned to the datasets in the label column. If none are given the
+        first dataset will get a 1 and all the others 0.
+        :return: pandas.DataFrame object storing a concatinated version of the DataCollection datasets.
         """
 
         # reduce dfs to feat_subset
@@ -329,8 +336,14 @@ class DataCollection(UserList):
 
     ## Clustering
 
-    def hierarchical_clustering(datacol, label=None, str_cols=None):
-        """ """
+    def hierarchical_clustering(self, label=None, str_cols=None, return_data=False):
+        """
+        Performs an agglomerative clustering using the dataset
+
+        :param label:
+        :param str_cols:
+        :return:
+        """
 
         def _confusion_matrix(data, label):
             """ """
@@ -359,8 +372,11 @@ class DataCollection(UserList):
         if label is None:
             label = "Dataset"
 
+        # create labels for the datasets
+        labels = range(1, len(self) + 1)
+
         # pre-process data to allow for clustering
-        cl_data = datacol.combine_dfs(label, labels=[8, 9])
+        cl_data = self.combine_dfs(label, labels=labels)
         num_datasets = len(cl_data[label].unique())
 
         # exclude string columns if given
@@ -378,8 +394,11 @@ class DataCollection(UserList):
         cl_data["Cluster"] = cl_labels
         confusion_m = _confusion_matrix(cl_data, label)
 
+        if return_data:
+            return calculate_cluster_purity(confusion_m), confusion_m, cl_data
+
         # calculate datasets distributions across clusters
-        return calculate_cluster_purity(confusion_m)
+        return calculate_cluster_purity(confusion_m), confusion_m
 
     ## longitudinal
 
@@ -437,16 +456,17 @@ class DataCollection(UserList):
 
         return DataCollection(prog_dfs, self.df_names, self.categorical_feats, self.numerical_feats)
 
-    def analyze_longitudinal_feats(self, time_col, bl_index, include=None,
-                                   exclude=None):
+    def analyze_longitudinal_feats(self, time_col, bl_index, include=None, exclude=None):
         """
-        Performs the longitudinal analysis. For each
+        Performs the longitudinal comparison. For each timepoint the progression scores of all variables will be
+        compared.
 
-        :param time_col:
-        :param bl_index:
-        :param include:
-        :param exclude:
-        :return:
+        :param time_col: Column name of the column storing the time dimension
+        :param bl_index: Value of the time column which refers to the baseline
+        :param include: List of feature names which shall be considered in the comparison
+        :param exclude: List of feature names which shall be excluded in the comparison
+        :return: pandas.DataFrame storing the results of the comprasion, List of dataframes that have the progression
+        scores.
         """
 
         # dict to collect p_values in
@@ -520,6 +540,7 @@ class DataCollection(UserList):
         """
         Plots a venn diagram illustrating the overlap in features between the datasets.
 
+        :param save_path: Path where to save the venn diagram
         :return:
         """
         feat_set = self.get_feature_sets()
