@@ -137,14 +137,15 @@ class DataCollection(UserList):
         zipper = dict(zip(feats, zip_values))
         return zipper
 
-    def print_number_of_entities(self, pat_col):
+    def print_number_of_entities(self, entity_col):
         """
+        Prints the number of entities per dataset.
 
-        :param pat_col:
+        :param entity_col: Column containing the entity identifiers
         :return:
         """
         for df in self:
-            print("# of entities: ", len(df[pat_col].unique()))
+            print("# of entities: ", len(df[entity_col].unique()))
 
     def reduce_dfs_to_value(self, col, val):
         """
@@ -497,9 +498,13 @@ class DataCollection(UserList):
         for df in self:
             qc_dfs.append(df[cols])
 
+        # exclude label if included into columns
+        if label in cols:
+            cols.remove(label)
+
         # construct formula
-        cols.remove(label)
         formula = construct_formula(label, cols)
+        print(formula)
 
         # create Matcher
         m = Matcher(*qc_dfs, yvar=label, formula=formula)
