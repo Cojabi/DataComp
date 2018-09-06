@@ -340,7 +340,8 @@ class DataCollection(UserList):
         """
         Performs an agglomerative clustering to assign entites in the datasets to clusters and evaluate the distribution
         of dataset memberships across the clusters. Outcome will be the cluster purity w.r.t. the dataset membership
-        labels and the confusion matrix, listing how many entities out of which dataset are assigned to which cluster.
+        labels and the confusion matrix, listing how many entities out of which dataset (rows) are assigned to which
+        cluster (columns).
 
         :param label: Column name of the column that should store the dataset membership labels. If None is given, a
         column named "Dataset" will be created and labels from 1 to number of datasets will be assigned as labels.
@@ -376,7 +377,7 @@ class DataCollection(UserList):
             label = "Dataset"
 
         # create labels for the datasets
-        labels = range(4, len(self) + 4)
+        labels = range(1, len(self) + 1)
 
         # pre-process data to allow for clustering
         cl_data = self.combine_dfs(label, labels=labels)
