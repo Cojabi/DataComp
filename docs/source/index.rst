@@ -31,10 +31,11 @@ DataComp supports:
 Links
 =====
 - Versioning on GitHub_
-.. _GitHub: https://github.com/Cojabi/DataComp
 - Documentation on `Read the docs`_
-.. _Read the docs: https://datacomp.readthedocs.io/en/latest/)
 - Distribution via PyPi
+
+.. _GitHub: https://github.com/Cojabi/DataComp
+.. _Read the docs: https://datacomp.readthedocs.io/en/latest/)
 
 .. toctree::
    :maxdepth: 2
@@ -42,6 +43,8 @@ Links
 
    install
    examples
+   preprocessing
+
 
 .. toctree::
    :maxdepth: 2
