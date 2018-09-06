@@ -454,7 +454,10 @@ class DataCollection(UserList):
             # add prog_df to list
             prog_dfs.append(prog_df)
 
-        return DataCollection(prog_dfs, self.df_names, self.categorical_feats, self.numerical_feats)
+        # keep track of which categorical features are still in the collection
+        categorical_feats = list(set(self.categorical_feats).intersection(feat_subset))
+
+        return DataCollection(prog_dfs, self.df_names, categorical_feats)
 
     def analyze_longitudinal_feats(self, time_col, bl_index, include=None, exclude=None):
         """
