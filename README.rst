@@ -3,12 +3,12 @@ DataComp: A python framework to statistically compare multiple data sets
 
 Description
 -----------
-DataComp can be used to systematically compare and statistically assess differences across multipe data sets. This
-could for example help to identify suitable training and validation datasets for machine learning protocols, to
-quality control if and how/where simulated data deviates from real world data or if different sites of a multi site
-study make similar observations.
+DataComp can be used to systematically compare and statistically assess differences across multiple datasets. This
+could for example help to identify suitable training and validation datasets for machine learning approaches, to
+quality control if, how and where simulated data deviates from real world data or if different sites of a multi-site
+study make similar observations or show significant differences.
 
-It literally compares everything, the only condition is, that the data sets share the same feature names for common
+It literally compares everything, the only condition is, that the datasets share the same feature names for common
 features, otherwise those will be handled as distinct features.
 
 Main Features
@@ -20,7 +20,7 @@ DataComp supports:
 - Visualizing feature distributions of (significantly deviating) features in form of boxplots or overlapping kde plots for visual comparison
 - Performing MANOVA to assess how much of an influence features show onto the dataset membership
 - Hierarchical clustering of the entities in the data sets to evaluate if dataset membership labels are evenly
-  distributed across clusters or separated
+  distributed across clusters or assigned to distinct clusters
 - Normalizing time series data to baseline and statistically comparing the progression of features over time
 - Visualization of feature progression over time
 
@@ -31,15 +31,17 @@ Installation
 
    pip install datacomp
 
+
 Documentation
 -------------
 Full package documentation can be found here_.
 
 .. _here: https://datacomp.readthedocs.io/en/latest/
 
+
 Examples
 ~~~~~~~~
-Example notebooks showcasing Datacomp workflows and results can be found at DataComp_Examples_:
+Example notebooks showcasing Datacomp workflows and results on simulated data can be found at DataComp_Examples_:
 
 .. _DataComp_Examples:
 
