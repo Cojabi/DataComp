@@ -373,3 +373,4 @@ def plot_entities_per_timepoint(datacol, time_col, label_name):
     labels = range(1, len(datacol)+1)
     combined = datacol.combine_dfs(label_name, labels=labels)
     sns.countplot(x=time_col, hue=label_name, data=combined)
+    plt.title("Number of entities per time point")
