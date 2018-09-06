@@ -103,5 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# IDEA
+# Added
 .idea
+docs/_build
