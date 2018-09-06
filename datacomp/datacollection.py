@@ -297,7 +297,7 @@ class DataCollection(UserList):
         numerical feature comparison functions.
 
         :param include: List of features that should be considered for the comparison solely.
-        :param exclude: List of features that should be excluded from the comparison.
+        :param exclude: List or set of features that should be excluded from the comparison.
         :return: pandas.Dataframe showing the p-values and corrected p-values of the comparison
         """
 
@@ -469,7 +469,7 @@ class DataCollection(UserList):
         scores.
         """
 
-        # dict to collect p_values in
+        # dict to collect p_values
         p_values = dict()
         # dict to collect dataframes reduced to only one time point. time point will be the key to the dataframe
         time_dfs = dict()
@@ -477,6 +477,13 @@ class DataCollection(UserList):
         # create a set of all time_points present in the dataframes
         time_points = self.create_value_set(time_col)
         time_points.remove(bl_index)
+
+        # add time to exclude features if not in there yet
+        if exclude:
+            exclude = set(exclude)
+            exclude.add(time_col)
+        else:
+            exclude = {time_col}
 
         # for each timepoint collect the data and compare the data
         for time in time_points:
