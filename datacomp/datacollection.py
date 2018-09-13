@@ -352,6 +352,7 @@ class DataCollection(UserList):
 
         # delete label if given
         if exclude:
+            assert type(exclude) == list, "exclude must be given as a list"
             for feat in exclude:
                 del zipper[feat]
             # update feature lists
@@ -359,6 +360,7 @@ class DataCollection(UserList):
             num_feats = set(num_feats).difference(exclude)
 
         if include:
+            assert type(include) == list, "include must be given as a list"
             cat_feats = set(cat_feats).intersection(include)
             num_feats = set(num_feats).intersection(include)
 
@@ -366,11 +368,14 @@ class DataCollection(UserList):
         p_values.update(test_cat_feats(zipper, cat_feats))
         p_values.update(test_num_feats(zipper, num_feats))
 
+        if not p_values:
+            warnings.warn(UserWarning, "No p_values have been calculated! Please check input data.")
+
         # test numerical features
         results = p_correction(p_values)
 
         if verbose:
-            print("Fraction of significantly deviating features:",
+            print("Fraction of significant comparisons:",
                   str(results["signf"].sum()) + "/" + str(len(results["signf"])))
 
         return results.sort_values("signf")
