@@ -13,6 +13,47 @@ from .stats import test_cat_feats, test_num_feats, p_correction
 from .utils import construct_formula, calc_prog_scores
 
 
+def create_datacol(df, categorical_feats, groupby, df_names=None, exclude_classes=[], rel_cols=None):
+    """
+    Creates a DataCollection from a DataFrame by grouping and splitting it according to values stated in the groupby
+    column.
+
+    :param df: Pandas DataFrame object
+     :param df_names: List of the dataframe names
+    :param categorical_feats: List of feautres which are categorical
+    :param groupby: Column name of the column by which the dataset shall be splitted
+    :param exclude_classes: A value present in the groupby column can be specified here. All entries containing that
+    value will not be included into the DataCollection.
+    :param rel_cols: A list of feature names can be given to consider only those features of the datasets. Other columns
+    will be excluded from the DataCollection.
+    :return: DataCollection object
+    """
+
+    dfs = []
+
+    grouping = df.groupby(groupby)
+
+    # split dataframe groups and create a list with all dataframes
+    for name, grp in grouping:
+        # skip class if it should be excluded
+        if name in exclude_classes:
+            continue
+
+        df = grouping.get_group(name)[::]
+
+        # consider all columns as relevant is no rel_cols given.
+        if rel_cols is None:
+            rel_cols = list(df)
+
+        # consider the relevant columns
+        dfs.append(df[rel_cols])
+
+    # extract dataset names from groupby column if none are given
+    if df_names is None:
+        df_names = list(sorted(grouping.groups.keys()))
+
+    return DataCollection(dfs, df_names, categorical_feats)
+
 def get_data(paths, df_names, categorical_feats, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """
     This function will load the data and create a DataCollection object. It takes either a list of paths to the datasets
@@ -54,7 +95,7 @@ def get_data(paths, df_names, categorical_feats, groupby=None, exclude_classes=[
         elif isinstance(paths, list):
             data = _load_data(*paths, sep)
         else:
-            raise ValueError("Seems that the input was a single path. Please input path as string or inside a list.")
+            raise ValueError("It seems like the input was a single path. Please input path as string or inside a list.")
 
         grouping = data.groupby(groupby)
 

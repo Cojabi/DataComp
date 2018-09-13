@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .datacollection import DataCollection, get_data
+from .datacollection import DataCollection, get_data, create_datacol
 
 from .stats import p_correction, test_num_feats, test_cat_feats, manova
 
