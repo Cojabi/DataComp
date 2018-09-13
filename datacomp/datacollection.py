@@ -369,7 +369,7 @@ class DataCollection(UserList):
         p_values.update(test_num_feats(zipper, num_feats))
 
         if not p_values:
-            warnings.warn(UserWarning, "No p_values have been calculated! Please check input data.")
+            warnings.warn("No p_values have been calculated! Please check input data.", UserWarning)
 
         # test numerical features
         results = p_correction(p_values)
