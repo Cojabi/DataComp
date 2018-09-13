@@ -4,10 +4,9 @@ import pandas as pd
 import numpy as np
 import warnings
 
-from scipy.stats import mannwhitneyu, ttest_ind
+from scipy.stats import mannwhitneyu, ttest_ind, chisquare
 from statsmodels.sandbox.stats.multicomp import multipletests
 from statsmodels.multivariate.manova import MANOVA
-from scipy.stats import chisquare
 from collections import Counter
 
 from .utils import construct_formula
@@ -83,7 +82,7 @@ def test_num_feats(zipper, feat_subset=None, method=None):
     return p_values
 
 
-def test_cat_feats(zipper, feat_subset=None):
+def test_cat_feats(zipper, feat_subset=None, method="chi"):
     """
     Performs hypothesis testing to identify significantly deviating categorical features. A chi-squared test is used.
 
@@ -141,9 +140,20 @@ def test_cat_feats(zipper, feat_subset=None):
                 # fill missing keys in test data:
                 test_data = _non_present_values_to_zero(test_data)
 
-                # calculate u statistic and return p-value
-                z = chisquare(*test_data)
-                p_values[feat][i + 1, j + 1] = z.pvalue
+                # sort testing data by index(categories) to align the counts for the categories
+                test_data = [data.sort_index() for data in test_data]
+
+                if method == "chi":
+                    # skip feature if number of events per group is smaller than 5
+                    if (test_data[0] < 5).any() or (test_data[1] < 5).any():
+                        warnings.warn(UserWarning, feat+"is skipped due to few observations in one or more groups.")
+                        # calculate u statistic and return p-value
+                        test_result = chisquare(*test_data)
+
+                elif method == "fisher":
+                    raise NotImplementedError
+
+                p_values[feat][i + 1, j + 1] = test_result.pvalue
 
     return p_values
 
