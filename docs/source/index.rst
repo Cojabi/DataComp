@@ -44,6 +44,7 @@ Links
    install
    examples
    preprocessing
+   nans
 
 
 .. toctree::
