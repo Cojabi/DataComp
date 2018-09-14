@@ -346,7 +346,7 @@ class DataCollection(UserList):
                 reduced_datcol[i].dropna(inplace=True)
 
         # combine datasets
-        combined_df = pd.concat(reduced_datcol)
+        combined_df = pd.concat(reduced_datcol, sort=False)
 
         # save them under save_path if save_path is given
         if save_path:
