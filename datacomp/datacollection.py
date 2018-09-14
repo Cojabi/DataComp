@@ -54,6 +54,7 @@ def create_datacol(df, categorical_feats, groupby, df_names=None, exclude_classe
 
     return DataCollection(dfs, df_names, categorical_feats)
 
+
 def get_data(paths, df_names, categorical_feats, groupby=None, exclude_classes=[], rel_cols=None, sep=","):
     """
     This function will load the data and create a DataCollection object. It takes either a list of paths to the datasets
@@ -152,7 +153,6 @@ class DataCollection(UserList):
         else:
             self.numerical_feats = numerical_feats
 
-
     def get_numerical_features(self, categorical_feats):
         """
         Given the categorical features, this function will return the features being non-categorical.
@@ -162,7 +162,6 @@ class DataCollection(UserList):
         """
         common_feats = self.get_common_features()
         return list(set(common_feats).difference(categorical_feats))
-
 
     def create_zipper(self, feats=None):
         """
@@ -339,11 +338,13 @@ class DataCollection(UserList):
 
         :param include: List of features that should be considered for the comparison solely.
         :param exclude: List or set of features that should be excluded from the comparison.
+        :param verbose: Flag, if true the ratio of significant features will be printed.
         :return: pandas.Dataframe showing the p-values and corrected p-values of the comparison
         """
 
         # create zipper
         zipper = self.create_zipper()
+
         # create dictionary that will store the results for feature comparison
         p_values = dict()
 
@@ -392,6 +393,8 @@ class DataCollection(UserList):
         :param label: Column name of the column that should store the dataset membership labels. If None is given, a \
         column named "Dataset" will be created and labels from 1 to number of datasets will be assigned as labels.
         :param str_cols: List of features where the values are non numeric. Must be excluded for clustering.
+        :param return_data: If true, the original dataframe will be returned with the cluster membership as a new \
+        column.
         :return: Cluster purity, Confusion matrix
         """
 
@@ -568,7 +571,8 @@ class DataCollection(UserList):
         population. Will train classifiers and create a plot.
 
         :param rel_cols: relevant columns
-        :param label: Label or class which should be regressed. (cohort1/cohort2, case/control, treatment/untreated etc.)
+        :param label: Label or class which should be regressed. \
+        (cohort1/cohort2, case/control, treatment/untreated etc.)
         """
 
         cols = rel_cols[::]

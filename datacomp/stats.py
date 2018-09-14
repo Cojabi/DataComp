@@ -146,7 +146,7 @@ def test_cat_feats(zipper, feat_subset=None, method="chi"):
                 if method == "chi":
                     # skip feature if number of events per group is smaller than 5
                     if (test_data[0] < 5).any() or (test_data[1] < 5).any():
-                        warnings.warn(feat+"has under 5 observations in one or more groups.", UserWarning)
+                        warnings.warn(feat + "has under 5 observations in one or more groups.", UserWarning)
                         # calculate u statistic and return p-value
                         test_result = chisquare(*test_data)
 
@@ -193,7 +193,7 @@ def p_correction(p_values):
 
     def _create_result_table(result, p_val_col, p_trans):
         """
-        Builds the dataframe showing the results
+        Builds the dataframe showing the results.
 
         :param result:
         :param p_val_col:

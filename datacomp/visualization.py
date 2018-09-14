@@ -80,17 +80,17 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
     :param save_folder:
     :return:
     """
-    def normalize_to_count(df): #TODO add normalization to the total number of entities in that group.
+
+    def normalize_to_count(df):  # TODO add normalization to the total number of entities in that group.
         """ """
         raise NotImplementedError
-
 
     combined = datacol.combine_dfs("Dataset", labels=datacol.df_names)
 
     for feat in feat_subset:
 
         if normalize:
-            normalize_to_count(combined) #TODO add normalization to the total number of entities in that group.
+            normalize_to_count(combined)  # TODO add normalization to the total number of entities in that group.
 
         sns.countplot(x=feat, hue="Dataset", data=combined)
 
@@ -370,7 +370,7 @@ def plot_entities_per_timepoint(datacol, time_col, label_name):
     :param label_name: Name of the label which should be used to organize the x-axis.
     :return:
     """
-    labels = range(1, len(datacol)+1)
+    labels = range(1, len(datacol) + 1)
     combined = datacol.combine_dfs(label_name, labels=labels)
     sns.countplot(x=time_col, hue=label_name, data=combined)
     plt.title("Number of entities per time point")
