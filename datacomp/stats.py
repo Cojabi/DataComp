@@ -18,7 +18,7 @@ def test_num_feats(zipper, feat_subset=None, method=None):
     the datasets. Currently t-test as a parametric and U-test as a non-parametric test are supported.
 
     :param zipper: Dictionary storing the feature values of the datasets in a list. Feature name is used as the key.
-    :param feat_subset: A list containing feature names. If given, analysis will only be performed for the contained
+    :param feat_subset: A list containing feature names. If given, analysis will only be performed for the contained \
     features. If not given all features will be considered.
     :param method: Specify which statistical test should be used. "u" for Mann-Whitney-U-test and "t" for t-test.
     :return: dictionary storing the p_values of the analysis. Feature names are used as keys.
@@ -87,7 +87,7 @@ def test_cat_feats(zipper, feat_subset=None, method="chi"):
     Performs hypothesis testing to identify significantly deviating categorical features. A chi-squared test is used.
 
     :param zipper: Dictionary storing the feature values of the datasets in a list. Feature name is used as the key.
-    :param feat_subset: A list containing feature names. If given, analysis will only be performed for the contained
+    :param feat_subset: A list containing feature names. If given, analysis will only be performed for the contained \
     features. If not given all features will be considered.
     :return:
     """
@@ -163,7 +163,7 @@ def p_correction(p_values):
     Corrects p_values for multiple testing.
 
     :param p_values: Dictionary storing p_values with corresponding feature names as keys.
-    :return: DataFrame which shows the results of the analysis; p-value, corrected p-value and boolean indicating
+    :return: DataFrame which shows the results of the analysis; p-value, corrected p-value and boolean indicating \
     significance.
     """
 

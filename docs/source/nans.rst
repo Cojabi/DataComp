@@ -24,8 +24,11 @@ Longitudinal Entity Drop-out
 For the longitudinal comparison it makes sense to visualize the data availability for each dataset per time point.
 This can be done using:
 
+
 .. code-block:: python
+
     plot_entities_per_timepoint(datacol, time_col, label_name)
+
 
 An example can be seen here_.
 

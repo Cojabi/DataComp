@@ -44,15 +44,15 @@ def construct_formula(label, rel_cols, label_side="l"):
 
 def calc_prog_scores(time_series, bl_index, method):
     """
-    Calculates the progression scores. Can be done using either a z-score normalization to baseline or expressing the
+    Calculates the progression scores. Can be done using either a z-score normalization to baseline or expressing the \
     score as ratio of baseline value.
 
-    :param time_series: pandas.Series storing the values at the different points in time which shall be transformed into
-    progression scores.
+    :param time_series: pandas.Series storing the values at the different points in time which shall be transformed \
+    into progression scores.
     :param bl_index: Value representing the baseline measurement in the time column.
-    :param method: Specifies which progression score should be calculated. z-score ("z-score") or
-    ratio of baseline ("robl")
-    :return:
+    :param method: Specifies which progression score should be calculated. z-score ("z-score") or ratio of baseline \
+    ("robl")
+    :return: Calculated progression scores
     """
 
     def _z_score_formula(x, bl, sd):

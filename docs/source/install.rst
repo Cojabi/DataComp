@@ -11,10 +11,12 @@ Using pip
 
 From Source
 -----------
-Install the latest version from GitHub_
+Install the latest version from GitHub_.
+
 .. _GitHub: https://github.com/Cojabi/DataComp
 
 .. code-block:: sh
+
    python3 -m pip install git+https://github.com/Cojabi/DataComp.git
 
 In editable mode:

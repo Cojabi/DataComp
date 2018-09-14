@@ -17,7 +17,7 @@ def plot_sig_num_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=
     """
     Plots boxplots for each significant feature to allow for visual comparison.
 
-    :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not.
+    :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not. \
     Is provided as outcome of the p_correction or analyze_feature_ranges function
     :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
     :param boxplot: Flag that indicates if boxplot figures shall be created
@@ -49,7 +49,7 @@ def plot_sig_cat_feats(datacol, sig_df, feat_subset=None, save_folder=None):
     """
     Plots boxplots for each significant feature to allow for visual comparison.
 
-    :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not.
+    :param sig_df: Dataframe storing the p_values, corrected p_values and a boolean if significant or not. \
     Is provided as outcome of the p_correction or analyze_feature_ranges function
     :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
     :param save_folder: Path to a folder in which the plots shall be saved
@@ -105,10 +105,10 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
     """
     Creates one boxplot figure per feature
 
-    :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x
-    lists (the values of the features in the x dataframes)
+    :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x lists \
+    (the values of the features in the x dataframes)
     :param df_names: names of the datasets to label figures accordingly
-    :param feat_subset: a list of features for which a plot shall be made. One plot per feature. If None all features
+    :param feat_subset: a list of features for which a plot shall be made. One plot per feature. If None all features \
     will be considered.
     :param save_folder: a path to a directory where to store the figures.
     :return:

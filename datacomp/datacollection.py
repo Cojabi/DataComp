@@ -22,10 +22,10 @@ def create_datacol(df, categorical_feats, groupby, df_names=None, exclude_classe
      :param df_names: List of the dataframe names
     :param categorical_feats: List of feautres which are categorical
     :param groupby: Column name of the column by which the dataset shall be splitted
-    :param exclude_classes: A value present in the groupby column can be specified here. All entries containing that
+    :param exclude_classes: A value present in the groupby column can be specified here. All entries containing that \
     value will not be included into the DataCollection.
-    :param rel_cols: A list of feature names can be given to consider only those features of the datasets. Other columns
-    will be excluded from the DataCollection.
+    :param rel_cols: A list of feature names can be given to consider only those features of the datasets. Other \
+    columns will be excluded from the DataCollection.
     :return: DataCollection object
     """
 
@@ -64,10 +64,10 @@ def get_data(paths, df_names, categorical_feats, groupby=None, exclude_classes=[
     :param df_names: List of the dataframe names
     :param categorical_feats: List of feautres which are categorical
     :param groupby: Column name of the column by which the dataset shall be splitted
-    :param exclude_classes: A value present in the groupby column can be specified here. All entries containing that
+    :param exclude_classes: A value present in the groupby column can be specified here. All entries containing that \
     value will not be included into the DataCollection.
-    :param rel_cols: A list of feature names can be given to consider only those features of the datasets. Other columns
-    will be excluded from the DataCollection.
+    :param rel_cols: A list of feature names can be given to consider only those features of the datasets. Other \
+    columns will be excluded from the DataCollection.
     :param sep: Separator for .csv files. Can be changed e.g. to "\t" is file is tab separated.
     :return: DataCollection object
     """
@@ -258,8 +258,8 @@ class DataCollection(UserList):
         Assess differences in features across the dataframes. A dictionary will be created where the dataframe
         combination which is compared serves as key and the value is a set with the differences across them.
 
-        :return: Dictionary where dataframe combination is the key and the value is a corresponding set of
-        non overlapping features.
+        :return: Dictionary where dataframe combination is the key and the value is a corresponding set of non \
+        overlapping features.
         """
         feats = self.get_feature_sets()
 
@@ -297,8 +297,8 @@ class DataCollection(UserList):
         :param feat_subset: List of feature names. All features not in the list will be excluded.
         :param cca: If true only complete cases are kept (cases where all features are non missing values)
         :param save_path: Path where to save the combined dataset.
-        :param labels: List of labels that shall be assigned to the datasets in the label column. If none are given the
-        first dataset will get a 1 and all the others 0.
+        :param labels: List of labels that shall be assigned to the datasets in the label column. If none are given the\
+         first dataset will get a 1 and all the others 0.
         :return: pandas.DataFrame object storing a concatinated version of the DataCollection datasets.
         """
 
@@ -389,7 +389,7 @@ class DataCollection(UserList):
         labels and the confusion matrix, listing how many entities out of which dataset (rows) are assigned to which
         cluster (columns).
 
-        :param label: Column name of the column that should store the dataset membership labels. If None is given, a
+        :param label: Column name of the column that should store the dataset membership labels. If None is given, a \
         column named "Dataset" will be created and labels from 1 to number of datasets will be assigned as labels.
         :param str_cols: List of features where the values are non numeric. Must be excluded for clustering.
         :return: Cluster purity, Confusion matrix
@@ -458,13 +458,12 @@ class DataCollection(UserList):
         scores". The feature values of patients are normalized to their baseline values using either the "visit to
         baseline" ratio or a z-score normalized to baseline.
 
-        :param feat_subset: List containing feature names, which shall be included into the new progression score
+        :param feat_subset: List containing feature names, which shall be included into the new progression score \
         datacollection.
         :param time_col: Name of the column in which the time information is stored. e.g. Months, Days, Visit number
-        :param patient_col: Name of the column in which the patient identifiers connecting the separate visits are
-        stored.
-        :param method: String indicating which progression score shall be calculated. z-score ("z-score") or
-        ratio of baseline ("robl")
+        :param patient_col: Name of the column in which the patient identifiers connecting the separate visits stored.
+        :param method: String indicating which progression score shall be calculated. z-score ("z-score") or ratio of \
+        baseline ("robl")
         :param bl_index: Value representing the baseline measurement in the time column.
         :return: DataCollection storing the progression scores for the features
         """
@@ -518,8 +517,9 @@ class DataCollection(UserList):
         :param bl_index: Value of the time column which refers to the baseline
         :param include: List of feature names which shall be considered in the comparison
         :param exclude: List of feature names which shall be excluded in the comparison
-        :return: pandas.DataFrame storing the results of the comprasion, List of dataframes that have the progression
+        :return: pandas.DataFrame storing the results of the comprasion, List of dataframes that have the progression \
         scores.
+
         """
 
         # dict to collect p_values
