@@ -147,11 +147,34 @@ class DataCollection(UserList):
 
         self.df_names = df_names
         self.categorical_feats = categorical_feats
+
+        # exclude all nan features
+        self.exclude_empty_feats()
+
+        # update categorical feats to only include the ones present in all datasets
+        self.update_categorical_feats()
+
         # get numerical features if not given
         if numerical_feats is None:
             self.numerical_feats = self.get_numerical_features(self.categorical_feats)
         else:
             self.numerical_feats = numerical_feats
+
+    def exclude_empty_feats(self):
+        """
+        Removes features that are all missing values.
+        :return:
+        """
+        for dataset in self:
+            dataset.dropna(axis=1, inplace=True)
+
+    def update_categorical_feats(self):
+        """
+        Reduces the given categorical features to only categorical features, that are present in all the datasets.
+        :return:
+        """
+        common_feats = self.get_common_features()
+        self.categorical_feats = list(set(self.categorical_feats).intersection(common_feats))
 
     def get_numerical_features(self, categorical_feats):
         """
@@ -172,7 +195,7 @@ class DataCollection(UserList):
         :return:
         """
         if feats is None:
-            feats = list(self[0])
+            feats = self.get_common_features()
 
         df_feats = []
 
@@ -305,7 +328,9 @@ class DataCollection(UserList):
         if feat_subset:
             reduced_datcol = self.reduce_dfs_to_feat_subset(feat_subset)
         else:
-            reduced_datcol = self[::]
+            # create copies of dataframe to not alter the original datacollection
+            datasets = [dataset[::] for dataset in self]
+            reduced_datcol = DataCollection(datasets, self.df_names, self.categorical_feats)
 
         # create labels; set label for first df to 1 all others to 0
         if labels is None:
@@ -353,7 +378,7 @@ class DataCollection(UserList):
 
         # delete label if given
         if exclude:
-            assert type(exclude) == list, "exclude must be given as a list"
+            assert (type(exclude) == list) or (type(exclude) == set), "exclude must be given as a list"
             for feat in exclude:
                 del zipper[feat]
             # update feature lists
@@ -361,7 +386,7 @@ class DataCollection(UserList):
             num_feats = set(num_feats).difference(exclude)
 
         if include:
-            assert type(include) == list, "include must be given as a list"
+            assert (type(include) == list) or (type(include) == set), "include must be given as a list"
             cat_feats = set(cat_feats).intersection(include)
             num_feats = set(num_feats).intersection(include)
 
