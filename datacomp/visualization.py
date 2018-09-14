@@ -81,16 +81,19 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
     :return:
     """
 
-    def normalize_to_count(df):  # TODO add normalization to the total number of entities in that group.
+    def normalize_count(df):  # TODO add normalization to the total number of entities in that group.
         """ """
         raise NotImplementedError
 
     combined = datacol.combine_dfs("Dataset", labels=datacol.df_names)
 
+    if feat_subset is None:
+        feat_subset = datacol.categorical_feats
+
     for feat in feat_subset:
 
         if normalize:
-            normalize_to_count(combined)  # TODO add normalization to the total number of entities in that group.
+            normalize_count(combined)  # TODO add normalization to the total number of entities in that group.
 
         sns.countplot(x=feat, hue="Dataset", data=combined)
 
@@ -103,7 +106,7 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
 
 def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
     """
-    Creates one boxplot figure per feature
+    Creates one boxplot figure per feature.
 
     :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x lists \
     (the values of the features in the x dataframes)

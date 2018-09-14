@@ -50,7 +50,8 @@ def create_datacol(df, categorical_feats, groupby, df_names=None, exclude_classe
 
     # extract dataset names from groupby column if none are given
     if df_names is None:
-        df_names = list(sorted(grouping.groups.keys()))
+        df_names = grouping.groups.keys()
+        df_names = sorted(list(set(df_names).difference(exclude_classes)))
 
     return DataCollection(dfs, df_names, categorical_feats)
 
@@ -296,6 +297,8 @@ class DataCollection(UserList):
 
         return diff_dict
 
+
+
     def create_value_set(self, col):
         """
         Creates a set of the combined dataframe values present in a specific column.
@@ -376,7 +379,7 @@ class DataCollection(UserList):
         cat_feats = self.categorical_feats[::]
         num_feats = self.numerical_feats[::]
 
-        # delete label if given
+        # delete label if exclude is given
         if exclude:
             assert (type(exclude) == list) or (type(exclude) == set), "exclude must be given as a list"
             for feat in exclude:
@@ -394,8 +397,11 @@ class DataCollection(UserList):
         p_values.update(test_cat_feats(zipper, cat_feats))
         p_values.update(test_num_feats(zipper, num_feats))
 
+        # if p-values are empty warn.
         if not p_values:
             warnings.warn("No p_values have been calculated! Please check input data.", UserWarning)
+
+
 
         # test numerical features
         results = p_correction(p_values)
