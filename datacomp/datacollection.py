@@ -166,7 +166,7 @@ class DataCollection(UserList):
         :return:
         """
         for dataset in self:
-            dataset.dropna(axis=1, inplace=True)
+            dataset.dropna(axis=1, how="all", inplace=True)
 
     def update_categorical_feats(self):
         """
