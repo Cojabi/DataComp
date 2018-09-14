@@ -297,7 +297,19 @@ class DataCollection(UserList):
 
         return diff_dict
 
+    def get_n_per_feat(self, feat_subset=None):
+        """"""
+        zipper = self.create_zipper(feat_subset)
 
+        for key in zipper:
+
+            zipper[key] = [len(z) for z in zipper[key]]
+
+            counts = pd.DataFrame(zipper).transpose()
+            counts.index.name = "features"
+            counts.columns = self.df_names
+
+        return counts
 
     def create_value_set(self, col):
         """

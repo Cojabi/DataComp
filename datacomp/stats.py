@@ -214,6 +214,11 @@ def p_correction(p_values):
         result_table.index = result_table[[2, 1]]
         result_table.index = pd.MultiIndex.from_tuples(result_table.index)
         result_table.drop([0, 1, 2], axis=1, inplace=True)
+
+        # name index levels
+        result_table.index.levels[0].name = "features"
+        result_table.index.levels[1].name = "datasets"
+
         return result_table
 
     p_trans = _transform_p_dict(p_values)
