@@ -297,8 +297,14 @@ class DataCollection(UserList):
 
         return diff_dict
 
+
     def get_n_per_feat(self, feat_subset=None):
-        """"""
+        """
+        Counts the available datapoints for each comparison and each dataset
+
+        :param feat_subset: List of a subset of features which shall be considered for this.
+        :return: DataFrame storing the counts for each dataset and feature
+        """
         zipper = self.create_zipper(feat_subset)
 
         for key in zipper:
@@ -310,6 +316,7 @@ class DataCollection(UserList):
             counts.columns = self.df_names
 
         return counts
+
 
     def create_value_set(self, col):
         """
@@ -413,10 +420,11 @@ class DataCollection(UserList):
         if not p_values:
             warnings.warn("No p_values have been calculated! Please check input data.", UserWarning)
 
+        # get counts of available datapoints per feature
+        counts = self.get_n_per_feat()
 
-
-        # test numerical features
-        results = p_correction(p_values)
+        # correct for multiple testing and create result table
+        results = p_correction(p_values, counts)
 
         if verbose:
             print("Fraction of significant comparisons:",

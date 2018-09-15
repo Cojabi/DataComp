@@ -158,11 +158,12 @@ def test_cat_feats(zipper, feat_subset=None, method="chi"):
     return p_values
 
 
-def p_correction(p_values):
+def p_correction(p_values, counts):
     """
     Corrects p_values for multiple testing.
 
     :param p_values: Dictionary storing p_values with corresponding feature names as keys.
+    :param counts: DataFrame storing the number of observations per dataset, per feature.
     :return: DataFrame which shows the results of the analysis; p-value, corrected p-value and boolean indicating \
     significance.
     """
@@ -191,13 +192,14 @@ def p_correction(p_values):
                 df_matrix.append([nested_items[1], nested_items[0], items[0]])
         return pd.DataFrame(df_matrix)
 
-    def _create_result_table(result, p_val_col, p_trans):
+    def _create_result_table(result, p_val_col, p_trans, counts):
         """
         Builds the dataframe showing the results.
 
         :param result:
         :param p_val_col:
         :param p_trans:
+        :param counts:
         :return:
         """
         # store test results
@@ -219,6 +221,9 @@ def p_correction(p_values):
         result_table.index.levels[0].name = "features"
         result_table.index.levels[1].name = "datasets"
 
+        # join with counts dataframe to display number of datapoint for each comparison
+        result_table = result_table.join(counts, how="outer")
+
         return result_table
 
     p_trans = _transform_p_dict(p_values)
@@ -239,8 +244,9 @@ def p_correction(p_values):
 
     # correct p-values
     result = multipletests(p_val_col.values)
+
     # build a table storing the p_values and corrected p_values for all features
-    result_table = _create_result_table(result, p_val_col, p_trans)
+    result_table = _create_result_table(result, p_val_col, p_trans, counts)
 
     return result_table.sort_index()
 
