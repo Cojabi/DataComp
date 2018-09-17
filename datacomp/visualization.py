@@ -42,7 +42,7 @@ def plot_sig_num_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=
         bp_single_features(sig_zipper, datacol.df_names, feat_subset=num_feats_to_plot, save_folder=save_folder)
     # plot kde plots
     if kdeplot:
-        feature_kdeplots(sig_zipper, feat_subset=num_feats_to_plot, save_folder=save_folder)
+        feature_kdeplots(sig_zipper, datacol.df_names, feat_subset=num_feats_to_plot, save_folder=save_folder)
 
 
 def plot_sig_cat_feats(datacol, sig_df, feat_subset=None, save_folder=None):
@@ -143,11 +143,12 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
             plt.show()
 
 
-def feature_kdeplots(zipper, feat_subset=None, save_folder=None):
+def feature_kdeplots(zipper, df_names, feat_subset=None, save_folder=None):
     """
     Plots distribution plots for each dataframe in one figure.
 
     :param zipper:
+    :param df_names:
     :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
     :param save_folder: Path to a folder in which the plots shall be saved
     :return:
@@ -167,12 +168,27 @@ def feature_kdeplots(zipper, feat_subset=None, save_folder=None):
             # set title
             plt.title(feat)
 
+            create_legend(df_names, colors)
+
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
             plt.savefig(save_file)
         else:
             plt.show()
 
+def create_legend(labels, colors):
+    """
+
+    :param labels:
+    :param colors:
+    :return:
+    """
+    patches = []
+
+    for color, label in zip(colors, labels):
+        patches.append(mpatches.Patch(color=color, label=label))
+
+    plt.legend(handles=patches)
 
 ## longitudinal plotting
 
@@ -298,15 +314,6 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         sig_ticks = list(compress(xticks_positions, significances))
         y_axis_values = [0 for i in range(len(sig_ticks))]
         plt.plot(sig_ticks, y_axis_values, "*")
-
-    def create_legend(labels, colors):
-        """ """
-        patches = []
-
-        for color, label in zip(colors, df_names):
-            patches.append(mpatches.Patch(color=color, label=label))
-
-        plt.legend(handles=patches)
 
     # get the number of dataframes and the dataframe names
     df_names = list(time_dfs.values())[0].df_names
