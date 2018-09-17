@@ -11,3 +11,9 @@ steps are taken anyway, since they allow for interoperability across, and the co
 (except if you want to compare the if different methods lead to different results)
 
 Features that are named differently will be treated as non-common features.
+
+Common Errors
+-------------
+
+Make sure, that numeric feature columns hold only numeric data and/or missing values (nan's). Otherwise this will lead
+to errors, especially in plotting the significant features.
