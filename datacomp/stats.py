@@ -82,7 +82,7 @@ def test_num_feats(zipper, feat_subset=None, method=None):
     return p_values
 
 
-def test_cat_feats(zipper, feat_subset=None, method="chi"):
+def test_cat_feats(zipper, feat_subset=None, method="chi", print_data=False):
     """
     Performs hypothesis testing to identify significantly deviating categorical features. A chi-squared test is used.
 
@@ -142,6 +142,12 @@ def test_cat_feats(zipper, feat_subset=None, method="chi"):
 
                 # sort testing data by index(categories) to align the counts for the categories
                 test_data = [data.sort_index() for data in test_data]
+
+                # print testing data if specified
+                if print_data:
+                    print(feat)
+                    print(test_data)
+                    print()
 
                 if method == "chi":
                     # skip feature if number of events per group is smaller than 5

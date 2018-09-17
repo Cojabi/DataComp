@@ -378,7 +378,7 @@ class DataCollection(UserList):
 
     ## Stats
 
-    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True):
+    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True, print_data=False):
         """
         This function can be used to compare all features easily. It works as a wrapper for the categorical and
         numerical feature comparison functions.
@@ -386,6 +386,7 @@ class DataCollection(UserList):
         :param include: List of features that should be considered for the comparison solely.
         :param exclude: List or set of features that should be excluded from the comparison.
         :param verbose: Flag, if true the ratio of significant features will be printed.
+        :param print_data: Flag to indicate if the categorical observations should be printed.
         :return: pandas.Dataframe showing the p-values and corrected p-values of the comparison
         """
 
@@ -413,7 +414,7 @@ class DataCollection(UserList):
             num_feats = set(num_feats).intersection(include)
 
         # test features:
-        p_values.update(test_cat_feats(zipper, cat_feats))
+        p_values.update(test_cat_feats(zipper, cat_feats, print_data=print_data))
         p_values.update(test_num_feats(zipper, num_feats))
 
         # if p-values are empty warn.
