@@ -4,12 +4,18 @@ Missing Data Handling
 DataComp will handle missing data in several ways if encountered. The amount of data for each variable in each dataset
 will be displayed next to the significance test results to evaluate reliability.
 
+Dataset Composition
+-------------------
+If a single dataframe is turned into a DataCollection based on the values in a single column, the original dataframe is
+split into many. If in one of these many dataframes one feature is all missing values (nan's) it will be excluded from
+this dataframe.
+
 Statistical Comparison
 ----------------------
 
 Numerical Features
 ~~~~~~~~~~~~~~~~~~
-In the direct comparison of numerical feature distributions missing values (nan's) will just be taken into account.
+In the direct comparison of numerical feature distributions missing values (nan's) will not be taken into account.
 (e.g. distribution [1, 2, nan, 3, 3] will be handled as [1, 2, 3, 4])
 
 Categorical Features
@@ -34,4 +40,4 @@ An example can be seen here_.
 
 .. _here: https://github.com/Cojabi/DataComp_Examples/blob/master/longitudinal_example.ipynb
 
-For the comparisons at the time points, missing data is handled as described in the section 'Statistical Comparison'.
+For the comparisons at each single time point, missing data is handled as described in the section 'Statistical Comparison'.
