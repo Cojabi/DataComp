@@ -1,5 +1,5 @@
-Comparison Result Interpretation
-================================
+Interpret Results
+=================
 
 Statistical Comparison Result-Table
 -----------------------------------
