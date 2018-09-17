@@ -1,5 +1,5 @@
-Missing Data Handling
-=====================
+Missing Data
+============
 
 DataComp will handle missing data in several ways if encountered. The amount of data for each variable in each dataset
 will be displayed next to the significance test results to evaluate reliability.

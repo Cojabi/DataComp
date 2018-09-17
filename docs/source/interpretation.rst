@@ -4,9 +4,10 @@ Interpret Results
 Statistical Comparison Result-Table
 -----------------------------------
 
-The index (rows) of the result table consists of the feature name on the outer level and the datasets used for the
-comparison represented in the row as second level index. FEATURE1 (1, 2) means, that this row represents the comparison
-of FEATURE1 between dataset 1 and 2, where 1 and 2 points to the position in the DataCollection.
+The index (rows) of the result table consists of the feature name on the outer level and the dataset combination used \
+for the comparison as second level index.
+FEATURE1 (1, 2) means, that this row represents the comparison of FEATURE1 between dataset 1 and 2, where 1 and 2 \
+points to the position in the DataCollection.
 
 The result table of a feature comparison lists in the columns:
 - the p-values
