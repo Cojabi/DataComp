@@ -435,7 +435,7 @@ class DataCollection(UserList):
 
     ## Clustering
 
-    def hierarchical_clustering(self, label=None, str_cols=None, return_data=False):
+    def hierarchical_clustering(self, label=None, feat_subset=None, str_cols=None, return_data=False):
         """
         Performs an agglomerative clustering to assign entites in the datasets to clusters and evaluate the distribution
         of dataset memberships across the clusters. Outcome will be the cluster purity w.r.t. the dataset membership
@@ -444,6 +444,7 @@ class DataCollection(UserList):
 
         :param label: Column name of the column that should store the dataset membership labels. If None is given, a \
         column named "Dataset" will be created and labels from 1 to number of datasets will be assigned as labels.
+        :param feat_subset: List of feature names. Only those features will be included into the clustering.
         :param str_cols: List of features where the values are non numeric. Must be excluded for clustering.
         :param return_data: If true, the original dataframe will be returned with the cluster membership as a new \
         column.
@@ -481,7 +482,7 @@ class DataCollection(UserList):
         labels = range(1, len(self) + 1)
 
         # pre-process data to allow for clustering
-        cl_data = self.combine_dfs(label, labels=labels)
+        cl_data = self.combine_dfs(label, labels=labels, feat_subset=feat_subset)
         num_datasets = len(cl_data[label].unique())
 
         # exclude string columns if given
@@ -489,7 +490,9 @@ class DataCollection(UserList):
             cl_data.drop(str_cols, axis=1, inplace=True)
 
         # make CCA
+        print("Entries pre incomplete case exclusion:", cl_data.shape[0])
         cl_data.dropna(inplace=True)
+        print("Entries post incomplete case exclusion:", cl_data.shape[0])
 
         # create model for clustering and fit it to the data
         model = AgglomerativeClustering(num_datasets)
