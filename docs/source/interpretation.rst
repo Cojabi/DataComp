@@ -27,3 +27,9 @@ Longitudinal Comparison
 Like for the cross-sectional comparison the table is indexed using multiple layers. The first and third index are again
 the feature name and the datasets being compared, respectively. The second layer gives information on the time point. It
 lists the time point for which the corresponding statistical tests have been performed.
+
+Clustering
+----------
+
+The confusion matrix of the hierarchical clustering lists the datasets as rows and clusters as columns.
+Each cell represents the number of entities of that dataset being assign to the cluster.
