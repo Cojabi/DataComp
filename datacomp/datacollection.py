@@ -195,16 +195,27 @@ class DataCollection(UserList):
         :param feats:
         :return:
         """
+
+
+
         if feats is None:
             feats = self.get_common_features()
 
         df_feats = []
 
+        # collect all values of the features for each dataframe separately
         for df in self:
-            df_feats.append([list(df[feat].dropna()) for feat in feats])
+            feature_values = [list(df[feat].dropna()) for feat in feats]
+            df_feats.append(feature_values)
 
+
+
+        # zip the two features
         zip_values = zip(*df_feats)
+
+        # turn into dictionary and add feature names as keys
         zipper = dict(zip(feats, zip_values))
+
         return zipper
 
     def print_number_of_entities(self, entity_col):
@@ -378,7 +389,7 @@ class DataCollection(UserList):
 
     ## Stats
 
-    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True, print_data=False):
+    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True, print_data=False, longitudinal=False):
         """
         This function can be used to compare all features easily. It works as a wrapper for the categorical and
         numerical feature comparison functions.
@@ -387,11 +398,20 @@ class DataCollection(UserList):
         :param exclude: List or set of features that should be excluded from the comparison.
         :param verbose: Flag, if true the ratio of significant features will be printed.
         :param print_data: Flag to indicate if the categorical observations should be printed.
+        :param longitudinal: Flag that if set to True will take care of the fact, that at some time points some \
+        features may be missing, that are in general present on others. These will be excluded for the specific time\
+        point.
         :return: pandas.Dataframe showing the p-values and corrected p-values of the comparison
         """
 
         # create zipper
         zipper = self.create_zipper()
+
+        # exclude features from "include"/"exclude" if they are not present in the datasets
+        if longitudinal:
+            common_feats = self.get_common_features()
+            exclude = list(set(exclude).intersection(common_feats))
+            include = list(set(include).intersection(common_feats))
 
         # create dictionary that will store the results for feature comparison
         p_values = dict()
@@ -608,7 +628,7 @@ class DataCollection(UserList):
                     time_dfs[time] = time_point_datacol
 
                     p_values[time] = time_point_datacol.analyze_feature_ranges(exclude=exclude, include=include,
-                                                                               verbose=False)
+                                                                               verbose=False, longitudinal=True)
                 # skip time point if only values in one dataset are available
                 except UserWarning:
                     continue
@@ -643,7 +663,6 @@ class DataCollection(UserList):
 
         # construct formula
         formula = construct_formula(label, cols)
-        print(formula)
 
         # create Matcher
         m = Matcher(*qc_dfs, yvar=label, formula=formula)
