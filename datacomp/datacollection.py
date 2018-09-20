@@ -196,8 +196,6 @@ class DataCollection(UserList):
         :return:
         """
 
-
-
         if feats is None:
             feats = self.get_common_features()
 
@@ -207,8 +205,6 @@ class DataCollection(UserList):
         for df in self:
             feature_values = [list(df[feat].dropna()) for feat in feats]
             df_feats.append(feature_values)
-
-
 
         # zip the two features
         zip_values = zip(*df_feats)
@@ -308,7 +304,6 @@ class DataCollection(UserList):
 
         return diff_dict
 
-
     def get_n_per_feat(self, feat_subset=None):
         """
         Counts the available datapoints for each comparison and each dataset
@@ -319,7 +314,6 @@ class DataCollection(UserList):
         zipper = self.create_zipper(feat_subset)
 
         for key in zipper:
-
             zipper[key] = [len(z) for z in zipper[key]]
 
             counts = pd.DataFrame(zipper).transpose()
@@ -327,7 +321,6 @@ class DataCollection(UserList):
             counts.columns = self.df_names
 
         return counts
-
 
     def create_value_set(self, col):
         """
@@ -597,7 +590,6 @@ class DataCollection(UserList):
         :param exclude: List of feature names which shall be excluded in the comparison
         :return: pandas.DataFrame storing the results of the comprasion, List of dataframes that have the progression \
         scores.
-
         """
 
         # dict to collect p_values
