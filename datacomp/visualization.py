@@ -203,6 +203,8 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
     :param feat_subset: List containing feature names for which plots shall be created.
     :param plot_bp: Flag if boxplots shall be plotted.
     :param plot_means: Flag is line connecting the means shall be plotted.
+    :param mean_sign: Matplotlib option how data points shall be represented in the plot. Default is "-". This \
+    might lead to bad plots if too many missing values are present.
     :param show_sig: Flag if significant deviations shall be marked in the plot.
     :param p_values: Result table from significance testing on the progression scores.
     :param save_folder: Folder in which plots will be saved.
@@ -371,6 +373,8 @@ def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, mean_sig
     :param p_values: Result table from significance testing on the progression scores.
     :param plot_bp: Flag if boxplots shall be plotted.
     :param plot_means: Flag is line connecting the means shall be plotted.
+    :param mean_sign: Matplotlib option how data points shall be represented in the plot. Default is "-". This \
+    might lead to bad plots if too many missing values are present.
     :param save_folder: Folder in which plots will be saved.
     :return:
     """
