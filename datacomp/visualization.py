@@ -192,7 +192,7 @@ def create_legend(labels, colors):
 
 ## longitudinal plotting
 
-def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_sig=False, p_values=None,
+def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_sign=None, show_sig=False, p_values=None,
                      save_folder=None):
     """
     Creates one plot per feature displaying the progession scores calculated for the datasets in comparison to each
@@ -218,6 +218,8 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :return: Dictionary storing lists with the means at the time points for each dataset
         """
         means = dict()
+
+        # build dataframe holding only the data for a single time point.
         time_data = [time_dfs[timepoint] for timepoint in sorted(time_dfs.keys())]
 
         # iterate over the time points
@@ -254,19 +256,25 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
 
         return bp_positions, xticks_positions
 
-    def _plot_prog_score_means(means, xticks_positions):
+    def _plot_prog_score_means(means, xticks_positions, mean_sign):
         """
         Plots the means of the progression scores over time.
 
         :param means: Dictionary storing lists with the means at the time points for each dataset
         :param xticks_positions: List storing the x-axis-tick positions.
+        :param mean_sign: Matplotlib option how data points shall be represented in the plot. Default is "-". This \
+        might lead to bad plots if too many missing values are present.
         :return:
         """
         colors = ["#1799B5", "#00FFFF", "#f7b42e", "#8ff74a"]  # TODO change color palette
 
+        # set mean sign if none:
+        if mean_sign is None:
+            mean_sign = "-"
+
         # plot lines
         for dataset_means, color in zip(means.values(), colors):
-            plt.plot(xticks_positions, dataset_means, "-", color=color)
+            plt.plot(xticks_positions, dataset_means, mean_sign, color=color)
 
     def _bp_all_timepoints(time_dfs, bp_positions, feat):
         """
@@ -310,6 +318,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
         :param p_values: Result table from significance testing on the progression scores.
         :return:
         """
+
         significances = p_values.loc[feat, "signf"]
         sig_ticks = list(compress(xticks_positions, significances))
         y_axis_values = [0 for i in range(len(sig_ticks))]
@@ -323,12 +332,12 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
     # plot one figure for each feature
     for feat in feat_subset:
         # calculate positions on x axis
-        means = _calculate_means_per_timepoint(time_dfs, feat)
         bp_positions, xticks_positions = _calc_positions(num_dfs, num_timepoints)
 
         # plot mean progression
         if plot_means:
-            _plot_prog_score_means(means, xticks_positions)
+            means = _calculate_means_per_timepoint(time_dfs, feat)
+            _plot_prog_score_means(means, xticks_positions, mean_sign=mean_sign)
 
         # plot progression scores at each time point as boxplots
         if plot_bp:
@@ -354,7 +363,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, show_
             plt.show()
 
 
-def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, save_folder=None):
+def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, mean_sign=None, save_folder=None):
     """
     Plots progression score plots for each feature that shows significant deviations at some time point.
 
@@ -367,8 +376,8 @@ def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, save_fol
     """
 
     sig_feats = get_sig_feats(p_values)
-    plot_prog_scores(time_dfs, sig_feats, plot_bp=plot_bp, plot_means=plot_means, show_sig=True, p_values=p_values,
-                     save_folder=save_folder)
+    plot_prog_scores(time_dfs, sig_feats, plot_bp=plot_bp, plot_means=plot_means, mean_sign=mean_sign,
+                     show_sig=True, p_values=p_values, save_folder=save_folder)
 
 
 def plot_entities_per_timepoint(datacol, time_col, label_name):

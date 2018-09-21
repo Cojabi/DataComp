@@ -18,4 +18,5 @@ Common Errors
 -------------
 
 Make sure, that numeric feature columns hold only numeric data and/or missing values (nan's). Otherwise this will lead
-to errors, especially in plotting the significant features.
+to errors, especially in plotting the significant features. String values like for example ">90" must be converted into
+numerical values.
