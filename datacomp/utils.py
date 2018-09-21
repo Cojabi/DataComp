@@ -14,7 +14,8 @@ def get_sig_feats(sig_df):
     :return:
     """
     # grab significant deviances
-    sig_entries = sig_df[sig_df["signf"].replace(np.nan, False)]
+    bool_series = sig_df["signf"].map(bool)
+    sig_entries = sig_df[bool_series.replace(np.nan, False)]
     index_labels = sig_entries.index.labels[0]
     return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
 
