@@ -213,8 +213,15 @@ def p_correction(p_values, counts):
 
         # rename columns and set values in result dataframe
         result_table.rename(columns={0: "pv"}, inplace=True)
-        result_table["cor_pv"] = result[1]
-        result_table["signf"] = result[0]
+
+        # insert corrected p_values
+        if result:
+            result_table["cor_pv"] = result[1]
+            result_table["signf"] = result[0]
+        elif result is None:
+            result_table["cor_pv"] = np.nan
+            result_table["signf"] = np.nan
+
         # combine p_value information with dataset and feature information stored in p_trans
         result_table = pd.concat([result_table, p_trans], axis=1, join="outer")
 
@@ -244,9 +251,19 @@ def p_correction(p_values, counts):
     # add NaN features back to p_trans to include them into result table later on
     p_trans = pd.concat([p_trans, nan_features])
 
-    # raise Error if no p_values where calculated that can be passed into multipletest correction
+    # raise Error if no p_values where calculated that can be passed into multiple test correction
     if p_val_col.values.size == 0:
-        raise ValueError("Empty list of p_values have been submitted into multiple test correction.")
+        # unpack the p_values which are stored in 2 layer nested dicts.
+        nested_values = []
+        for value in p_values.values():
+            nested_values.append(*value.values())
+
+        # if all p_values are nan, return an all nan result table
+        if pd.isnull(nested_values).all():
+            result_table = _create_result_table(None, p_val_col, p_trans, counts)
+            return result_table.sort_index()
+
+        raise ValueError("No p_values have been submitted into multiple test correction.")
 
     # correct p-values
     result = multipletests(p_val_col.values)

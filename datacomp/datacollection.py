@@ -132,7 +132,7 @@ class DataCollection(UserList):
     subsets of features or to compare the feature ranges of the two dataframes to each other.
     """
 
-    def __init__(self, df_list, df_names, categorical_feats, numerical_feats=None):
+    def __init__(self, df_list, df_names, categorical_feats, numerical_feats=None, exclude_nan_feats=True):
         """
         Initialize DataCollection object.
 
@@ -149,11 +149,12 @@ class DataCollection(UserList):
         self.df_names = df_names
         self.categorical_feats = categorical_feats
 
-        # exclude all nan features
-        self.exclude_empty_feats()
+        if exclude_nan_feats:
+            # exclude all nan features
+            self.exclude_empty_feats()
 
-        # update categorical feats to only include the ones present in all datasets
-        self.update_categorical_feats()
+            # update categorical feats to only include the ones present in all datasets
+            self.update_categorical_feats()
 
         # get numerical features if not given
         if numerical_feats is None:
@@ -224,7 +225,7 @@ class DataCollection(UserList):
         for df in self:
             print("# of entities: ", len(df[entity_col].unique()))
 
-    def reduce_dfs_to_value(self, col, val):
+    def reduce_dfs_to_value(self, col, val, exclude_nan_feats=True):
         """
         Keep only the rows in the dataframes where a specific column holds a specific value.
 
@@ -239,7 +240,8 @@ class DataCollection(UserList):
             indices = df[df[col] == val].index
             reduced_dfs.append(df.loc[indices])
 
-        return DataCollection(reduced_dfs, self.df_names, self.categorical_feats, self.numerical_feats)
+        return DataCollection(reduced_dfs, self.df_names, self.categorical_feats, self.numerical_feats,
+                              exclude_nan_feats=exclude_nan_feats)
 
     def reduce_dfs_to_feat_subset(self, feat_subset):
         """
@@ -616,11 +618,11 @@ class DataCollection(UserList):
                 warnings.filterwarnings("error", category=UserWarning)
                 # catch Warning that one dataframe is empty
                 try:
-                    time_point_datacol = self.reduce_dfs_to_value(time_col, time)
+                    time_point_datacol = self.reduce_dfs_to_value(time_col, time, exclude_nan_feats=False)
                     time_dfs[time] = time_point_datacol
 
                     p_values[time] = time_point_datacol.analyze_feature_ranges(exclude=exclude, include=include,
-                                                                               verbose=False, longitudinal=True)
+                                                                               verbose=False, longitudinal=False)
                 # skip time point if only values in one dataset are available
                 except UserWarning:
                     continue
@@ -628,7 +630,7 @@ class DataCollection(UserList):
         # concatinate dataframes of single time points and sort by feature name
         long_result_table = pd.concat(p_values).swaplevel(0, 1).sort_index()
 
-        return long_result_table, time_dfs
+        return long_result_table.dropna(how="any"), time_dfs
 
     ## propensity score matching
 
