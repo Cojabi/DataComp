@@ -402,12 +402,6 @@ class DataCollection(UserList):
         # create zipper
         zipper = self.create_zipper()
 
-        # exclude features from "include"/"exclude" if they are not present in the datasets
-        if longitudinal:
-            common_feats = self.get_common_features()
-            exclude = list(set(exclude).intersection(common_feats))
-            include = list(set(include).intersection(common_feats))
-
         # create dictionary that will store the results for feature comparison
         p_values = dict()
 
@@ -622,7 +616,7 @@ class DataCollection(UserList):
                     time_dfs[time] = time_point_datacol
 
                     p_values[time] = time_point_datacol.analyze_feature_ranges(exclude=exclude, include=include,
-                                                                               verbose=False, longitudinal=False)
+                                                                               verbose=False)
                 # skip time point if only values in one dataset are available
                 except UserWarning:
                     continue
