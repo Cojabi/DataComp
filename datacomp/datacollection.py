@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
+import numpy as np
 import matplotlib_venn as mv
 import matplotlib.pylab as plt
 import os
@@ -519,7 +520,7 @@ class DataCollection(UserList):
 
     ## longitudinal
 
-    def create_progression_tables(self, feat_subset, time_col, patient_col, method, bl_index):
+    def create_progression_tables(self, feat_subset, time_col, patient_col, method, bl_index, skip_no_bl=False):
         """
         Creates a new datacollection object which now stores the feature values not as absolute numbers but "progression
         scores". The feature values of patients are normalized to their baseline values using either the "visit to
@@ -551,6 +552,12 @@ class DataCollection(UserList):
                     # create value series storing the values of a patient
                     values = df.loc[pat_inds, feat]
                     values.index = df.loc[pat_inds, time_col]
+
+                    # skip patient if no baseline value is present
+                    if skip_no_bl:
+                        if bl_index not in values.index:
+                            prog_df.loc[pat_inds, feat] = np.nan
+                            continue
 
                     # calculate scores for patient and reindex to merge back into dataframe copy
                     scores = calc_prog_scores(values, bl_index, method)
