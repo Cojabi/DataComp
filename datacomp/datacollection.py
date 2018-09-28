@@ -385,7 +385,7 @@ class DataCollection(UserList):
 
     ## Stats
 
-    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True, print_data=False, longitudinal=False):
+    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True, print_data=False):
         """
         This function can be used to compare all features easily. It works as a wrapper for the categorical and
         numerical feature comparison functions.
@@ -394,9 +394,6 @@ class DataCollection(UserList):
         :param exclude: List or set of features that should be excluded from the comparison.
         :param verbose: Flag, if true the ratio of significant features will be printed.
         :param print_data: Flag to indicate if the categorical observations should be printed.
-        :param longitudinal: Flag that if set to True will take care of the fact, that at some time points some \
-        features may be missing, that are in general present on others. These will be excluded for the specific time\
-        point.
         :return: pandas.Dataframe showing the p-values and corrected p-values of the comparison
         """
 
@@ -533,6 +530,8 @@ class DataCollection(UserList):
         :param method: String indicating which progression score shall be calculated. z-score ("z-score") or ratio of \
         baseline ("robl")
         :param bl_index: Value representing the baseline measurement in the time column.
+        :param skip_no_bl: Flag that indicates if entities without baseline measurements shall be skipped. If False an\
+        error will be risen.
         :return: DataCollection storing the progression scores for the features
         """
 
