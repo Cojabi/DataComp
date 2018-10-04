@@ -100,6 +100,7 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
             plt.savefig(save_file)
+            plt.clf()
         else:
             plt.show()
 
@@ -139,6 +140,7 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
             plt.savefig(save_file)
+            plt.clf()
         else:
             plt.show()
 
@@ -173,6 +175,7 @@ def feature_kdeplots(zipper, df_names, feat_subset=None, save_folder=None):
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
             plt.savefig(save_file)
+            plt.clf()
         else:
             plt.show()
 
@@ -192,8 +195,8 @@ def create_legend(labels, colors):
 
 ## longitudinal plotting
 
-def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_sign=None, show_sig=False, p_values=None,
-                     save_folder=None):
+def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_sign=None, show_sig=False,
+                     p_values=None, x_label=None, save_folder=None):
     """
     Creates one plot per feature displaying the progession scores calculated for the datasets in comparison to each
     other. Plots the distribution of the progression scores as boxplots and the means as a line connecting the different
@@ -348,11 +351,16 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         if show_sig:
             plot_significances(xticks_positions, p_values)
 
-        # set axes limits, labels and plot title
+        # set axis ticks, limits, labels
         ax = plt.axes()
         plt.xlim(0, np.max(bp_positions))
         ax.set_xticklabels(sorted(time_dfs.keys()))
         ax.set_xticks(xticks_positions)
+
+        # set label for x-axis and plot title
+        if x_label is None:
+            x_label = "Longitudinal Value"
+        plt.xlabel(x_label)
         plt.title(feat)
 
         colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
@@ -361,6 +369,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         if save_folder:
             save_file = os.path.join(save_folder, feat + "prog_score.png")
             plt.savefig(save_file)
+            plt.clf()
         else:
             plt.show()
 
