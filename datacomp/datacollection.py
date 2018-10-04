@@ -260,14 +260,20 @@ class DataCollection(UserList):
 
         return DataCollection(reduced_dfs, self.df_names, categorical_feats)
 
-    def get_feature_sets(self):
+    def get_feature_sets(self, exclude=None):
         """
         Creates a list of sets, where in each set the a ll the feature names of one dataframe are stored respectively.
 
         :return: List of sets. Each set contains the feature names of one of the dataframes
         """
+
         # Create list containing features per dataframe as sets
-        return [set(df) for df in self]
+        feat_sets = [set(df) for df in self]
+        # exclude unwanted features
+        if exclude:
+            feat_sets = [df_set.difference(exclude) for df_set in feat_sets]
+
+        return feat_sets
 
     def get_common_features(self, exclude=None):
         """
@@ -668,24 +674,30 @@ class DataCollection(UserList):
 
     ## Visualization
 
-    def feat_venn_diagram(self, save_path=None):
+    def feat_venn_diagram(self, exclude=None, weighted=True, label_fontsize=10, count_fontsize=10, save_path=None):
         """
         Plots a venn diagram illustrating the overlap in features between the datasets.
 
         :param save_path: Path where to save the venn diagram
         :return:
         """
-        feat_set = self.get_feature_sets()
+        feat_set = self.get_feature_sets(exclude)
 
         # Plotting when two datasets are compared
         if len(self) == 2:
             # set variables needed to assign new color scheme
             colors = ["blue", "green"]
             ids = ["A", "B"]
-            # create circles
-            v = mv.venn2(feat_set, set_labels=self.df_names)
-            # create lines around circles
-            circles = mv.venn2_circles(feat_set)
+            if weighted:
+                # create circles
+                v = mv.venn2(feat_set, set_labels=self.df_names)
+                # create lines around circles
+                circles = mv.venn2_circles(feat_set)
+            else:
+                # create circles
+                v = mv.venn2_unweighted(feat_set, set_labels=self.df_names)
+                # create lines around circles
+                circles = mv.venn2_circles(subsets=(1, 1, 1))
 
         # Plotting when three datasets are compared
         elif len(self) == 3:
@@ -698,7 +710,7 @@ class DataCollection(UserList):
             circles = mv.venn3_circles(subsets=(1, 1, 1, 1, 1, 1, 1))
 
         else:
-            raise ValueError("Too many datasets in DataCollection. Venn diagram only supported up to 3 datasets.")
+            raise ValueError("Too many datasets in DataCollection. Venn diagram only supported for up to 3 datasets.")
 
         # set colors for the circles in venn diagram
         for df_name, color in zip(ids, colors):
@@ -707,6 +719,13 @@ class DataCollection(UserList):
         # reduce line width around circles
         for c in circles:
             c.set_lw(1.0)
+
+        # change font size of dataset labels
+        for text in v.set_labels:
+            text.set_fontsize(label_fontsize)
+        # change font size of displayed counts
+        for text in v.subset_labels:
+            text.set_fontsize(count_fontsize)
 
         plt.title("Feature Overlap")
 
