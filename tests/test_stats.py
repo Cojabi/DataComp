@@ -18,8 +18,7 @@ df_names = ["Test1", "Test2"]
 group_col = "site"
 cat_feats = ["cat1", "cat2", "cat3"]
 feat_subset = ["feat1", "feat2", "cat1"]
-exclude_feats = ["feat1", "feat2", "site", "cat1",
-                 "feat3", "cat2"]
+exclude_feats = ["site"]
 
 class TestDataCollection(unittest.TestCase):
     """ """
@@ -57,7 +56,9 @@ class TestDataCollection(unittest.TestCase):
         cat1_p_val = chisquare([1, 3, 1],[2, 1, 3])
         self.assertEqual(p_vals["cat3"][(1, 2)], cat1_p_val.pvalue)
 
-
-
+    def test_p_correction(self):
+        p_vals = test_num_feats(self.zipper, )
+        self.assertEqual(p_vals, 1)
+        p_correction()
 
 

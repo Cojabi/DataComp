@@ -365,7 +365,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
             plt.show()
 
 
-def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, mean_sign=None, save_folder=None):
+def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, mean_sign=None, show_sig=False, save_folder=None):
     """
     Plots progression score plots for each feature that shows significant deviations at some time point.
 
@@ -375,13 +375,14 @@ def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, mean_sig
     :param plot_means: Flag is line connecting the means shall be plotted.
     :param mean_sign: Matplotlib option how data points shall be represented in the plot. Default is "-". This \
     might lead to bad plots if too many missing values are present.
+    :param show_sig: Flag if significant deviations shall be marked in the plot.
     :param save_folder: Folder in which plots will be saved.
     :return:
     """
 
     sig_feats = get_sig_feats(p_values)
     plot_prog_scores(time_dfs, sig_feats, plot_bp=plot_bp, plot_means=plot_means, mean_sign=mean_sign,
-                     show_sig=True, p_values=p_values, save_folder=save_folder)
+                     show_sig=show_sig, p_values=p_values, save_folder=save_folder)
 
 
 def plot_entities_per_timepoint(datacol, time_col, label_name, labels=None, rotate_labels=False, save_path=None):
