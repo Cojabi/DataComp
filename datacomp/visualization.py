@@ -391,6 +391,9 @@ def plot_entities_per_timepoint(datacol, time_col, label_name, labels=None, save
     :param datacol: DataCollection storing the data
     :param time_col: Column name of the column storing the time information.
     :param label_name: Name of the label which should be used to organize the x-axis.
+    :param labels: Labels that shall be shown on the legend. The order needs to match the order of the datasets in the\
+    DataCollection.
+    :param save_path: Path to which the plot shall be saved.
     :return:
     """
     if labels is None:
