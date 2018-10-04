@@ -384,7 +384,7 @@ def plot_signf_progs(time_dfs, p_values, plot_bp=True, plot_means=True, mean_sig
                      show_sig=True, p_values=p_values, save_folder=save_folder)
 
 
-def plot_entities_per_timepoint(datacol, time_col, label_name, labels=None, save_path=None):
+def plot_entities_per_timepoint(datacol, time_col, label_name, labels=None, rotate_labels=False, save_path=None):
     """
     Plots a bar plot which shows the number of entities at each point in time for each dataset.
 
@@ -393,15 +393,22 @@ def plot_entities_per_timepoint(datacol, time_col, label_name, labels=None, save
     :param label_name: Name of the label which should be used to organize the x-axis.
     :param labels: Labels that shall be shown on the legend. The order needs to match the order of the datasets in the\
     DataCollection.
+    :param rotate_labels: If True x axis labels will be slightly rotated to prevent overlapping.
     :param save_path: Path to which the plot shall be saved.
     :return:
     """
     if labels is None:
         labels = range(1, len(datacol) + 1)
 
+    # combined data for counting
     combined = datacol.combine_dfs(label_name, labels=labels)
-    sns.countplot(x=time_col, hue=label_name, data=combined)
+    # create plot
+    ax = sns.countplot(x=time_col, hue=label_name, data=combined)
     plt.title("Number of entities per time point")
+
+    if rotate_labels:
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
+        plt.tight_layout()
 
     if save_path:
         plt.savefig(save_path)
