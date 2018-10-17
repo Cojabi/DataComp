@@ -20,10 +20,17 @@ def create_prop_matched_dfs(matches_path, datacol):
     matched.dropna(inplace=True)
 
     # create dfs containing only matched data. Try to get oder of dataframes and matching columns correct
-    try:
-        prop_dfs = [datacol[1].loc[matched.index], datacol[0].loc[matched["Match"]]]
-    except KeyError:
-        prop_dfs = [datacol[0].loc[matched.index], datacol[1].loc[matched["Match"]]]
+    # if the intersection of the indeces of the match table overlap perfectly with the indices of the 1 dataframe:
+    if (datacol[0].index.intersection(matched.index) == matched.index).all():
+        prop_dfs = [datacol[0].loc[datacol[0].index.intersection(matched.index)],
+                    datacol[1].loc[datacol[1].index.intersection(matched["Match"])]]
+
+    # if the intersection of the indeces of the match table overlap perfectly with the indices of the 2 dataframe:
+    elif (datacol[1].index.intersection(matched.index) == matched.index).all():
+        prop_dfs = [datacol[1].loc[datacol[1].index.intersection(matched.index)],
+                    datacol[0].loc[datacol[0].index.intersection(matched["Match"])]]
+    else:
+        raise ValueError("Matched labels do not fit to either of the dataframes in the datacollection!")
 
     return DataCollection(prop_dfs, datacol.df_names, datacol.categorical_feats)
 
