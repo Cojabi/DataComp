@@ -391,7 +391,7 @@ class DataCollection(UserList):
 
     ## Stats
 
-    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True, print_data=False):
+    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True, ret_num=False, print_data=False):
         """
         This function can be used to compare all features easily. It works as a wrapper for the categorical and
         numerical feature comparison functions.
@@ -443,6 +443,10 @@ class DataCollection(UserList):
         if verbose:
             print("Fraction of significant comparisons:",
                   str(results["signf"].sum()) + "/" + str(len(results["signf"])))
+
+        # return number of significant feats
+        if ret_num:
+            return results["signf"].sum(), results.sort_values("signf")
 
         return results.sort_values("signf")
 
