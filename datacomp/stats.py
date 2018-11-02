@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import warnings
 
-from scipy.stats import mannwhitneyu, ttest_ind, chisquare
+from scipy.stats import mannwhitneyu, ttest_ind, chisquare, wilcoxon
 from statsmodels.sandbox.stats.multicomp import multipletests
 from statsmodels.multivariate.manova import MANOVA
 
@@ -21,7 +21,8 @@ def test_num_feats(zipper, feat_subset=None, method=None):
     :param zipper: Dictionary storing the feature values of the datasets in a list. Feature name is used as the key.
     :param feat_subset: A list containing feature names. If given, analysis will only be performed for the contained \
     features. If not given all features will be considered.
-    :param method: Specify which statistical test should be used. "u" for Mann-Whitney-U-test and "t" for t-test.
+    :param method: Specify which statistical test should be used. "u" for Mann-Whitney-U-test, "t" for t-test and \
+    "wilcoxon" for a Wilcoxon signed rank test.
     :return: dictionary storing the p_values of the analysis. Feature names are used as keys.
     """
 
@@ -60,6 +61,8 @@ def test_num_feats(zipper, feat_subset=None, method=None):
                     # calculate t-test and return p-value
                     elif method == "t":
                         stat_test_result = ttest_ind(zipper[feat][i], zipper[feat][j])
+                    elif method == "wilcoxon":
+                        stat_test_result = wilcoxon(zipper[feat][i], zipper[feat][j])
 
                     p_values[feat][i + 1, j + 1] = stat_test_result.pvalue
 
