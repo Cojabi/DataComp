@@ -182,14 +182,14 @@ def _create_result_table(result, p_val_col, p_trans, counts):
     result_table = pd.DataFrame(p_val_col)
 
     # rename columns and set values in result dataframe
-    result_table.rename(columns={0: "pv"}, inplace=True)
+    result_table.rename(columns={0: "p-value"}, inplace=True)
 
     # insert corrected p_values
     if result:
-        result_table["cor_pv"] = result[1]
+        result_table["cor_p-value"] = result[1]
         result_table["signf"] = result[0]
     elif result is None:
-        result_table["cor_pv"] = np.nan
+        result_table["cor_p-value"] = np.nan
         result_table["signf"] = np.nan
 
     # combine p_value information with dataset and feature information stored in p_trans
