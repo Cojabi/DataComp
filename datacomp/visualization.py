@@ -117,6 +117,9 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
     :param save_folder: a path to a directory where to store the figures.
     :return:
     """
+    # set colors
+    colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
+
     # calculate positions for boxplots
     positions = range(1, len(df_names) + 1)
 
@@ -127,8 +130,14 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
         # create new figure
         plt.figure()
         ax = plt.axes()
-        plt.boxplot(zipper[feat], positions=positions, widths=0.6)
-        # colorbps(bp)
+
+        for df_feature, color, position in zip(zipper[feat], colors, positions):
+            bp = plt.boxplot(df_feature, positions=[position], widths=0.6)
+
+            # color boxplot
+            for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
+                for element in bp[bp_part]:
+                    plt.setp(element, color=color)
 
         # set axes limits and labels
         plt.xlim(0, np.max(positions) + 1)
@@ -136,6 +145,9 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
         ax.set_xticklabels(df_names)
         # set title
         plt.title(feat)
+
+        # legend
+        create_legend(df_names, colors)
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
