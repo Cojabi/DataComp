@@ -391,13 +391,16 @@ class DataCollection(UserList):
 
     ## Stats
 
-    def analyze_feature_ranges(self, include=None, exclude=None, verbose=True, ret_num=False, print_data=False):
+    def analyze_feature_ranges(self, include=None, exclude=None, num_method=None, cat_method=None, verbose=True,
+                               ret_num=False, print_data=False):
         """
         This function can be used to compare all features easily. It works as a wrapper for the categorical and
         numerical feature comparison functions.
 
         :param include: List of features that should be considered for the comparison solely.
         :param exclude: List or set of features that should be excluded from the comparison.
+        :param methods: Statistical tests that shall be used. Standard is Mann-Whitney U test for numerical and \
+        chi² test for categorical features.
         :param verbose: Flag, if true the ratio of significant features will be printed.
         :param print_data: Flag to indicate if the categorical observations should be printed.
         :return: pandas.Dataframe showing the p-values and corrected p-values of the comparison
@@ -427,8 +430,8 @@ class DataCollection(UserList):
             num_feats = set(num_feats).intersection(include)
 
         # test features:
-        p_values.update(test_cat_feats(zipper, cat_feats, print_data=print_data))
-        p_values.update(test_num_feats(zipper, num_feats))
+        p_values.update(test_cat_feats(zipper, cat_feats, method=cat_method, print_data=print_data))
+        p_values.update(test_num_feats(zipper, num_feats, method=num_method))
 
         # if p-values are empty warn.
         if not p_values:
