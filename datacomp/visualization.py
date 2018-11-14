@@ -373,6 +373,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         if x_label is None:
             x_label = "Longitudinal Value"
         plt.xlabel(x_label)
+        plt.ylabel("Value of ", feat)
         plt.title(feat)
 
         colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]

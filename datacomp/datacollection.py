@@ -737,6 +737,6 @@ class DataCollection(UserList):
         plt.title("Feature Overlap")
 
         if save_path:
-            plt.savefig(save_path)
+            plt.savefig(save_path, dpi=300)
         else:
             plt.show()
