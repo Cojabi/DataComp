@@ -45,6 +45,93 @@ def plot_sig_num_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=
         feature_kdeplots(sig_zipper, datacol.df_names, feat_subset=num_feats_to_plot, save_folder=save_folder)
 
 
+def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
+    """
+    Creates one boxplot figure per feature.
+
+    :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x lists \
+    (the values of the features in the x dataframes)
+    :param df_names: names of the datasets to label figures accordingly
+    :param feat_subset: a list of features for which a plot shall be made. One plot per feature. If None all features \
+    will be considered.
+    :param save_folder: a path to a directory where to store the figures.
+    :return:
+    """
+    # set colors
+    colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
+
+    # calculate positions for boxplots
+    positions = range(1, len(df_names) + 1)
+
+    if feat_subset is None:
+        feat_subset = zipper.keys()
+
+    for feat in feat_subset:
+        # create new figure
+        plt.figure()
+        ax = plt.axes()
+
+        for df_feature, color, position in zip(zipper[feat], colors, positions):
+            bp = plt.boxplot(df_feature, positions=[position], widths=0.6)
+
+            # color boxplot
+            for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
+                for element in bp[bp_part]:
+                    plt.setp(element, color=color)
+
+        # set axes limits and labels
+        plt.xlim(0, np.max(positions) + 1)
+        ax.set_xticks(positions)
+        ax.set_xticklabels(df_names)
+        # set title
+        plt.title(feat)
+
+        # legend
+        create_legend(df_names, colors)
+
+        if save_folder:
+            save_file = os.path.join(save_folder, feat + "_boxplot.png")
+            plt.savefig(save_file, dpi=300)
+            plt.clf()
+        else:
+            plt.show()
+
+
+def feature_kdeplots(zipper, df_names, feat_subset=None, save_folder=None):
+    """
+    Plots distribution plots for each dataframe in one figure.
+
+    :param zipper:
+    :param df_names:
+    :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
+    :param save_folder: Path to a folder in which the plots shall be saved
+    :return:
+    """
+    # set colors
+    colors = ["b", "c", "r"]  # TODO adjust color pallette
+
+    # if no feature subset is provided, consider all features
+    if feat_subset is None:
+        feat_subset = zipper.keys()
+
+    for feat in feat_subset:
+        # include feature distributions of all dataframes into plot
+        for dataset_feature, color in zip(zipper[feat], colors):
+            sns.distplot(dataset_feature, hist=False, color=color, kde_kws={"shade": True})
+
+            # set title
+            plt.title(feat)
+
+            create_legend(df_names, colors)
+
+        if save_folder:
+            save_file = os.path.join(save_folder, feat + "_kdeplot.png")
+            plt.savefig(save_file, dpi=300)
+            plt.clf()
+        else:
+            plt.show()
+
+
 def plot_sig_cat_feats(datacol, sig_df, feat_subset=None, save_folder=None):
     """
     Plots boxplots for each significant feature to allow for visual comparison.
@@ -104,92 +191,6 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
         else:
             plt.show()
 
-
-def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
-    """
-    Creates one boxplot figure per feature.
-
-    :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x lists \
-    (the values of the features in the x dataframes)
-    :param df_names: names of the datasets to label figures accordingly
-    :param feat_subset: a list of features for which a plot shall be made. One plot per feature. If None all features \
-    will be considered.
-    :param save_folder: a path to a directory where to store the figures.
-    :return:
-    """
-    # set colors
-    colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
-
-    # calculate positions for boxplots
-    positions = range(1, len(df_names) + 1)
-
-    if feat_subset is None:
-        feat_subset = zipper.keys()
-
-    for feat in feat_subset:
-        # create new figure
-        plt.figure()
-        ax = plt.axes()
-
-        for df_feature, color, position in zip(zipper[feat], colors, positions):
-            bp = plt.boxplot(df_feature, positions=[position], widths=0.6)
-
-            # color boxplot
-            for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
-                for element in bp[bp_part]:
-                    plt.setp(element, color=color)
-
-        # set axes limits and labels
-        plt.xlim(0, np.max(positions) + 1)
-        ax.set_xticks(positions)
-        ax.set_xticklabels(df_names)
-        # set title
-        plt.title(feat)
-
-        # legend
-        create_legend(df_names, colors)
-
-        if save_folder:
-            save_file = os.path.join(save_folder, feat + ".png")
-            plt.savefig(save_file, dpi=300)
-            plt.clf()
-        else:
-            plt.show()
-
-
-def feature_kdeplots(zipper, df_names, feat_subset=None, save_folder=None):
-    """
-    Plots distribution plots for each dataframe in one figure.
-
-    :param zipper:
-    :param df_names:
-    :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
-    :param save_folder: Path to a folder in which the plots shall be saved
-    :return:
-    """
-    # set colors
-    colors = ["b", "c", "r"]  # TODO adjust color pallette
-
-    # if no feature subset is provided, consider all features
-    if feat_subset is None:
-        feat_subset = zipper.keys()
-
-    for feat in feat_subset:
-        # include feature distributions of all dataframes into plot
-        for dataset_feature, color in zip(zipper[feat], colors):
-            sns.distplot(dataset_feature, hist=False, color=color, kde_kws={"shade": True})
-
-            # set title
-            plt.title(feat)
-
-            create_legend(df_names, colors)
-
-        if save_folder:
-            save_file = os.path.join(save_folder, feat + ".png")
-            plt.savefig(save_file, dpi=300)
-            plt.clf()
-        else:
-            plt.show()
 
 def create_legend(labels, colors):
     """
