@@ -99,7 +99,7 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
-            plt.savefig(save_file)
+            plt.savefig(save_file, bpi=300)
             plt.clf()
         else:
             plt.show()
@@ -151,7 +151,7 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
-            plt.savefig(save_file)
+            plt.savefig(save_file, dpi=300)
             plt.clf()
         else:
             plt.show()
@@ -186,7 +186,7 @@ def feature_kdeplots(zipper, df_names, feat_subset=None, save_folder=None):
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + ".png")
-            plt.savefig(save_file)
+            plt.savefig(save_file, dpi=300)
             plt.clf()
         else:
             plt.show()
@@ -381,7 +381,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + "prog_score.png")
-            plt.savefig(save_file)
+            plt.savefig(save_file, dpi=300)
             plt.clf()
         else:
             plt.show()
@@ -434,6 +434,6 @@ def plot_entities_per_timepoint(datacol, time_col, label_name, labels=None, rota
         plt.tight_layout()
 
     if save_path:
-        plt.savefig(save_path)
+        plt.savefig(save_path, dpi=300)
     else:
         plt.show()
