@@ -76,7 +76,7 @@ def calc_prog_scores(time_series, bl_index, method):
         :param bl: Baseline feature Value
         :return: Baseline feature value ratio
         """
-        return x / bl
+        return np.log(x / bl)
 
     # get baseline value
     try:

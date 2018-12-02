@@ -85,6 +85,7 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
         ax.set_xticklabels(df_names)
         # set title
         plt.title(feat)
+        plt.ylabel("Feature value")
 
         # legend
         create_legend(df_names, colors)
@@ -108,7 +109,7 @@ def feature_kdeplots(zipper, df_names, feat_subset=None, save_folder=None):
     :return:
     """
     # set colors
-    colors = ["b", "c", "r"]  # TODO adjust color pallette
+    colors = ["#1f77b4", "#17becf", "#e8a145"]  # TODO adjust color pallette
 
     # if no feature subset is provided, consider all features
     if feat_subset is None:
@@ -121,7 +122,7 @@ def feature_kdeplots(zipper, df_names, feat_subset=None, save_folder=None):
 
             # set title
             plt.title(feat)
-
+            plt.xlabel("Feature value")
             create_legend(df_names, colors)
 
         if save_folder:
@@ -374,7 +375,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         if x_label is None:
             x_label = "Longitudinal Value"
         plt.xlabel(x_label)
-        plt.ylabel("Value of ", feat)
+        plt.ylabel("Feature value")
         plt.title(feat)
 
         colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
