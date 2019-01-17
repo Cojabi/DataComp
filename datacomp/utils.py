@@ -47,7 +47,7 @@ def construct_formula(label, rel_cols, label_side="l"):
 def calc_prog_scores(time_series, bl_index, method):
     """
     Calculates the progression scores. Can be done using either a z-score normalization to baseline or expressing the \
-    score as ratio of baseline value.
+    score as log-ratio of baseline value.
 
     :param time_series: pandas.Series storing the values at the different points in time which shall be transformed \
     into progression scores.
@@ -70,7 +70,7 @@ def calc_prog_scores(time_series, bl_index, method):
 
     def _robl_formula(x, bl):
         """
-        Calculates the ratio between the current feature value and the baseline feature value.
+        Calculates the log-ratio between the current feature value and the baseline feature value.
 
         :param x: Feature Value
         :param bl: Baseline feature Value
@@ -117,7 +117,7 @@ def _categorical_table(data):
 
 def _non_present_values_to_zero(test_data):
     """
-    Fills keys in the test data of one dataframe if it is not present but present in one of the other datasets.
+    Fills keys in the test data of one dataframe if key is not present in it but in one of the other datasets.
 
     :param test_data:
     :return:

@@ -7,6 +7,7 @@ import matplotlib.pylab as plt
 import os
 import warnings
 
+from scipy.stats import chi2_contingency
 from pymatch.Matcher import Matcher
 from collections import UserList, Counter
 from sklearn.cluster import AgglomerativeClustering
@@ -522,11 +523,14 @@ class DataCollection(UserList):
         cl_data["Cluster"] = cl_labels
         confusion_m = _confusion_matrix(cl_data, label)
 
+        # test if difference in cluster and dataset label are independent
+        pval = chi2_contingency(confusion_m).p
+
         if return_data:
             return calculate_cluster_purity(confusion_m), confusion_m, cl_data
 
         # calculate datasets distributions across clusters
-        return calculate_cluster_purity(confusion_m), confusion_m
+        return calculate_cluster_purity(confusion_m), confusion_m, pval
 
     ## longitudinal
 

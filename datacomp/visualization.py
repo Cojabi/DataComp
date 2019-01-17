@@ -368,7 +368,11 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         # set axis ticks, limits, labels
         ax = plt.axes()
         plt.xlim(0, np.max(bp_positions))
-        ax.set_xticklabels(sorted(time_dfs.keys()))
+
+        # try converting x_labels into integers #TODO fix this or put in utility function
+        xticks = [int(tick) for tick in sorted(time_dfs.keys())]
+
+        ax.set_xticklabels(xticks)
         ax.set_xticks(xticks_positions)
 
         # set label for x-axis and plot title
