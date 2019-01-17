@@ -524,13 +524,13 @@ class DataCollection(UserList):
         confusion_m = _confusion_matrix(cl_data, label)
 
         # test if difference in cluster and dataset label are independent
-        pval = chi2_contingency(confusion_m).p
+        chi2_results  = chi2_contingency(confusion_m)
 
         if return_data:
             return calculate_cluster_purity(confusion_m), confusion_m, cl_data
 
         # calculate datasets distributions across clusters
-        return calculate_cluster_purity(confusion_m), confusion_m, pval
+        return calculate_cluster_purity(confusion_m), confusion_m, chi2_results[1]
 
     ## longitudinal
 
