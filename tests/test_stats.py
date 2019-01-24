@@ -56,4 +56,5 @@ class TestDataCollection(unittest.TestCase):
         cat1_p_val = chisquare([1, 3, 1],[2, 1, 3])
         self.assertEqual(p_vals["cat3"][(1, 2)], cat1_p_val.pvalue)
 
-
+    def test_p_correction(self):
+        pass

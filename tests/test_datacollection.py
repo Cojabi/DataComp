@@ -92,3 +92,21 @@ class TestDataCollection(unittest.TestCase):
         self.assertFalse(
             (reduced_datacol[1][changed_feat] == self.datacol[1].loc[["x23", "x25", "x27"], changed_feat]).all()
         )
+
+    def test_hierarchical_clustering(self):
+        pass
+
+    def test_create_prop_matched_dfs(self):
+        pass
+
+    def test_create_prop_matched_dfs_longitudinal(self):
+        pass
+
+    def test_get_n_per_feat(self):
+        pass
+
+    def test_create_value_set(self):
+        pass
+
+    def test_combine_dfs(self):
+        pass
