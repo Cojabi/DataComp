@@ -6,7 +6,7 @@ import numpy as np
 import os
 import seaborn as sns
 
-from .utils import get_sig_feats
+from .utils import get_sig_feats, make_ticks_int
 from itertools import compress
 
 # load plot style
@@ -39,26 +39,35 @@ def plot_sig_num_feats(datacol, sig_df, feat_subset=None, boxplot=True, kdeplot=
 
     # plot boxplots
     if boxplot:
-        bp_single_features(sig_zipper, datacol.df_names, feat_subset=num_feats_to_plot, save_folder=save_folder)
+        all_feature_boxplots(sig_zipper, datacol.df_names, feat_subset=num_feats_to_plot, save_folder=save_folder)
     # plot kde plots
     if kdeplot:
-        feature_kdeplots(sig_zipper, datacol.df_names, feat_subset=num_feats_to_plot, save_folder=save_folder)
+        all_feature_kdeplots(sig_zipper, datacol.df_names, feat_subset=num_feats_to_plot, save_folder=save_folder)
 
 
-def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
+def all_feature_boxplots(zipper, df_names, feat_subset=None, colors=None, legend=True, fig_size=None, save_folder=None):
     """
     Creates one boxplot figure per feature.
 
-    :param zipper: zipper dict, that contains numerical variables. For each key the value is a list containing x lists \
-    (the values of the features in the x dataframes)
+    :param zipper: Zipper dict that contains numerical variables. For each key the value is a list containing one list \
+    for each dataset covering the respective values.
     :param df_names: names of the datasets to label figures accordingly
     :param feat_subset: a list of features for which a plot shall be made. One plot per feature. If None all features \
     will be considered.
+    :param colors: Iterable storing the colors that shall be used for visualizing. One color per dataset in the \
+    DataCollection.
+    :param legend: Boolean if legend shall be created. True by default.
+    :param fig_size: List or tuple containing the figure size. Default is [8, 6]
     :param save_folder: a path to a directory where to store the figures.
     :return:
     """
     # set colors
-    colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
+    if colors is None:
+        colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
+
+    # set figure size
+    if not fig_size:
+        fig_size = [8, 6]
 
     # calculate positions for boxplots
     positions = range(1, len(df_names) + 1)
@@ -68,28 +77,30 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
 
     for feat in feat_subset:
         # create new figure
-        plt.figure(figsize=[4, 4])
+        plt.figure(figsize=fig_size)
         ax = plt.axes()
 
         for df_feature, color, position in zip(zipper[feat], colors, positions):
             # set color and linewidth of boxplots
             box_properties = dict(linewidth=1.6, color=color)
-            bp = plt.boxplot(df_feature, positions=[position], widths=0.6,
-                             boxprops=box_properties, whiskerprops=box_properties,
-                             capprops=box_properties)
+            plt.boxplot(df_feature, positions=[position], widths=0.6,
+                        boxprops=box_properties, whiskerprops=box_properties,
+                        capprops=box_properties)
 
 
-        # set axes limits and labels
+        # configure axes ticks, limits and labels
         plt.xlim(0, np.max(positions) + 1)
         ax.set_xticks(positions)
         ax.set_xticklabels(df_names)
         ax.tick_params(labelsize="large")
+        plt.ylabel("Feature value", fontsize=12.5)
         # set title
         plt.title(feat)
-        plt.ylabel("Feature value", fontsize=12.5)
 
-        # legend
-        create_legend(df_names, colors)
+
+        # create legend
+        if legend:
+            create_legend(df_names, colors)
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + "_boxplot.png")
@@ -99,18 +110,22 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
             plt.show()
 
 
-def feature_kdeplots(zipper, df_names, feat_subset=None, save_folder=None):
+def all_feature_kdeplots(zipper, df_names, feat_subset=None, colors=None, save_folder=None):
     """
     Plots distribution plots for each dataframe in one figure.
 
-    :param zipper:
-    :param df_names:
+    :param zipper: Zipper dict that contains numerical variables. For each key the value is a list containing one list \
+    for each dataset covering the respective values.
+    :param df_names: Iterable containing the names of the datasets.
     :param feat_subset: List of a subset of the features. Only for the mentioned features, a plot will be created.
+    :param colors: Iterable storing the colors that shall be used for visualizing. One color per dataset in the \
+    DataCollection.
     :param save_folder: Path to a folder in which the plots shall be saved
     :return:
     """
     # set colors
-    colors = ["#1f77b4", "#17becf", "#e8a145"]  # TODO adjust color pallette
+    if colors is None:
+        colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
 
     # if no feature subset is provided, consider all features
     if feat_subset is None:
@@ -199,7 +214,7 @@ def create_legend(labels, colors):
     Creates a legend for plots using the given colors and labels.
 
     :param labels: Iterable of labels that shall be used in the legend.
-    :param colors: Iterable of colors that shall be used in the legen.
+    :param colors: Iterable of colors that shall be used in the legend.
     :return:
     """
     patches = []
@@ -211,8 +226,8 @@ def create_legend(labels, colors):
 
 ## longitudinal plotting
 
-def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_sign=None, show_sig=False,
-                     p_values=None, x_label=None, save_folder=None):
+def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, bp_colors=None, mean_colors=None,
+                     mean_sign=None, show_sig=False, p_values=None, x_label=None, save_folder=None):
     """
     Creates one plot per feature displaying the progession scores calculated for the datasets in comparison to each
     other. Plots the distribution of the progression scores as boxplots and the means as a line connecting the different
@@ -226,6 +241,11 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
     might lead to bad plots if too many missing values are present.
     :param show_sig: Flag if significant deviations shall be marked in the plot.
     :param p_values: Result table from significance testing on the progression scores.
+    :param bp_colors: Iterable storing the colors that shall be used for visualizing the boxplots. \
+    One color per dataset in the DataCollection.
+    :param mean_colors: Iterable storing the colors that shall be used for visualizing the means. \
+    One color per dataset in the DataCollection.
+    :param x_label: Label for the x axis.
     :param save_folder: Folder in which plots will be saved.
     :return:
     """
@@ -277,7 +297,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
 
         return bp_positions, xticks_positions
 
-    def _plot_prog_score_means(means, xticks_positions, mean_sign):
+    def _plot_prog_score_means(means, xticks_positions, mean_sign, colors):
         """
         Plots the means of the progression scores over time.
 
@@ -285,9 +305,10 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         :param xticks_positions: List storing the x-axis-tick positions.
         :param mean_sign: Matplotlib option how data points shall be represented in the plot. Default is "-". This \
         might lead to bad plots if too many missing values are present.
+        :param colors: Iterable storing the colors that shall be used for visualizing. One color per dataset in the \
+        DataCollection.
         :return:
         """
-        colors = ["#1799B5", "#00FFFF", "#f7b42e", "#8ff74a"]  # TODO change color palette
 
         # set mean sign if none:
         if mean_sign is None:
@@ -297,17 +318,18 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         for dataset_means, color in zip(means.values(), colors):
             plt.plot(xticks_positions, dataset_means, mean_sign, color=color)
 
-    def _bp_all_timepoints(time_dfs, bp_positions, feat):
+    def _bp_all_timepoints(time_dfs, bp_positions, feat, colors):
         """
         Plot progression score distributions per time point as boxplots.
 
         :param time_dfs: Dictionary storing the calculated progression scores per time point.
         :param bp_positions: List storing the boxplot positions
         :param feat: Feature name for which plot shall be created.
+        :param colors: Iterable storing the colors that shall be used for visualizing. One color per dataset in the \
+        DataCollection.
         :return:
         """
 
-        colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]  # TODO change color palette
         timepoints = list(time_dfs.keys())
         timepoints.sort()
 
@@ -345,6 +367,12 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         y_axis_values = [0 for i in range(len(sig_ticks))]
         plt.plot(sig_ticks, y_axis_values, "*")
 
+    if bp_colors is None:
+        colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]  # TODO change color palette
+
+    if mean_colors is None:
+        colors = ["#1799B5", "#00FFFF", "#f7b42e", "#8ff74a"]  # TODO change color palette
+
     # get the number of dataframes and the dataframe names
     df_names = list(time_dfs.values())[0].df_names
     num_dfs = len(df_names)
@@ -362,7 +390,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
 
         # plot progression scores at each time point as boxplots
         if plot_bp:
-            _bp_all_timepoints(time_dfs, bp_positions, feat)
+            _bp_all_timepoints(time_dfs, bp_positions, feat, colors=bp_colors)
 
         if show_sig:
             plot_significances(xticks_positions, p_values)
@@ -371,8 +399,8 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         ax = plt.axes()
         plt.xlim(0, np.max(bp_positions))
 
-        # try converting x_labels into integers #TODO fix this or put in utility function
-        xticks = [int(tick) for tick in sorted(time_dfs.keys())]
+        # try converting x tick labels into integers
+        xticks = make_ticks_int(sorted(time_dfs.keys()))
 
         ax.set_xticklabels(xticks)
         ax.set_xticks(xticks_positions)
@@ -384,8 +412,7 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, mean_
         plt.ylabel("Feature value")
         plt.title(feat)
 
-        colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]
-        create_legend(df_names, colors)
+        create_legend(df_names, bp_colors)
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + "prog_score.png")

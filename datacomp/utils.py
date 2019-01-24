@@ -246,3 +246,13 @@ def calculate_cluster_purity(contingency_mat):
     :return: Cluster purity value
     """
     return contingency_mat.max().sum() / contingency_mat.values.sum()
+
+def make_ticks_int(tick_list):
+    """
+    Converts axis ticks to integers.
+
+    :param tick_list: Iterable of the axis ticks to be converted. Should be sortend in the order they shall be put on \
+    the axis.
+    :return:
+    """
+    return [int(tick) for tick in tick_list]
