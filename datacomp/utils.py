@@ -208,3 +208,41 @@ def _create_result_table(result, p_val_col, p_trans, counts):
     result_table = result_table.join(counts, how="outer")
 
     return result_table
+
+
+def create_contin_mat(data, dataset_labels, value_col):
+    """
+    Creates a contingency table from clustering results.
+
+    :param data: Dictionary with observation numbers.
+    :param dataset_labels: Labels of the datasets used as keys in 'data' dict.
+    :param value_col: Name of the column in which the values of interest are stored. e.g. "Gender".
+    :return: contingency matrix
+    """
+    contingency_matrix = dict()
+
+    # count for each label
+    for dataset_nr in data[dataset_labels].unique():
+        # select subset out of dataframe
+        dataset = data[data[dataset_labels] == dataset_nr]
+
+        # count occurences
+        c = Counter(dataset["Cluster"])
+
+        # get rid of NaNs
+        c = {key: c[key] for key in c if not pd.isnull(key)}
+
+        # add to confusion matrix
+        contingency_matrix[dataset_nr] = c
+
+    return pd.DataFrame(contingency_matrix).transpose()
+
+
+def calculate_cluster_purity(contingency_mat):
+    """
+    Will calculate cluster purity values.
+
+    :param contingency_mat: Contigency matrix containing the observations.
+    :return: Cluster purity value
+    """
+    return contingency_mat.max().sum() / contingency_mat.values.sum()

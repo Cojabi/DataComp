@@ -12,7 +12,7 @@ from pymatch.Matcher import Matcher
 from collections import UserList, Counter
 from sklearn.cluster import AgglomerativeClustering
 from .stats import test_cat_feats, test_num_feats, p_correction
-from .utils import construct_formula, calc_prog_scores
+from .utils import construct_formula, calc_prog_scores, calculate_cluster_purity, create_contin_mat
 
 
 def create_datacol(df, categorical_feats, groupby, df_names=None, exclude_classes=[], rel_cols=None):
@@ -151,11 +151,11 @@ class DataCollection(UserList):
         self.df_names = df_names
         self.categorical_feats = categorical_feats
 
+        # exclude all nan features
         if exclude_nan_feats:
-            # exclude all nan features
             self.exclude_empty_feats()
 
-            # update categorical feats to only include the ones present in all datasets
+            # update categorical feature name list to only include the ones present after feature elimination
             self.update_categorical_feats()
 
         # get numerical features if not given
@@ -416,7 +416,7 @@ class DataCollection(UserList):
         cat_feats = self.categorical_feats[::]
         num_feats = self.numerical_feats[::]
 
-        # delete label if exclude is given
+        # delete dictionary entry if 'exclude' is given
         if exclude:
             assert (type(exclude) == list) or (type(exclude) == set), "exclude must be given as a list"
             for feat in exclude:
@@ -448,7 +448,7 @@ class DataCollection(UserList):
             print("Fraction of significant comparisons:",
                   str(results["signf"].sum()) + "/" + str(len(results["signf"])))
 
-        # return number of significant feats
+        # return number of significant features
         if ret_num:
             return results["signf"].sum(), results.sort_values("signf")
 
@@ -456,14 +456,14 @@ class DataCollection(UserList):
 
     ## Clustering
 
-    def hierarchical_clustering(self, label=None, feat_subset=None, str_cols=None, return_data=False):
+    def hierarchical_clustering(self, dataset_label=None, feat_subset=None, str_cols=None, return_data=False):
         """
         Performs an agglomerative clustering to assign entites in the datasets to clusters and evaluate the distribution
         of dataset memberships across the clusters. Outcome will be the cluster purity w.r.t. the dataset membership
         labels and the confusion matrix, listing how many entities out of which dataset (rows) are assigned to which
         cluster (columns).
 
-        :param label: Column name of the column that should store the dataset membership labels. If None is given, a \
+        :param dataset_label: Column name of the column that should store the dataset membership labels. If None is given, a \
         column named "Dataset" will be created and labels from 1 to number of datasets will be assigned as labels.
         :param feat_subset: List of feature names. Only those features will be included into the clustering.
         :param str_cols: List of features where the values are non numeric. Must be excluded for clustering.
@@ -472,39 +472,15 @@ class DataCollection(UserList):
         :return: Cluster purity, Confusion matrix
         """
 
-        def _confusion_matrix(data, label):
-            """ """
-            confusion_matrix = dict()
+        if dataset_label is None:
+            dataset_label = "Dataset"
 
-            # count for each label
-            for dataset_nr in data[label].unique():
-                # select subset out of dataframe
-                dataset = data[data[label] == dataset_nr]
-
-                # count occurences
-                c = Counter(dataset["Cluster"])
-
-                # get rid of NaNs
-                c = {key: c[key] for key in c if not pd.isnull(key)}
-
-                # add to confusion matrix
-                confusion_matrix[dataset_nr] = c
-
-            return pd.DataFrame(confusion_matrix).transpose()
-
-        def calculate_cluster_purity(confusion_matrix):
-            """ """
-            return confusion_matrix.max().sum() / confusion_matrix.values.sum()
-
-        if label is None:
-            label = "Dataset"
-
-        # create labels for the datasets
+        # create labels for the datasets, starting at 1.
         labels = range(1, len(self) + 1)
 
-        # pre-process data to allow for clustering
-        cl_data = self.combine_dfs(label, labels=labels, feat_subset=feat_subset)
-        num_datasets = len(cl_data[label].unique())
+        # Combine datasets into one for clustering
+        cl_data = self.combine_dfs(dataset_label, labels=labels, feat_subset=feat_subset)
+        num_datasets = len(cl_data[dataset_label].unique())
 
         # exclude string columns if given
         if str_cols:
@@ -521,10 +497,10 @@ class DataCollection(UserList):
 
         # set label column
         cl_data["Cluster"] = cl_labels
-        confusion_m = _confusion_matrix(cl_data, label)
+        confusion_m = create_contin_mat(cl_data, dataset_label, "Cluster")
 
-        # test if difference in cluster and dataset label are independent
-        chi2_results  = chi2_contingency(confusion_m)
+        # test if cluster and dataset label are independent
+        chi2_results = chi2_contingency(confusion_m)
 
         if return_data:
             return calculate_cluster_purity(confusion_m), confusion_m, cl_data
@@ -532,7 +508,7 @@ class DataCollection(UserList):
         # calculate datasets distributions across clusters
         return calculate_cluster_purity(confusion_m), confusion_m, chi2_results[1]
 
-    ## longitudinal
+    # longitudinal analysis functions
 
     def create_progression_tables(self, feat_subset, time_col, patient_col, method, bl_index, skip_no_bl=False):
         """
@@ -689,7 +665,7 @@ class DataCollection(UserList):
         """
         Plots a venn diagram illustrating the overlap in features between the datasets.
 
-        :param save_path: Path where to save the venn diagram
+        :param save_path: Path to which venn diagram shall be saved.
         :return:
         """
         feat_set = self.get_feature_sets(exclude)

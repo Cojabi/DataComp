@@ -68,31 +68,32 @@ def bp_single_features(zipper, df_names, feat_subset=None, save_folder=None):
 
     for feat in feat_subset:
         # create new figure
-        plt.figure()
+        plt.figure(figsize=[4, 4])
         ax = plt.axes()
 
         for df_feature, color, position in zip(zipper[feat], colors, positions):
-            bp = plt.boxplot(df_feature, positions=[position], widths=0.6)
+            # set color and linewidth of boxplots
+            box_properties = dict(linewidth=1.6, color=color)
+            bp = plt.boxplot(df_feature, positions=[position], widths=0.6,
+                             boxprops=box_properties, whiskerprops=box_properties,
+                             capprops=box_properties)
 
-            # color boxplot
-            for bp_part in ['boxes', 'whiskers', 'fliers', 'caps']:
-                for element in bp[bp_part]:
-                    plt.setp(element, color=color)
 
         # set axes limits and labels
         plt.xlim(0, np.max(positions) + 1)
         ax.set_xticks(positions)
         ax.set_xticklabels(df_names)
+        ax.tick_params(labelsize="large")
         # set title
         plt.title(feat)
-        plt.ylabel("Feature value")
+        plt.ylabel("Feature value", fontsize=12.5)
 
         # legend
         create_legend(df_names, colors)
 
         if save_folder:
             save_file = os.path.join(save_folder, feat + "_boxplot.png")
-            plt.savefig(save_file, dpi=300)
+            plt.savefig(save_file, dpi=500, bbox_inches="tight")
             plt.clf()
         else:
             plt.show()
@@ -195,9 +196,10 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
 
 def create_legend(labels, colors):
     """
+    Creates a legend for plots using the given colors and labels.
 
-    :param labels:
-    :param colors:
+    :param labels: Iterable of labels that shall be used in the legend.
+    :param colors: Iterable of colors that shall be used in the legen.
     :return:
     """
     patches = []
@@ -205,7 +207,7 @@ def create_legend(labels, colors):
     for color, label in zip(colors, labels):
         patches.append(mpatches.Patch(color=color, label=label))
 
-    plt.legend(handles=patches)
+    plt.legend(handles=patches, prop={'size': 12})
 
 ## longitudinal plotting
 
