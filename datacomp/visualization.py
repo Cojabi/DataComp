@@ -368,10 +368,10 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, bp_co
         plt.plot(sig_ticks, y_axis_values, "*")
 
     if bp_colors is None:
-        colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]  # TODO change color palette
+        bp_colors = ["#1f77b4", "#17becf", "#e8a145", "#71ea20"]  # TODO change color palette
 
     if mean_colors is None:
-        colors = ["#1799B5", "#00FFFF", "#f7b42e", "#8ff74a"]  # TODO change color palette
+        mean_colors = ["#1799B5", "#00FFFF", "#f7b42e", "#8ff74a"]  # TODO change color palette
 
     # get the number of dataframes and the dataframe names
     df_names = list(time_dfs.values())[0].df_names
@@ -386,11 +386,11 @@ def plot_prog_scores(time_dfs, feat_subset, plot_bp=True, plot_means=True, bp_co
         # plot mean progression
         if plot_means:
             means = _calculate_means_per_timepoint(time_dfs, feat)
-            _plot_prog_score_means(means, xticks_positions, mean_sign=mean_sign)
+            _plot_prog_score_means(means, xticks_positions, mean_sign, mean_colors)
 
         # plot progression scores at each time point as boxplots
         if plot_bp:
-            _bp_all_timepoints(time_dfs, bp_positions, feat, colors=bp_colors)
+            _bp_all_timepoints(time_dfs, bp_positions, feat, bp_colors)
 
         if show_sig:
             plot_significances(xticks_positions, p_values)
