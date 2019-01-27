@@ -112,7 +112,7 @@ class TestDataCollection(unittest.TestCase):
     def test_hierarchical_clustering(self):
         pass
 
-    # based on matchings
+    # based on matchings; code can be found in prop_matching.py
     def test_create_prop_matched_dfs(self):
         matched_datacol = create_prop_matched_dfs(matching_data, self.datacol)
 

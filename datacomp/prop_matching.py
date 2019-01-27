@@ -46,11 +46,11 @@ def create_prop_matched_dfs_longitudinal(matches_path, datacol, pat_col):
     """
 
     # load matches and drop non matched ids
-    matched = pd.read_csv(matches_path, index_col=0)
+    matched = pd.read_csv(matches_path)
     matched.dropna(inplace=True)
 
-    majority_inds = matched["Match"]
-    minority_inds = matched.index
+    majority_inds = matched.iloc[:, 1]
+    minority_inds = matched.iloc[:, 0]
 
     # create dfs containing only matched data. Try to get oder of dataframes and matching columns correct
     try:
