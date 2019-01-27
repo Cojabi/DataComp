@@ -316,7 +316,7 @@ class DataCollection(UserList):
 
     def get_n_per_feat(self, feat_subset=None):
         """
-        Counts the available datapoints for each comparison and each dataset
+        Counts the available datapoints for each comparison and each dataset.
 
         :param feat_subset: List of a subset of features which shall be considered for this.
         :return: DataFrame storing the counts for each dataset and feature
@@ -324,6 +324,7 @@ class DataCollection(UserList):
         zipper = self.create_zipper(feat_subset)
 
         for key in zipper:
+            # turns zipper values into lists storing the number of entries of the respective features per dataset
             zipper[key] = [len(z) for z in zipper[key]]
 
             counts = pd.DataFrame(zipper).transpose()

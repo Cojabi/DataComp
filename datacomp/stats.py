@@ -85,7 +85,7 @@ def test_cat_feats(zipper, feat_subset=None, method=None, print_data=False):
 
     p_values = dict()
 
-    # consider all features is no feature subset was specified
+    # consider all features if no feature subset was specified
     if feat_subset is None:
         feat_subset = zipper.keys()
 
