@@ -16,19 +16,19 @@ def create_prop_matched_dfs(matches_path, datacol):
     """
 
     # load matches and drop non matched ids
-    matched = pd.read_csv(matches_path, index_col=0)
+    matched = pd.read_csv(matches_path)
     matched.dropna(inplace=True)
 
     # create dfs containing only matched data. Try to get oder of dataframes and matching columns correct
     # if the intersection of the indeces of the match table overlap perfectly with the indices of the 1 dataframe:
-    if (datacol[0].index.intersection(matched.index) == matched.index).all():
-        prop_dfs = [datacol[0].loc[datacol[0].index.intersection(matched.index)],
-                    datacol[1].loc[datacol[1].index.intersection(matched["Match"])]]
+    if (datacol[0].index.intersection(matched.iloc[:, 0]) == matched.iloc[:, 0]).all():
+        prop_dfs = [datacol[0].loc[datacol[0].index.intersection(matched.iloc[:, 0])],
+                    datacol[1].loc[datacol[1].index.intersection(matched.iloc[:, 1])]]
 
     # if the intersection of the indeces of the match table overlap perfectly with the indices of the 2 dataframe:
-    elif (datacol[1].index.intersection(matched.index) == matched.index).all():
-        prop_dfs = [datacol[1].loc[datacol[1].index.intersection(matched.index)],
-                    datacol[0].loc[datacol[0].index.intersection(matched["Match"])]]
+    elif (datacol[1].index.intersection(matched.iloc[:, 0]) == matched.iloc[:, 0]).all():
+        prop_dfs = [datacol[1].loc[datacol[1].index.intersection(matched.iloc[:, 0])],
+                    datacol[0].loc[datacol[0].index.intersection(matched.iloc[:, 1])]]
     else:
         raise ValueError("Matched labels do not fit to either of the dataframes in the datacollection!")
 
