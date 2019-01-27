@@ -4,10 +4,12 @@ import os
 import unittest
 
 from datacomp.datacollection import get_data
+from datacomp.prop_matching import create_prop_matched_dfs
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 test_data_path = os.path.join(dir_path, 'test_data.csv')
+matching_data = os.path.join(dir_path, 'example_matching.csv')
 
 df_names = ["Test1", "Test2"]
 
@@ -93,20 +95,29 @@ class TestDataCollection(unittest.TestCase):
             (reduced_datacol[1][changed_feat] == self.datacol[1].loc[["x23", "x25", "x27"], changed_feat]).all()
         )
 
+    def test_get_n_per_feat(self):
+        counts = self.datacol.get_n_per_feat(feat_subset=feat_subset)
+
+        self.assertEqual(list(counts.loc["feat1", ::]), [4, 5])
+        self.assertEqual(counts.shape[0], 3)
+
+    def test_combine_dfs(self):
+        combined = self.datacol.combine_dfs("site")
+        self.assertEqual(combined.shape, (11, 8))
+
+    def test_create_value_set(self):
+        values = self.datacol.create_value_set("cat3")
+        self.assertEqual(values, {0, 1, 2})
+
     def test_hierarchical_clustering(self):
         pass
 
+    # based on matchings
     def test_create_prop_matched_dfs(self):
-        pass
+        matched_datacol = create_prop_matched_dfs(matching_data, self.datacol)
+
+        self.assertEqual(list(matched_datacol[0].index), ["x10", "x12", "x13"])
+        self.assertEqual(list(matched_datacol[1].index), ["x25", "x26", "x27"])
 
     def test_create_prop_matched_dfs_longitudinal(self):
-        pass
-
-    def test_get_n_per_feat(self):
-        pass
-
-    def test_create_value_set(self):
-        pass
-
-    def test_combine_dfs(self):
         pass

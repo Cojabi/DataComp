@@ -45,8 +45,9 @@ class TestDataCollection(unittest.TestCase):
             # Trigger a warning.
             p_vals = test_cat_feats(self.zipper, feat_subset=self.datacol.categorical_feats)
 
-            self.assertEqual(len(w), 4)
-            self.assertTrue("cat1" in str(w[0].message))
+            warns = sorted([str(m.message) for m in w])
+            self.assertEqual(len(w), 4) # 4 because one warining will be a divide by zero assertion error
+            self.assertTrue("cat1" in warns[0])
 
         # check categorical table creation
         test_data = _categorical_table(["A", "A", "C", "A", "A"])
