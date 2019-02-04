@@ -417,7 +417,7 @@ class DataCollection(UserList):
         cat_feats = self.categorical_feats[::]
         num_feats = self.numerical_feats[::]
 
-        # delete dictionary entry if 'exclude' is given
+        # delete zipper entry if 'exclude' is given
         if exclude:
             assert (type(exclude) == list) or (type(exclude) == set), "exclude must be given as a list"
             for feat in exclude:
@@ -425,7 +425,7 @@ class DataCollection(UserList):
             # update feature lists
             cat_feats = set(cat_feats).difference(exclude)
             num_feats = set(num_feats).difference(exclude)
-
+        # select relevant feature subset if "include" is given
         if include:
             assert (type(include) == list) or (type(include) == set), "include must be given as a list"
             cat_feats = set(cat_feats).intersection(include)
@@ -456,7 +456,6 @@ class DataCollection(UserList):
         return results.sort_values("signf")
 
     ## Clustering
-
     def hierarchical_clustering(self, dataset_label=None, feat_subset=None, str_cols=None, return_data=False):
         """
         Performs an agglomerative clustering to assign entites in the datasets to clusters and evaluate the distribution
@@ -470,7 +469,7 @@ class DataCollection(UserList):
         :param str_cols: List of features where the values are non numeric. Must be excluded for clustering.
         :param return_data: If true, the original dataframe will be returned with the cluster membership as a new \
         column.
-        :return: Cluster purity, Confusion matrix
+        :return: Cluster purity, Contingency matrix, p-value from a chi² test
         """
 
         if dataset_label is None:
@@ -479,7 +478,7 @@ class DataCollection(UserList):
         # create labels for the datasets, starting at 1.
         labels = range(1, len(self) + 1)
 
-        # Combine datasets into one for clustering
+        # Combine datasets into one, will create a new column with dataset labels
         cl_data = self.combine_dfs(dataset_label, labels=labels, feat_subset=feat_subset)
         num_datasets = len(cl_data[dataset_label].unique())
 
@@ -496,7 +495,7 @@ class DataCollection(UserList):
         model = AgglomerativeClustering(num_datasets)
         cl_labels = model.fit_predict(cl_data)
 
-        # set label column
+        # create a column which stores the cluster labels
         cl_data["Cluster"] = cl_labels
         confusion_m = create_contin_mat(cl_data, dataset_label, "Cluster")
 
@@ -510,7 +509,6 @@ class DataCollection(UserList):
         return calculate_cluster_purity(confusion_m), confusion_m, chi2_results[1]
 
     # longitudinal analysis functions
-
     def create_progression_tables(self, feat_subset, time_col, patient_col, method, bl_index, skip_no_bl=False):
         """
         Creates a new datacollection object which now stores the feature values not as absolute numbers but "progression
@@ -627,7 +625,6 @@ class DataCollection(UserList):
         return long_result_table.dropna(how="any"), time_dfs
 
     ## propensity score matching
-
     def qc_prop_matching(self, rel_cols, label):
         """
         Evaluates the need for a propensity score matching and can be used to quality control a propensity score matched
@@ -660,9 +657,7 @@ class DataCollection(UserList):
         m.predict_scores()
         m.plot_scores()
 
-    ## Visualization
-
-    def feat_venn_diagram(self, exclude=None, weighted=True, label_fontsize=10, count_fontsize=10, save_path=None):
+    def feature_overlap(self, exclude=None, weighted=True, label_fontsize=10, count_fontsize=10, save_path=None):
         """
         Plots a venn diagram illustrating the overlap in features between the datasets.
 
