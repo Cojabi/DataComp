@@ -21,6 +21,8 @@ Install the latest version from GitHub_.
 
 In editable mode:
 
+This makes sure that the newest version of the code is used when the code is changed locally.
+
 .. code-block:: sh
 
    git clone https://github.com/Cojabi/DataComp.git

@@ -1,22 +1,20 @@
-Pre-processing The Datasets
+Assumptions to Datasets
 ===========================
 
-For DataComp to work properly, some standard pre-processing needs to be performed on the datasets. Most commonly these
-steps are taken anyway, since they allow for interoperability across, and the comparison of, the datasets:
+To ensure proper DataComp functionality some basic assumptions have to be met by the datasets:
 
-- Entities should be represented in the rows
-- Feature/variables should be stored in columns
-- Feature names should be equivalent between the datasets - semantically equal features should bear the same name.
-- Feature values should be represented in the same way (e.g. same dummy variable coding, same strings for categories)
-- Any normalization/imputation or similar approaches should be carried out in the same manner on the same features \
-  (except if you want to compare the if different methods lead to different results)
+- Tabular data formates should be used (.csv, .tsv, excel etc.)
+- Data points / entities should be represented in the rows
+- Features / variables should be stored in columns
+- Feature names should be equivalent between the datasets - semantically equal features should bear the same name. \
+Features that are named differently will be treated as features not in common.
+- Feature values should be represented in the same way (e.g. same variable coding, same categories for discrete variables)
+- Any data alternations (e.g. normalization) should be carried out the same way on the features to be compared\
+  (except the aim is to evaluate if different methods)
 
-
-Features that are named differently will be treated as non-common features.
 
 Common Errors
 -------------
 
-Make sure, that numeric feature columns hold only numeric data and/or missing values (nan's). Otherwise this will lead
-to errors, especially in plotting the significant features. String values like for example ">90" must be converted into
-numerical values.
+Make sure that numeric feature columns hold solely numeric data and/or missing values (nan's).
+String values like for example ">90" must be converted into numerical values other wise errors will occur.

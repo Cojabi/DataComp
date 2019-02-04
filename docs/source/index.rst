@@ -6,27 +6,37 @@
 DataComp Documentation
 ======================
 
-DataComp can be used to systematically compare and statistically assess differences across multiple datasets. This
-could for example help to identify suitable training and validation datasets for machine learning approaches, to
-quality control if, how and where simulated data differs from real world data or if different sites of a multi-site
-study make similar observations or show significant differences.
+DataComp is an open source Python package for domain independent multimodal longitudinal dataset comparisons.
+It serves as an investigative toolbox to assess differences between multiple datasets on feature level.
+DataComp empowers data analysts to identify significantly different and not significantly different dataset combinations.
 
-It literally compares everything, the only condition is, that the features that shall be compared share the same column
-names, otherwise those will be handled as distinct features.
+Typical application scenarios are:
+
+- Identifying comparable datasets that can be used in machine learning approaches as training and independent test data
+- Evaluate if, how and where simulated or synthetic datasets deviate from real world data
+- Assess differences across data from multiple sampling sites
+- Conduct large scale scale statistical comparisons
+- Comparative visualizations
+
+.. image:: DataComp_workflow.png
+   :align: center
+
+This figure depicts a typical DataComp workflow.
 
 Main Features
 =============
 DataComp supports:
 
-- Evaluating and visualizing the overlap in features across the data sets
-- Parametric and non-parametric statistical hypothesis testing to compare feature value distributions
-- Visualizing feature distributions of (significantly deviating) features in form of boxplots or overlapping kde plots
-  for visual comparison
-- Performing a MANOVA to assess how much of an influence features show onto the dataset membership
+- Evaluating and visualizing the overlap in features across datasets
+- Parametric and nonparametric statistical hypothesis testing to compare feature value distributions
+- Creating comparative plots of feature value distributions
+- Normalizing time series data to baseline and statistically comparing the progression of features over time
+- Comparative visualization of feature progression over time
 - Hierarchical clustering of the entities in the data sets to evaluate if dataset membership labels are evenly
   distributed across clusters or assigned to distinct clusters
-- Normalizing time series data to baseline and statistically comparing the progression of features over time
-- Visualization of feature progression over time
+- Performing a MANOVA to assess the influence of features onto the dataset membership
+
+For examples see :ref:`ref_ex`.
 
 Links
 =====
