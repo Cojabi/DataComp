@@ -7,7 +7,8 @@ import warnings
 from scipy.stats import mannwhitneyu, chisquare
 
 from datacomp.datacollection import get_data
-from datacomp.stats import test_num_feats, test_cat_feats, p_correction
+from datacomp.stats import test_num_feats as num_test, p_correction
+from datacomp.stats import test_cat_feats as cat_test
 from datacomp.utils import _categorical_table
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -29,7 +30,7 @@ class TestDataCollection(unittest.TestCase):
 
 
     def test_test_num_feats(self):
-        p_vals = test_num_feats(self.zipper, feat_subset=["feat1", "feat2"])
+        p_vals = num_test(self.zipper, feat_subset=["feat1", "feat2"])
 
         # check if p-value for feat1 is correct
         feat1_p_val = mannwhitneyu(self.datacol[0]["feat1"].dropna(), self.datacol[1]["feat1"].dropna(),
@@ -43,7 +44,7 @@ class TestDataCollection(unittest.TestCase):
             # Cause all warnings to always be triggered.
             warnings.simplefilter("always")
             # Trigger a warning.
-            p_vals = test_cat_feats(self.zipper, feat_subset=self.datacol.categorical_feats)
+            p_vals = cat_test(self.zipper, feat_subset=self.datacol.categorical_feats)
 
             warns = sorted([str(m.message) for m in w])
             self.assertEqual(len(w), 4) # 4 because one warining will be a divide by zero assertion error
