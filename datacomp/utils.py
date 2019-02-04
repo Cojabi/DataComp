@@ -101,23 +101,10 @@ def calc_prog_scores(time_series, bl_index, method):
     else:
         return np.nan
 
-def _categorical_table(data):
-    """
-    Returns the counts of occurences for the categories. Is used to build the observation table
-    for a chi square test.
-
-    :param data:
-    :return:
-    """
-    # count occurences
-    c = Counter(data)
-    # get rid of NaNs
-    c = {key: c[key] for key in c if not pd.isnull(key)}
-    return pd.Series(c)
 
 def _non_present_values_to_zero(test_data):
     """
-    Fills keys in the test data of one dataframe if key is not present in it but in one of the other datasets.
+    Adds keys to the test data of one dataframe, if key was not present in that one but in one of the other datasets.
 
     :param test_data:
     :return:
@@ -235,6 +222,22 @@ def create_contin_mat(data, dataset_labels, observation_col):
         contingency_matrix[dataset_nr] = counts
 
     return pd.DataFrame(contingency_matrix).transpose()
+
+
+def _categorical_table(data):
+    """
+    Returns the number of occurrences for the categories. Is used to build the observation table
+    for a chi square test.
+
+    :param data:
+    :return:
+    """
+    # count occurences
+    c = Counter(data)
+    # delete NaNs
+    c = {key: c[key] for key in c if not pd.isnull(key)}
+
+    return pd.Series(c)
 
 
 def calculate_cluster_purity(contingency_mat):

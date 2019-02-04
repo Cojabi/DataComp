@@ -4,13 +4,13 @@ import pandas as pd
 import numpy as np
 import warnings
 
-from scipy.stats import mannwhitneyu, ttest_ind, chisquare, wilcoxon
+from scipy.stats import mannwhitneyu, ttest_ind, chisquare, wilcoxon, fisher_exact
 from statsmodels.sandbox.stats.multicomp import multipletests
 from statsmodels.multivariate.manova import MANOVA
 
 
 from .utils import construct_formula, _categorical_table, _non_present_values_to_zero, \
-    _test_if_all_vals_equal, _create_result_table, _transform_p_dict
+    _test_if_all_vals_equal, _create_result_table, _transform_p_dict, create_contin_mat
 
 
 def test_num_feats(zipper, feat_subset=None, method=None):
@@ -94,7 +94,7 @@ def test_cat_feats(zipper, feat_subset=None, method=None, print_data=False):
         method = "chi"
 
     for feat in feat_subset:
-        # initiate dict in dict for d1 vs d2, d2 vs d3 etc. per feature
+        # initiate dict in dict for dataset1 vs dataset2, d1 vs d3 etc. per feature
         p_values[feat] = dict()
 
         for i in range(len(zipper[feat]) - 1):  # select dataset1
@@ -111,7 +111,7 @@ def test_cat_feats(zipper, feat_subset=None, method=None, print_data=False):
                 # print testing data if specified
                 if print_data:
                     print(feat)
-                    print(test_data)
+                    print(pd.DataFrame(test_data))
                     print()
 
                 if method == "chi":
@@ -119,12 +119,12 @@ def test_cat_feats(zipper, feat_subset=None, method=None, print_data=False):
                     if (test_data[0] < 5).any() or (test_data[1] < 5).any():
                         warnings.warn(feat + " has under 5 observations in one or more groups.", UserWarning)
                     # calculate u statistic and return p-value
-                    test_result = chisquare(*test_data)
+                    p_val = chisquare(*test_data).pvalue
 
                 elif method == "fisher":
-                    raise NotImplementedError
+                    p_val = fisher_exact(test_data)[1]
 
-                p_values[feat][i + 1, j + 1] = test_result.pvalue
+                p_values[feat][i + 1, j + 1] = p_val
 
     return p_values
 
