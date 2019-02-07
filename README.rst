@@ -15,7 +15,7 @@ Typical application scenarios contain:
 - Conduct large scale scale statistical comparisons
 - Comparative visualizations
 
-.. image:: docs/source/DataComp_workflow.pngDataComp_workflow.png
+.. image:: docs/source/DataComp_workflow.png
    :align: center
 
 The above figure depicts a typical DataComp workflow.
