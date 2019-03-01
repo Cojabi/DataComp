@@ -671,6 +671,8 @@ class DataCollection(UserList):
             # set variables needed to assign new color scheme
             colors = ["blue", "green"]
             ids = ["A", "B"]
+            plt.figure(figsize=[3, 4])
+
             if weighted:
                 # create circles
                 v = mv.venn2(feat_set, set_labels=self.df_names)
