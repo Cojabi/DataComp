@@ -9,7 +9,7 @@ def create_prop_matched_dfs(matches_path, datacol):
     """
     Creates a new DataCollection containing only the matched cases. A table listing the matched data points is required.
 
-    :param matches_path: Path to a csv which contains the matched data. 2 Columns: one lists the subjects of df1 and
+    :param matches_path: Path to a csv which contains the matched data. 2 Columns: one lists the subjects of df1 and \
     the other lists the matching sample from df2.
     :param datacol: DataCollection object
     :return: DataCollection object containing only the matches samples
@@ -39,7 +39,7 @@ def create_prop_matched_dfs_longitudinal(matches_path, datacol, pat_col):
     """
     Creates a new Collection containing only the matched cases. A table listing the matched data points is required.
 
-    :param matches_path: Path to a csv which contains the matched data. 2 Columns: one lists the subjects of df1 and
+    :param matches_path: Path to a csv which contains the matched data. 2 Columns: one lists the subjects of df1 and \
     the other lists the matching sample from df2.
     :param datacol: DataCollection object
     :return: DataCollection object containing only the matches samples
