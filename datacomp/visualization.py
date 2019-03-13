@@ -179,9 +179,9 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
     """
     Creates countplots with discrete feature split over x axis and number of occurences on y axis.
 
-    :param datacol:
-    :param feat_subset:
-    :param save_folder:
+    :param datacol: DataCollection object
+    :param feat_subset: Iterable storing features of interest. Only those feature will be plotted. Default is None.
+    :param save_folder: Path to a folder where to save the generated plots.
     :return:
     """
 

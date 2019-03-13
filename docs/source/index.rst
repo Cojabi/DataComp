@@ -15,7 +15,7 @@ Typical application scenarios are:
 
 - Identifying comparable datasets that can be used in machine learning approaches as training and independent test data
 - Evaluate if, how and where simulated or synthetic datasets deviate from real world data
-- Assess differences across data from multiple sampling sites
+- Assess (systematic) differences across multiple datasets (for example multiple sampling sites)
 - Conducting multiple statistical comparisons
 - Comparative visualizations
 

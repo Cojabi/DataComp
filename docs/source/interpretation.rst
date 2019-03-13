@@ -1,5 +1,5 @@
-Exemplary Results
-=================
+Interpretation of Results
+=========================
 
 Statistical Comparison Result-Table
 -----------------------------------
@@ -44,4 +44,4 @@ Clustering
 The confusion matrix of the hierarchical clustering lists the datasets as rows and clusters as columns.
 Each cell represents the number of entities of that dataset being assigned to the respective cluster.
 Based on the contingency matrix a chi² test is performed to assess if the distribution across clusters is significantly\
- different for the datasets. If so, there might be systematic batch effects present.
+different for the datasets. If so, there might be systematic batch effects present.
