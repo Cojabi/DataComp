@@ -1,16 +1,17 @@
 DataComp: A Python Framework for Systematic Dataset Comparisons
 ===============================================================
-[![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)]
 
+|pypi_version| |pypi_license| |python_versions| |documentation|
 
-|PyPI license| |python_versions| |documentation|
-
-.. |PyPI license| image:: https://img.shields.io/pypi/l/PyBEL.svg
+.. |pypi_license| image:: https://img.shields.io/pypi/l/datacomp.svg
     :alt: Apache 2.0 License
 
 .. |python_versions| image:: https://img.shields.io/pypi/pyversions/datacomp.svg
     :alt: Stable Supported Python Versions
-    
+
+.. |pypi_version| image:: https://img.shields.io/pypi/v/datacomp.svg
+    :alt: Current version on PyPI
+
 .. |documentation| image:: https://readthedocs.org/projects/datacomp/badge/?version=latest
     :target: http://pybel.readthedocs.io/en/latest/
     :alt: Development Documentation Status
