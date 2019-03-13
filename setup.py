@@ -12,7 +12,7 @@ PACKAGES = setuptools.find_packages(where='src')
 
 setuptools.setup(
     name="datacomp",
-    version='0.0.3-dev',
+    version='0.0.3',
     author="Colin Birkenbihl",
     author_email="colin.birken@gmail.com",
     description="A small example package",
