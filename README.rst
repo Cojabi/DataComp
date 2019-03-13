@@ -76,5 +76,5 @@ Example notebooks showcasing Datacomp workflows and results on simulated data ca
     :alt: Current version on PyPI
 
 .. |documentation| image:: https://readthedocs.org/projects/datacomp/badge/?version=latest
-    :target: http://pybel.readthedocs.io/en/latest/
+    :target: http://datacomp.readthedocs.io/en/latest/
     :alt: Development Documentation Status
