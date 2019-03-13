@@ -1,4 +1,4 @@
 Longitudinal
 ==============
-.. automodule:: datacomp.longitudinal
+.. automodule:: src.datacomp.longitudinal
     :members:

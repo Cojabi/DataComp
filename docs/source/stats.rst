@@ -1,4 +1,4 @@
 Statistics
 ==========
-.. automodule:: datacomp.stats
+.. automodule:: src.datacomp.stats
     :members:

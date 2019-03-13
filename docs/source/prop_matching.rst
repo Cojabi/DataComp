@@ -1,4 +1,4 @@
 Propensity Score Matching
 =========================
-.. automodule:: datacomp.prop_matching
+.. automodule:: src.datacomp.prop_matching
     :members:

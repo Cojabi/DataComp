@@ -1,4 +1,4 @@
 Utilities
 =========
-.. automodule:: datacomp.utils
+.. automodule:: src.datacomp.utils
     :members:

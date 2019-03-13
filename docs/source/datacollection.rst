@@ -1,4 +1,4 @@
 DataCollection
 ==============
-.. automodule:: datacomp.datacollection
+.. automodule:: src.datacomp.datacollection
     :members:

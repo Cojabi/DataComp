@@ -1,4 +1,4 @@
 Visualization
 =============
-.. automodule:: datacomp.visualization
+.. automodule:: src.datacomp.visualization
     :members:
