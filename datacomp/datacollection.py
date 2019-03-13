@@ -347,12 +347,13 @@ class DataCollection(UserList):
             value_set.update(df[col])
         return value_set
 
-    def combine_dfs(self, label_name, feat_subset=None, cca=False, save_path=None, labels=None):
+    def combine_dfs(self, create_label=None, feat_subset=None, cca=False, save_path=None, labels=None):
         """
-        Will create a combined dataframe in which labels are assigned depending on the dataset membership.
-        The resulting dataframe will be saved under save_path and can be used for propensity_score_matching.
+        Will create a combined dataframe in which labels can be assigned depending on the dataset membership.
+        The resulting dataframe will be saved under save_path and can be used e.g. for propensity_score_matching.
 
-        :param label_name: Name of the label column, that will be created.
+        :param create_label: Default None. If True a new column will be created with labels marking the previously\
+         distinct dataframes.
         :param feat_subset: List of feature names. All features not in the list will be excluded.
         :param cca: If true only complete cases are kept (cases where all features are non missing values)
         :param save_path: Path where to save the combined dataset.
@@ -369,17 +370,18 @@ class DataCollection(UserList):
             datasets = [dataset[::] for dataset in self]
             reduced_datcol = DataCollection(datasets, self.df_names, self.categorical_feats)
 
-        # create labels; set label for first df to 1 all others to 0
-        if labels is None:
-            labels = [1] + [0 for i in range(len(self) - 1)]
+        if create_label:
+            # create labels; set label for first df to 1 all others to 0
+            if labels is None:
+                labels = [1] + [0 for i in range(len(self) - 1)]
 
-        # add labels to dataframes
-        for i in range(len(labels)):
-            reduced_datcol[i][label_name] = labels[i]
+            # add labels to dataframes
+            for i in range(len(labels)):
+                reduced_datcol[i][create_label] = labels[i]
 
         # drop all non complete cases
         if cca:
-            for i in range(len(labels)):
+            for i in range(len(reduced_datcol)):
                 reduced_datcol[i].dropna(inplace=True)
 
         # combine datasets
