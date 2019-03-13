@@ -31,7 +31,8 @@ Longitudinal Comparison
 
 Like for the cross-sectional comparison the table is indexed using multiple layers. The first and third index refer \
 again to the feature name and the datasets being compared, respectively. The second layer gives information on the \
-longitudinal dimension. It lists the time point at which the corresponding statistical tests have been performed.
+longitudinal dimension. It lists the longitudinal value (e.g. a time point) at which the corresponding statistical \
+tests have been performed.
 
 .. image:: FEAT1prog_score_ROBL.png
 
@@ -41,4 +42,6 @@ Clustering
 ----------
 
 The confusion matrix of the hierarchical clustering lists the datasets as rows and clusters as columns.
-Each cell represents the number of entities of that dataset being assign to the cluster.
+Each cell represents the number of entities of that dataset being assigned to the respective cluster.
+Based on the contingency matrix a chi² test is performed to assess if the distribution across clusters is significantly\
+ different for the datasets. If so, there might be systematic batch effects present.

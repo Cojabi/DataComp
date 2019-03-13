@@ -5,20 +5,21 @@ Description
 -----------
 DataComp is an open source Python package for domain independent multimodal longitudinal dataset comparisons.
 It serves as an investigative toolbox to assess differences between multiple datasets on feature level.
-DataComp empowers data analysts to identify significantly different and not significantly different dataset combinations.
+DataComp empowers data analysts to identify significantly different and not significantly difference between datasets \
+and thereby is helpful to identify comparable dataset combinations.
 
-Typical application scenarios contain:
+Typical application scenarios are:
 
 - Identifying comparable datasets that can be used in machine learning approaches as training and independent test data
 - Evaluate if, how and where simulated or synthetic datasets deviate from real world data
-- Assess differences across data from multiple sampling sites
-- Conduct large scale scale statistical comparisons
+- Assess (systematic) differences across multiple datasets (for example multiple sampling sites)
+- Conducting multiple statistical comparisons
 - Comparative visualizations
 
 .. image:: ./docs/source/DataComp_workflow.png
    :align: center
 
-The above figure depicts a typical DataComp workflow.
+The figure above depicts a typical DataComp workflow.
 
 Main Features
 =============
