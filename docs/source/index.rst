@@ -6,6 +6,8 @@
 DataComp Documentation
 ======================
 
+|pypi_version| |pypi_license| |python_versions| |documentation|
+
 DataComp is an open source Python package for domain independent multimodal longitudinal dataset comparisons.
 It serves as an investigative toolbox to assess differences between multiple datasets on feature level.
 DataComp empowers data analysts to identify significantly different and not significantly difference between datasets \
@@ -77,3 +79,17 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+.. |pypi_license| image:: https://img.shields.io/pypi/l/datacomp.svg
+    :alt: Apache 2.0 License
+
+.. |python_versions| image:: https://img.shields.io/pypi/pyversions/datacomp.svg
+    :alt: Stable Supported Python Versions
+
+.. |pypi_version| image:: https://img.shields.io/pypi/v/datacomp.svg
+    :alt: Current version on PyPI
+
+.. |documentation| image:: https://readthedocs.org/projects/datacomp/badge/?version=latest
+    :target: http://pybel.readthedocs.io/en/latest/
+    :alt: Development Documentation Status
