@@ -3,20 +3,6 @@ DataComp: A Python Framework for Systematic Dataset Comparisons
 
 |pypi_version| |pypi_license| |python_versions| |documentation|
 
-.. |pypi_license| image:: https://img.shields.io/pypi/l/datacomp.svg
-    :alt: Apache 2.0 License
-
-.. |python_versions| image:: https://img.shields.io/pypi/pyversions/datacomp.svg
-    :alt: Stable Supported Python Versions
-
-.. |pypi_version| image:: https://img.shields.io/pypi/v/datacomp.svg
-    :alt: Current version on PyPI
-
-.. |documentation| image:: https://readthedocs.org/projects/datacomp/badge/?version=latest
-    :target: http://pybel.readthedocs.io/en/latest/
-    :alt: Development Documentation Status
-
-
 Description
 -----------
 DataComp is an open source Python package for domain independent multimodal longitudinal dataset comparisons.
@@ -78,3 +64,17 @@ Example notebooks showcasing Datacomp workflows and results on simulated data ca
 - `Longitudinal Comparison Example`_
 
 .. _Longitudinal Comparison Example: https://github.com/Cojabi/DataComp_Examples/blob/master/longitudinal_example.ipynb
+
+
+.. |pypi_license| image:: https://img.shields.io/pypi/l/datacomp.svg
+    :alt: Apache 2.0 License
+
+.. |python_versions| image:: https://img.shields.io/pypi/pyversions/datacomp.svg
+    :alt: Stable Supported Python Versions
+
+.. |pypi_version| image:: https://img.shields.io/pypi/v/datacomp.svg
+    :alt: Current version on PyPI
+
+.. |documentation| image:: https://readthedocs.org/projects/datacomp/badge/?version=latest
+    :target: http://pybel.readthedocs.io/en/latest/
+    :alt: Development Documentation Status
