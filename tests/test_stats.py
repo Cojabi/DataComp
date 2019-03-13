@@ -7,8 +7,8 @@ import warnings
 from scipy.stats import mannwhitneyu, chisquare
 
 from datacomp.datacollection import get_data
-from datacomp.stats import test_num_feats as num_test, p_correction
 from datacomp.stats import test_cat_feats as cat_test
+from datacomp.stats import test_num_feats as num_test
 from datacomp.utils import _categorical_table
 
 dir_path = os.path.dirname(os.path.realpath(__file__))

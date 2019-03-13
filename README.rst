@@ -1,6 +1,8 @@
 DataComp: A Python Framework for Systematic Dataset Comparisons
 ===============================================================
 
+[![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)]
+
 Description
 -----------
 DataComp is an open source Python package for domain independent multimodal longitudinal dataset comparisons.
