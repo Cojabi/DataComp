@@ -21,11 +21,11 @@ setuptools.setup(
     url="https://github.com/Cojabi/datacomp",
     packages=PACKAGES,
     package_dir={'': 'src'},
+    license = "Apache 2.0 License",
     classifiers=[
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3 :: Only",
-        "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
     install_requires=[
