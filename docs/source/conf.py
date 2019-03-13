@@ -58,7 +58,7 @@ author = 'Colin Birkenbihl'
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
-release = '0.0.5'
+release = '0.0.6-dev'
 
 # The short X.Y version.
 parsed_version = re.match(
