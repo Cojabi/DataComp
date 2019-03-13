@@ -1,6 +1,18 @@
 DataComp: A Python Framework for Systematic Dataset Comparisons
 ===============================================================
 
+|PyPI license| |python_versions| |documentation|
+
+.. |PyPI license| image:: https://img.shields.io/pypi/l/PyBEL.svg
+    :alt: Apache 2.0 License
+
+.. |python_versions| image:: https://img.shields.io/pypi/pyversions/PyBEL.svg
+    :alt: Stable Supported Python Versions
+    
+.. |documentation| image:: https://readthedocs.org/projects/pybel/badge/?version=latest
+    :target: http://pybel.readthedocs.io/en/latest/
+    :alt: Development Documentation Status
+
 Description
 -----------
 DataComp is an open source Python package for domain independent multimodal longitudinal dataset comparisons.
