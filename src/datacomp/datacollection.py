@@ -14,7 +14,7 @@ from sklearn.cluster import AgglomerativeClustering
 
 from .stats import test_cat_feats, test_num_feats, p_correction, calc_conf_inv
 from .utils import construct_formula, calc_prog_scores, calculate_cluster_purity, \
-                   create_contin_mat
+                   create_contin_mat, _create_result_table
 
 
 def create_datacol(df, categorical_feats, groupby, df_names=None, exclude_classes=[], rel_cols=None):
@@ -449,8 +449,7 @@ class DataCollection(UserList):
         conf_invs = calc_conf_inv(zipper, num_feats, self.df_names)
 
         # correct for multiple testing and create result table
-        results = p_correction(p_values, conf_invs, counts)
-
+        results = _create_result_table(*p_correction(p_values), conf_invs, counts)
 
         if verbose:
             print("Fraction of significant comparisons:",

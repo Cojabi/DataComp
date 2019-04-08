@@ -149,12 +149,11 @@ def test_cat_feats(zipper, feat_subset=None, method=None, print_data=False):
     return p_values
 
 
-def p_correction(p_values, conf_invs, counts):
+def p_correction(p_values):
     """
     Corrects p_values for multiple testing.
 
     :param p_values: Dictionary storing p_values with corresponding feature names as keys.
-    :param counts: DataFrame storing the number of observations per dataset, per feature.
     :return: DataFrame which shows the results of the analysis; p-value, corrected p-value and boolean indicating \
     significance.
     """
@@ -188,10 +187,7 @@ def p_correction(p_values, conf_invs, counts):
     # correct p-values
     result = multipletests(p_val_col.values)
 
-    # build a table storing the p_values and corrected p_values for all features
-    result_table = _create_result_table(result, p_val_col, p_trans, conf_invs, counts)
-
-    return result_table.sort_index()
+    return result, p_val_col, p_trans
 
 
 def manova(datacol, label, variable_cols):

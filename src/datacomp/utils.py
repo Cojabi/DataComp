@@ -159,12 +159,13 @@ def _transform_p_dict(p_value_dict):
 
 def _create_result_table(result, p_val_col, p_trans, conf_invs, counts):
     """
-    Builds the dataframe showing the results.
+    Builds the dataframe displaying the results.
 
     :param result:
     :param p_val_col:
     :param p_trans:
-    :param counts:
+    :param conf_invs: DataFrame storing the 95% confidence interval per dataset, per feature.
+    :param counts: DataFrame storing the number of observations per dataset, per feature.
     :return:
     """
     # store test results
@@ -198,7 +199,7 @@ def _create_result_table(result, p_val_col, p_trans, conf_invs, counts):
     # join with counts dataframe to display number of datapoint for each comparison
     result_table = result_table.join(counts, how="outer")
 
-    return result_table
+    return result_table.sort_index()
 
 
 def create_contin_mat(data, dataset_labels, observation_col):
