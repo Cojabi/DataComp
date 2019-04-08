@@ -20,13 +20,13 @@ def create_prop_matched_dfs(matches_path, datacol):
     matched.dropna(inplace=True)
 
     # create dfs containing only matched data. Try to get oder of dataframes and matching columns correct
-    # if the intersection of the indeces of the match table overlap perfectly with the indices of the 1 dataframe:
-    if (datacol[0].index.intersection(matched.iloc[:, 0]) == matched.iloc[:, 0]).all():
+    # check if mached_labels are in the first or second position of the DataCollection
+
+    if set(datacol[0].index.intersection(matched.iloc[:, 0])) == set(matched.iloc[:, 0]):
         prop_dfs = [datacol[0].loc[datacol[0].index.intersection(matched.iloc[:, 0])],
                     datacol[1].loc[datacol[1].index.intersection(matched.iloc[:, 1])]]
 
-    # if the intersection of the indeces of the match table overlap perfectly with the indices of the 2 dataframe:
-    elif (datacol[1].index.intersection(matched.iloc[:, 0]) == matched.iloc[:, 0]).all():
+    elif set(datacol[1].index.intersection(matched.iloc[:, 0])) == set(matched.iloc[:, 0]):
         prop_dfs = [datacol[1].loc[datacol[1].index.intersection(matched.iloc[:, 0])],
                     datacol[0].loc[datacol[0].index.intersection(matched.iloc[:, 1])]]
     else:

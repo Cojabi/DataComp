@@ -12,8 +12,9 @@ from pymatch.Matcher import Matcher
 from scipy.stats import chi2_contingency
 from sklearn.cluster import AgglomerativeClustering
 
-from .stats import test_cat_feats, test_num_feats, p_correction
-from .utils import construct_formula, calc_prog_scores, calculate_cluster_purity, create_contin_mat
+from .stats import test_cat_feats, test_num_feats, p_correction, calc_conf_inv
+from .utils import construct_formula, calc_prog_scores, calculate_cluster_purity, \
+                   create_contin_mat
 
 
 def create_datacol(df, categorical_feats, groupby, df_names=None, exclude_classes=[], rel_cols=None):
@@ -434,7 +435,7 @@ class DataCollection(UserList):
             cat_feats = set(cat_feats).intersection(include)
             num_feats = set(num_feats).intersection(include)
 
-        # test features:
+        # significant testing
         p_values.update(test_cat_feats(zipper, cat_feats, method=cat_method, print_data=print_data))
         p_values.update(test_num_feats(zipper, num_feats, method=num_method))
 
@@ -445,8 +446,11 @@ class DataCollection(UserList):
         # get counts of available datapoints per feature
         counts = self.get_n_per_feat()
 
+        conf_invs = calc_conf_inv(zipper, num_feats, self.df_names)
+
         # correct for multiple testing and create result table
-        results = p_correction(p_values, counts)
+        results = p_correction(p_values, conf_invs, counts)
+
 
         if verbose:
             print("Fraction of significant comparisons:",

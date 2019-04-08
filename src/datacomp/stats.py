@@ -9,7 +9,7 @@ from statsmodels.multivariate.manova import MANOVA
 from statsmodels.sandbox.stats.multicomp import multipletests
 
 from .utils import construct_formula, _categorical_table, _non_present_values_to_zero, \
-    _test_if_all_vals_equal, _create_result_table, _transform_p_dict
+    _test_if_all_vals_equal, _create_result_table, _transform_p_dict, conf_interval
 
 
 def test_num_feats(zipper, feat_subset=None, method=None):
@@ -71,6 +71,27 @@ def test_num_feats(zipper, feat_subset=None, method=None):
 
     return p_values
 
+def calc_conf_inv(zipper, feat_subset, df_names):
+    """
+    Calculates the confidence intervals for numerical features.
+
+    :param zipper: Zipper created from a DataCollection.
+    :param feat_subset: An iterable of features for which the confidence intervals shall be calculated.
+    :param df_names: Names of the dataframes in the DataCollection
+    :return:
+    """
+    confs = dict()
+
+    for key in feat_subset:
+        #print(zipper[key])
+        # turns zipper values into lists storing the number of entries of the respective features per dataset
+        confs[key] = [np.round(conf_interval(z),2) for z in zipper[key]]
+
+        counts = pd.DataFrame(confs).transpose()
+        counts.index.name = "features"
+        counts.columns = [name+"conf." for name in df_names]
+
+    return counts
 
 def test_cat_feats(zipper, feat_subset=None, method=None, print_data=False):
     """
@@ -128,7 +149,7 @@ def test_cat_feats(zipper, feat_subset=None, method=None, print_data=False):
     return p_values
 
 
-def p_correction(p_values, counts):
+def p_correction(p_values, conf_invs, counts):
     """
     Corrects p_values for multiple testing.
 
@@ -159,7 +180,7 @@ def p_correction(p_values, counts):
 
         # if all p_values are nan, return an all nan result table
         if pd.isnull(nested_values).all():
-            result_table = _create_result_table(None, p_val_col, p_trans, counts)
+            result_table = _create_result_table(None, p_val_col, p_trans, conf_invs, counts)
             return result_table.sort_index()
 
         raise ValueError("No p_values have been submitted into multiple test correction.")
@@ -168,7 +189,7 @@ def p_correction(p_values, counts):
     result = multipletests(p_val_col.values)
 
     # build a table storing the p_values and corrected p_values for all features
-    result_table = _create_result_table(result, p_val_col, p_trans, counts)
+    result_table = _create_result_table(result, p_val_col, p_trans, conf_invs, counts)
 
     return result_table.sort_index()
 

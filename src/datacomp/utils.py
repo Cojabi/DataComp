@@ -6,6 +6,8 @@ from operator import itemgetter
 import numpy as np
 import pandas as pd
 
+from scipy.stats import sem, t
+
 
 def get_sig_feats(sig_df):
     """
@@ -155,7 +157,7 @@ def _transform_p_dict(p_value_dict):
             df_matrix.append([nested_items[1], nested_items[0], items[0]])
     return pd.DataFrame(df_matrix)
 
-def _create_result_table(result, p_val_col, p_trans, counts):
+def _create_result_table(result, p_val_col, p_trans, conf_invs, counts):
     """
     Builds the dataframe showing the results.
 
@@ -191,6 +193,8 @@ def _create_result_table(result, p_val_col, p_trans, counts):
     result_table.index.levels[0].name = "features"
     result_table.index.levels[1].name = "datasets"
 
+    # join with counts dataframe to display number of datapoint for each comparison
+    result_table = result_table.join(conf_invs, how="outer")
     # join with counts dataframe to display number of datapoint for each comparison
     result_table = result_table.join(counts, how="outer")
 
@@ -258,3 +262,21 @@ def make_ticks_int(tick_list):
     :return:
     """
     return [int(tick) for tick in tick_list]
+
+def conf_interval(data_series):
+    """
+    Calculate the confidence interval for the data distribution under the assumptions that it can be calculated using \
+    a student-t distribution.
+
+    :return:
+    """
+
+    mean = np.mean(data_series)
+
+    conf_int = sem(data_series) * t.ppf((1 + 0.95) / 2, len(data_series) - 1)
+
+    start = mean - conf_int
+    end = mean + conf_int
+
+    return start, end
+
