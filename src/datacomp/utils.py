@@ -315,14 +315,20 @@ def conf_interval(data_series):
     return start, end
 
 def calc_mean_diff(series1, series2, round=2):
-    """ """
+    """
+
+    :param series1:
+    :param series2:
+    :param round:
+    :return:
+    """
     mean1 = np.mean(series1)
     mean2 = np.mean(series2)
     var1 = np.var(series1, ddof=1)
     var2 = np.var(series2, ddof=1)
 
     # estimate common variance
-    s2 = (len(series1)-1 * var1 + len(series2)-1 * var2)/ len(series1)-1+len(series2)-1
+    s2 = ((len(series1)-1) * var1 + (len(series2)-1) * var2) / (len(series1)-1 + len(series2)-1)
 
     sd = np.sqrt(s2 * (1/len(series1) + 1/len(series2)))
 
