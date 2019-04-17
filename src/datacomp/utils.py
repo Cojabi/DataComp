@@ -157,22 +157,50 @@ def _transform_p_dict(p_value_dict):
             df_matrix.append([nested_items[1], nested_items[0], items[0]])
     return pd.DataFrame(df_matrix)
 
-def _create_result_table(result, p_val_col, p_trans, conf_invs, counts):
+def _convert_multindex(val_dict, rename_dict):
+    """
+    This function will create a multiindex dataframe which lists features as outer and dataset combinations \
+    as inner level for row indices. It is for example used to convert the output of stats.calc_diff_invs into a \
+    dataframe that can be joined with the result_table.
+
+    :param val_dict: Nested dictionary with features as outer keys and dataset combinations as inner keys.
+    :return: result_table like table with multiindex
+    """
+
+    # create a multiindex dict using tuples as keys from a nested dict. Pandas expects multiindeces to come as tuples
+    reform = {(outerKey, innerKey): values for outerKey, innerDict in val_dict.items() for innerKey, values in
+     innerDict.items()}
+
+    result_table = pd.DataFrame(reform).transpose()
+
+    # create multiindex to fit result table
+    result_table.index.levels[0].name = "features"
+    result_table.index.levels[1].name = "datasets"
+    # rename columns
+    result_table.rename(columns=rename_dict, inplace=True)
+
+    return result_table
+
+
+def _create_result_table(result, p_val_col, p_trans, diff_confs, conf_invs, counts):
     """
     Builds the dataframe displaying the results.
+    The first three arguments are used to handle the p-values and match them back to the corresponding dataset and \
+    features, because they will be ordered during multiple testing correction.
 
     :param result:
-    :param p_val_col:
-    :param p_trans:
+    :param p_val_col: Stores the uncorrected p_values
+    :param p_trans: Stores uncorrected p_values, the dataset combination which was tested and the corresponding \
+    feature name
     :param conf_invs: DataFrame storing the 95% confidence interval per dataset, per feature.
     :param counts: DataFrame storing the number of observations per dataset, per feature.
-    :return:
+    :return: Result table listing all important outcomes of the statistical comparison
     """
     # store test results
     result_table = pd.DataFrame(p_val_col)
 
     # rename columns and set values in result dataframe
-    result_table.rename(columns={0: "p-value"}, inplace=True)
+    result_table.rename(columns={"0": "p-value"}, inplace=True)
 
     # insert corrected p_values
     if result:
@@ -185,7 +213,7 @@ def _create_result_table(result, p_val_col, p_trans, conf_invs, counts):
     # combine p_value information with dataset and feature information stored in p_trans
     result_table = pd.concat([result_table, p_trans], axis=1, join="outer")
 
-    # create multi index brom feature name result_table[2] and datasets result_table[1]
+    # create multi index from feature name (result_table[2]) and datasets (result_table[1])
     result_table.index = result_table[[2, 1]]
     result_table.index = pd.MultiIndex.from_tuples(result_table.index)
     result_table.drop([0, 1, 2], axis=1, inplace=True)
@@ -194,7 +222,12 @@ def _create_result_table(result, p_val_col, p_trans, conf_invs, counts):
     result_table.index.levels[0].name = "features"
     result_table.index.levels[1].name = "datasets"
 
-    # join with counts dataframe to display number of datapoint for each comparison
+    # prepare confidence interval for mean difference
+    diff_confs = _convert_multindex(diff_confs, {0:"mean_diff", 1:"diff_flag"})
+
+    # join with mean difference confidence intervals dataframe
+    result_table = result_table.join(diff_confs, how="outer")
+    # join with actual mean confidence intervals dataframe
     result_table = result_table.join(conf_invs, how="outer")
     # join with counts dataframe to display number of datapoint for each comparison
     result_table = result_table.join(counts, how="outer")
@@ -281,3 +314,22 @@ def conf_interval(data_series):
 
     return start, end
 
+def calc_mean_diff(series1, series2, round=2):
+    """ """
+    mean1 = np.mean(series1)
+    mean2 = np.mean(series2)
+    var1 = np.var(series1, ddof=1)
+    var2 = np.var(series2, ddof=1)
+
+    # estimate common variance
+    s2 = (len(series1)-1 * var1 + len(series2)-1 * var2)/ len(series1)-1+len(series2)-1
+
+    sd = np.sqrt(s2 * (1/len(series1) + 1/len(series2)))
+
+    diff = mean1 - mean2
+    z = t.ppf((1+0.95) / 2, len(series1)-1+len(series2)-1)
+
+    start = diff - z * sd
+    end = diff + z * sd
+
+    return [np.round(start, round), np.round(end, round)]

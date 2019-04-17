@@ -9,7 +9,7 @@ from statsmodels.multivariate.manova import MANOVA
 from statsmodels.sandbox.stats.multicomp import multipletests
 
 from .utils import construct_formula, _categorical_table, _non_present_values_to_zero, \
-    _test_if_all_vals_equal, _create_result_table, _transform_p_dict, conf_interval
+    _test_if_all_vals_equal, _create_result_table, _transform_p_dict, conf_interval, calc_mean_diff
 
 
 def test_num_feats(zipper, feat_subset=None, method=None):
@@ -92,6 +92,47 @@ def calc_conf_inv(zipper, feat_subset, df_names):
         counts.columns = [name+"conf." for name in df_names]
 
     return counts
+
+def calc_diff_conf(zipper, feat_subset):
+    """
+    Calculates the confidence intervals for numerical features.
+
+    :param zipper: Zipper created from a DataCollection.
+    :param feat_subset: An iterable of features for which the confidence intervals shall be calculated.
+    :return:
+    """
+    # initialize dictionary which stores the conf_invs
+    conf_invs = dict()
+
+    if feat_subset is None:
+        feat_subset = zipper.keys()
+
+    for feat in feat_subset:  # run through all variables
+
+        # initiate dict in dict for d1 vs d2, d2 vs d3 etc. per feature
+        conf_invs[feat] = dict()
+
+        for i in range(len(zipper[feat]) - 1):  # select dataset1
+            for j in range(i + 1, len(zipper[feat])):  # select dataset2
+
+                # only calculate score if there are values in each dataset
+                if zipper[feat][i] and zipper[feat][j]:
+                    interval = np.round(calc_mean_diff(zipper[feat][i], zipper[feat][j]), 2)
+
+                    # indicator = True if 0 is not in the interval
+                    if interval[0] > 0 or interval[1] < 0:
+                        flag = True
+                    else:
+                        flag = False
+
+                    conf_invs[feat][i + 1, j + 1] = (interval, flag)
+
+                # if one or both sets are empty
+                else:
+                    conf_invs[feat][i + 1, j + 1] = (np.nan, np.nan)
+
+    return conf_invs
+
 
 def test_cat_feats(zipper, feat_subset=None, method=None, print_data=False):
     """
