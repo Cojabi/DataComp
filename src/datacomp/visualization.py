@@ -185,10 +185,9 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
     :param save_folder: Path to a folder where to save the generated plots.
     :return:
     """
+    raise NotImplementedError
 
-    def normalize_count(df):  # TODO add normalization to the total number of entities in that group.
-        """ """
-        raise NotImplementedError
+    """Use the frequency function from utils to plot relative frequencies. Add a indicator for N per class"""
 
     combined = datacol.combine_dfs("Dataset", labels=datacol.df_names)
 
@@ -198,7 +197,7 @@ def countplot_single_features(datacol, feat_subset=None, normalize=False, save_f
     for feat in feat_subset:
 
         if normalize:
-            normalize_count(combined)  # TODO add normalization to the total number of entities in that group.
+            combined  # TODO add normalization to the total number of entities in that group.
 
         sns.countplot(x=feat, hue="Dataset", data=combined)
 
