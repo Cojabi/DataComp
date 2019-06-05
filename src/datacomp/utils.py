@@ -17,11 +17,24 @@ def get_sig_feats(sig_df):
     :return:
     """
     # grab significant deviances
-    bool_series = sig_df["signf"].map(bool)
-    sig_entries = sig_df[bool_series.replace(np.nan, False)]
-    index_labels = sig_entries.index.labels[0]
-    return set(itemgetter(index_labels)(sig_entries.index.levels[0]))
+    series = sig_df["signf"]
+    series = series.fillna("False")
+    index_labels = series[series == True].index.labels[0]
+    set(itemgetter(index_labels)(series.index.levels[0]))
 
+def get_diff_feats(sig_df):
+    """
+    Get's the feature names of features from a result table who's confidence interval for difference in means does not \
+    include 0.
+
+    :param sig_df: Dataframe storing the mean difference confidence intervals like returned by stats.p_correction()
+    :return:
+    """
+    # grab significant deviances
+    series = sig_df["diff_flag"]
+    series = series.fillna("False")
+    index_labels = series[series == True].index.labels[0]
+    set(itemgetter(index_labels)(series.index.levels[0]))
 
 def construct_formula(label, rel_cols, label_side="l"):
     """
@@ -314,26 +327,49 @@ def conf_interval(data_series):
 
     return start, end
 
-def calc_mean_diff(series1, series2, round=2):
-    """
+def get_cat_frequencies(series):
+    """ """
 
-    :param series1:
-    :param series2:
-    :param round:
-    :return:
+    # count occurrences and store in Series
+    counts = pd.Series(Counter(series))
+    # calculate frequencies
+    freqs = counts / counts.sum()
+
+    return freqs
+
+
+def calc_mean_diff(series1, series2, var_type="n", round=2):
     """
-    mean1 = np.mean(series1)
-    mean2 = np.mean(series2)
-    var1 = np.var(series1, ddof=1)
-    var2 = np.var(series2, ddof=1)
+    Calculates the confidence interval of the difference in means between two iterables.
+
+    :param series1: Iterable storing the values of variable 1.
+    :param series2: Iterable storing the values of variable 2.
+    :param var_type: Indicator if numerical or multinomial distribution. "n" for numerical "m" for multinomial.
+    :param round: Number of decimal positions on which result shall be rounded.
+    :return: List representing the interval
+    """
+    if var_type == "n":
+        mean1 = np.mean(series1)
+        mean2 = np.mean(series2)
+        var1 = np.var(series1, ddof=1)
+        var2 = np.var(series2, ddof=1)
+    elif var_type == "m":
+
+        pass
+
+
 
     # estimate common variance
     s2 = ((len(series1)-1) * var1 + (len(series2)-1) * var2) / (len(series1)-1 + len(series2)-1)
 
+    # estimate standard deviation
     sd = np.sqrt(s2 * (1/len(series1) + 1/len(series2)))
 
+    # calculate difference in means
     diff = mean1 - mean2
-    z = t.ppf((1+0.95) / 2, len(series1)-1+len(series2)-1)
+
+    # set z value. 1.96 is standard for a 95% significance level
+    z = 1.96 #t.ppf((1+0.95) / 2, len(series1)-1+len(series2)-1)
 
     start = diff - z * sd
     end = diff + z * sd
