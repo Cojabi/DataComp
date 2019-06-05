@@ -463,7 +463,7 @@ class DataCollection(UserList):
 
         # return number of significant features
         if ret_num:
-            return results["signf"].sum(), results.sort_values("signf")
+            return results["signf"].sum(), results["diff_flag"].sum(), results.sort_values("signf")
 
         return results.sort_values("signf")
 
