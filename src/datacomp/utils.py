@@ -202,7 +202,7 @@ def _convert_multindex(val_dict, rename_dict):
     return result_table
 
 
-def _create_result_table(result, p_val_col, p_trans, diff_confs, conf_invs, counts):
+def _create_result_table(result, p_val_col, p_trans, mean_confs, prop_confs, conf_invs, counts):
     """
     Builds the dataframe displaying the results.
     The first three arguments are used to handle the p-values and match them back to the corresponding dataset and \
@@ -243,10 +243,13 @@ def _create_result_table(result, p_val_col, p_trans, diff_confs, conf_invs, coun
     result_table.index.levels[1].name = "datasets"
 
     # prepare confidence interval for mean difference
-    diff_confs = _convert_multindex(diff_confs, {0: "mean_diff", 1: "diff_flag"})
+    mean_confs = _convert_multindex(mean_confs, {0: "mean_diff", 1: "mean_flag"})
+    prop_confs = _convert_multindex(prop_confs, {0: "prop_diff", 1: "prop_flag"})
 
     # join with mean difference confidence intervals dataframe
-    result_table = result_table.join(diff_confs, how="outer")
+    result_table = result_table.join(mean_confs, how="outer")
+    # join with mean difference confidence intervals dataframe
+    result_table = result_table.join(prop_confs, how="outer")
     # join with actual mean confidence intervals dataframe
     result_table = result_table.join(conf_invs, how="outer")
     # join with counts dataframe to display number of datapoint for each comparison
@@ -356,26 +359,6 @@ def get_cat_frequencies(series):
     return freqs, counts.sum(), counts
 
 
-def means_vars_numerical(series1, series2):
-    """
-    Calculates means and variances for two iterable stroing data. The outputs are then futher used in the calculation \
-    of confidence intervals for the difference in means.
-
-    :param series1: Iterable storing the values of variable 1.
-    :param series2: Iterable storing the values of variable 2.
-    :return mean1: Mean for values in series1
-    :return mean2: Mean for values in series2
-    :return var1: Variance for values in series1
-    :return var2: Variance for values in series2
-    """
-    mean1 = np.mean(series1)
-    mean2 = np.mean(series2)
-    var1 = np.var(series1, ddof=1)
-    var2 = np.var(series2, ddof=1)
-
-    return mean1, mean2, var1, var2
-
-
 def means_vars_categorical(series1, series2):
     """
     A generator which will yield means and variances as well as number of occurences for each factor encountered in \
@@ -437,9 +420,9 @@ def diff_mean_conf_formula(n1, n2, mean1, mean2, var1, var2, rnd=2):
     return [np.round(start, rnd), np.round(end, rnd)]
 
 
-def diff_prop_conf_formula(n1, n2, prop1, prop2, rnd=2):
+def diff_prop_conf_formula(count1, n1, count2, n2, rnd=2):
     """
-    Calculates the confidence interval for the difference of proportions between two features.
+    Calculates the Agresti / Cuffo confidence interval for the difference of proportions between two features.
 
     :param n1: Sample size of sample 1
     :param n2: Sample size of sample 2
@@ -449,8 +432,15 @@ def diff_prop_conf_formula(n1, n2, prop1, prop2, rnd=2):
     :return: Confidence interval given as a list: [intervat start, interval end]
     """
 
+    # Agresti / Cuffo adjustment
+    n1m = n1 + 2
+    n2m = n2 + 2
+    prop1 = (count1 + 1) / n1m
+    prop2 = (count2 + 1) / n2m
+
+
     # calculate combined standard error
-    se = np.sqrt(prop1 * (1 - prop1) / n1 ** 2 + prop2 * (1 - prop2) / n2 ** 2)
+    se = np.sqrt(prop1 * (1 - prop1) / n1m + prop2 * (1 - prop2) / n2m)
 
     # calculate difference in means
     diff = prop1 - prop2
@@ -464,42 +454,62 @@ def diff_prop_conf_formula(n1, n2, prop1, prop2, rnd=2):
     return [np.round(start, rnd), np.round(end, rnd)]
 
 
-def calc_mean_diff(series1, series2, var_type="n", rnd=2):
+def calc_mean_diff(series1, series2, rnd=2):
     """
     Calculates the confidence interval of the difference in means between two iterables.
 
     :param series1: Iterable storing the values of variable 1.
     :param series2: Iterable storing the values of variable 2.
-    :param var_type: Indicator if numerical or categorical. "n" for numerical "c" for categorical.
     :param rnd: Number of decimal positions on which result shall be rounded.
     :return: List representing the interval
     """
-    # Handle numerical features
-    if var_type == "n":
-        mean1, mean2, var1, var2 = means_vars_numerical(series1, series2)
-        return diff_mean_conf_formula(len(series1), len(series2),
-                                      mean1, mean2, var1, var2, rnd)
+    # calculate means and variances
+    mean1 = np.mean(series1)
+    mean2 = np.mean(series2)
+    var1 = np.var(series1, ddof=1)
+    var2 = np.var(series2, ddof=1)
 
-    elif var_type == "c":
+    # calculate and return confidence interval
+    return diff_mean_conf_formula(len(series1), len(series2), mean1, mean2, var1, var2, rnd)
 
-        # calculate relative frequencies and n for each categorical value
-        freqs1, n1, counts1 = get_cat_frequencies(series1)
-        freqs2, n2, counts2 = get_cat_frequencies(series2)
+def calc_prop_diff(series1, series2, feat_name, rnd=2):
+    """
+    Calculates the confidence interval of the difference in proportions between two iterables storing the realisations \
+    of a categorical variable. Each possible realisation of a multinomial categorical variable will be treated as a \
+    single binominal distributed feature.
 
-        # collect all intervals for a variable in dictionary using the factors as keys
-        invs = dict()
+    :param series1: Iterable storing the values of variable 1.
+    :param series2: Iterable storing the values of variable 2.
+    :param rnd: Number of decimal positions on which result shall be rounded.
+    :return: List representing the interval
+    """
 
-        # for each factor that the categorigal variable can take on, perform the confidence interval calculation
-        for factor in freqs1.index.union(freqs2.index):
+    # calculate relative frequencies and n for each categorical value
+    freqs1, n1, counts1 = get_cat_frequencies(series1)
+    freqs2, n2, counts2 = get_cat_frequencies(series2)
 
-            prop1, prop2, n1, n2 = freqs1[factor], freqs2[factor], counts1[factor], counts2[factor]
+    # collect all intervals for a variable in dictionary using the factors as keys
+    invs = dict()
 
-            # check statistical assumptions
-            if (n1 * prop1) < 10 or (n1 * (1-prop1)) < 10 or (n2 * prop2) < 10 or (n2 * (1-prop2)) < 10:
-                warnings.warn(
-                    "Sample size is smaller than 10 for the realisation", factor,"of the feature.",
-                    UserWarning)
+    # for each factor that the categorigal variable can take on, perform the confidence interval calculation
+    for factor in freqs1.index.union(freqs2.index):
 
-            invs[factor] = diff_prop_conf_formula(n1, n2, prop1, prop2, rnd)
+        # assign variables important for later calculations
+        prop1, prop2 = freqs1[factor], freqs2[factor]
+        count1, count2 = counts1[factor], counts2[factor]
+        n1, n2 = len(series1), len(series2)
+
+        # check statistical assumptions
+        if (n1 * prop1) < 10 or (n1 * (1 - prop1)) < 10 or (n2 * prop2) < 10 or (n2 * (1 - prop2)) < 10:
+            warnings.warn(
+                "Sample size is smaller than 10 for the realisation {} of the feature.".format(factor),
+                UserWarning)
+
+        # append to CI dictionary and append feature name to factor to create a uniq index/key
+        ind = feat_name + "_" + str(factor)
+
+        # attach counts for each factor to include them in the result table
+        invs[ind] = diff_prop_conf_formula(count1, n1, count2, n2, rnd)
+
 
     return invs
