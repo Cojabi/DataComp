@@ -9,7 +9,7 @@ from statsmodels.multivariate.manova import MANOVA
 from statsmodels.sandbox.stats.multicomp import multipletests
 
 from .utils import construct_formula, _categorical_table, _non_present_values_to_zero, \
-    _test_if_all_vals_equal, _create_result_table, _transform_p_dict, conf_interval, calc_mean_diff
+    _test_if_all_vals_equal, _create_result_table, _transform_p_dict, conf_interval, calc_mean_diff, calc_prop_diff
 
 
 def test_num_feats(zipper, feat_subset=None, method=None):
@@ -73,7 +73,7 @@ def test_num_feats(zipper, feat_subset=None, method=None):
 
 def calc_conf_inv(zipper, feat_subset, df_names):
     """
-    Calculates the confidence intervals for numerical features.
+    Calculates the confidence intervals of means for numerical features.
 
     :param zipper: Zipper created from a DataCollection.
     :param feat_subset: An iterable of features for which the confidence intervals shall be calculated.
@@ -83,9 +83,9 @@ def calc_conf_inv(zipper, feat_subset, df_names):
     confs = dict()
 
     for key in feat_subset:
-        #print(zipper[key])
+
         # turns zipper values into lists storing the number of entries of the respective features per dataset
-        confs[key] = [np.round(conf_interval(z),2) for z in zipper[key]]
+        confs[key] = [np.round(conf_interval(z), 2) for z in zipper[key]]
 
         counts = pd.DataFrame(confs).transpose()
         counts.index.name = "features"
@@ -93,7 +93,7 @@ def calc_conf_inv(zipper, feat_subset, df_names):
 
     return counts
 
-def calc_diff_conf(zipper, feat_subset):
+def calc_mean_diff_conf(zipper, feat_subset):
     """
     Calculates the confidence intervals for numerical features.
 
@@ -103,9 +103,6 @@ def calc_diff_conf(zipper, feat_subset):
     """
     # initialize dictionary which stores the conf_invs
     conf_invs = dict()
-
-    if feat_subset is None:
-        feat_subset = zipper.keys()
 
     for feat in feat_subset:  # run through all variables
 
@@ -120,12 +117,60 @@ def calc_diff_conf(zipper, feat_subset):
                     interval = np.round(calc_mean_diff(zipper[feat][i], zipper[feat][j]), 2)
 
                     # indicator = True if 0 is not in the interval
-                    if interval[0] > 0 or interval[1] < 0:
+                    if interval[0] >= 0 or interval[1] <= 0:
                         flag = True
                     else:
                         flag = False
 
                     conf_invs[feat][i + 1, j + 1] = (interval, flag)
+
+                # if one or both sets are empty
+                else:
+                    conf_invs[feat][i + 1, j + 1] = (np.nan, np.nan)
+
+    return conf_invs
+
+def calc_prop_diff_conf(zipper, feat_subset):
+    """
+    Calculates the confidence intervals for numerical features.
+
+    :param zipper: Zipper created from a DataCollection.
+    :param feat_subset: An iterable of features for which the confidence intervals shall be calculated.
+    :return:
+    """
+    # initialize dictionary which stores the conf_invs
+    conf_invs = dict()
+
+    for feat in feat_subset:  # run through all variables
+
+        # initiate dict in dict for d1 vs d2, d2 vs d3 etc. per feature
+        conf_invs[feat] = dict()
+
+        for i in range(len(zipper[feat]) - 1):  # select dataset1
+            for j in range(i + 1, len(zipper[feat])):  # select dataset2
+
+                # only calculate score if there are values in each dataset
+                if zipper[feat][i] and zipper[feat][j]:
+
+                    invs = calc_prop_diff(zipper[feat][i], zipper[feat][j], feat)
+
+                    # check for each factor of the categorical feature if 0 is in the CI or not and append it to dict
+                    for factor in invs:
+                        inv = invs[factor]
+
+                        # TODO: pass the counts over to the next function such that in can be included into the result table
+                        #count1 = invs[factor][0]
+                        #count2 = invs[factor][1]
+
+                        # indicator = True if 0 is not in the interval
+                        flag = inv[0] >= 0.00 or inv[1] <= 0.00
+
+                        # save interval in dict
+                        try:
+                            conf_invs[factor][i + 1, j + 1] = (inv, flag)
+                        except KeyError:
+                            conf_invs[factor] = dict()
+                            conf_invs[factor][i + 1, j + 1] = (inv, flag)
 
                 # if one or both sets are empty
                 else:
