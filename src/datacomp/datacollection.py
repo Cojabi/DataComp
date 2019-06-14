@@ -12,7 +12,8 @@ from pymatch.Matcher import Matcher
 from scipy.stats import chi2_contingency
 from sklearn.cluster import AgglomerativeClustering
 
-from .stats import test_cat_feats, test_num_feats, p_correction, calc_conf_inv, calc_diff_conf
+from .stats import test_cat_feats, test_num_feats, p_correction, calc_conf_inv, calc_mean_diff_conf, \
+                   calc_prop_diff_conf
 from .utils import construct_formula, calc_prog_scores, calculate_cluster_purity, \
                    create_contin_mat, _create_result_table
 
@@ -450,20 +451,21 @@ class DataCollection(UserList):
         conf_invs = calc_conf_inv(zipper, num_feats, self.df_names)
 
         # calculate confidence interval for difference of means
-        mean_invs = calc_diff_conf(zipper, num_feats)
+        mean_invs = calc_mean_diff_conf(zipper, num_feats)
+        prop_invs = calc_prop_diff_conf(zipper, cat_feats)
 
         # correct for multiple testing and create result table
-        results = _create_result_table(*p_correction(p_values), mean_invs, conf_invs, counts)
+        results = _create_result_table(*p_correction(p_values), mean_invs, prop_invs, conf_invs, counts)
 
         if verbose:
             print("Fraction of significant comparisons:",
                   str(results["signf"].sum()) + "/" + str(len(results["signf"])))
             print("Fraction of mean diff. confidence intervals without '0':",
-                  str(results["diff_flag"].sum()) + "/" + str(len(results["diff_flag"])))
+                  str(results["mean_flag"].sum() + results["prop_flag"].sum()) + "/" + str(len(results["mean_flag"])))
 
         # return number of significant features
         if ret_num:
-            return results["signf"].sum(), results["diff_flag"].sum(), results.sort_values("signf")
+            return results["signf"].sum(), results["mean_flag"].sum(), results.sort_values("signf")
 
         return results.sort_values("signf")
 
