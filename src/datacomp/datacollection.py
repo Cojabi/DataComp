@@ -458,10 +458,16 @@ class DataCollection(UserList):
         results = _create_result_table(*p_correction(p_values), mean_invs, prop_invs, conf_invs, counts)
 
         if verbose:
-            print("Fraction of significant comparisons:",
-                  str(results["signf"].sum()) + "/" + str(len(results["signf"])))
+            print("Fraction of significant comparisons (p-values):",
+                  str(results["signf"].sum()) + "/" + str(results["signf"].notnull().sum()))
+            # numerical
             print("Fraction of mean diff. confidence intervals without '0':",
-                  str(results["mean_flag"].sum() + results["prop_flag"].sum()) + "/" + str(len(results["mean_flag"])))
+                  str(results["mean_flag"].sum()) + "/" + str(results["mean_flag"].notnull().sum()))
+            # categorical
+            print("Categorical features before splitting them into single factors:", len(cat_feats))
+            print("Categorical features after splitting them into single factors:", len(cat_feats))
+            print("Fraction of proportion diff. confidence intervals without '0':",
+                  str(results["prop_flag"].sum()) + "/" + str(results["prop_flag"].notnull().sum()))
 
         # return number of significant features
         if ret_num:
