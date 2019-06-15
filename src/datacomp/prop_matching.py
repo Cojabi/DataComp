@@ -5,18 +5,20 @@ import pandas as pd
 from .datacollection import DataCollection
 
 
-def create_prop_matched_dfs(matches_path, datacol):
+def create_prop_matched_dfs(matched, datacol):
     """
     Creates a new DataCollection containing only the matched cases. A table listing the matched data points is required.
 
-    :param matches_path: Path to a csv which contains the matched data. 2 Columns: one lists the subjects of df1 and \
-    the other lists the matching sample from df2.
+    :param matched: Either a path to a csv which contains the matched data or a dataframe containing the matches. \
+    2 Columns: one lists the subjects of df1 and the other lists the matching sample from df2.
     :param datacol: DataCollection object
     :return: DataCollection object containing only the matches samples
     """
 
     # load matches and drop non matched ids
-    matched = pd.read_csv(matches_path)
+    if type(matched) == str:
+        matched = pd.read_csv(matched)
+
     matched.dropna(inplace=True)
 
     # create dfs containing only matched data. Try to get oder of dataframes and matching columns correct
