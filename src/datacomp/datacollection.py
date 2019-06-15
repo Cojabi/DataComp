@@ -257,7 +257,7 @@ class DataCollection(UserList):
         reduced_dfs = []
 
         for df in self:
-            reduced_dfs.append(df.loc[:, feat_subset])
+            reduced_dfs.append(df.reindex(columns=feat_subset))
 
         # keep only categorical feats that are present in the feat_subset
         categorical_feats = list(set(self.categorical_feats).intersection(feat_subset))
