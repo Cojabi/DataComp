@@ -148,7 +148,7 @@ class DataCollection(UserList):
         super().__init__(df_list)
 
         # check if there is an empty dataframe in the datacollection
-        if True in {df.empty for df in self}:
+        if any(df.empty for df in self):
             warnings.warn("One of the dataframes in the DataCollection is empty!", UserWarning)
 
         self.df_names = df_names
